@@ -1,3 +1,17 @@
+<?php
+    session_start();
+    if (isset($_POST['button'])) {
+        if (empty($_POST['pseudo'])) {
+            $error = "Veuillez entrer un pseudo";
+        } 
+        else {
+            
+        }  
+    }
+   
+?>
+<DOCTYPE html>
+<html lang="fr">
 <head>
     
     <meta charset="utf-8">
@@ -9,6 +23,7 @@
 
 </head>
 <body>
+
     <ul class="menu">
         <a class="navbar_elem" href="#"> Refaire le QCM</a>
         <a class="navbar_elem" href="#"> Voir les résultats</a>
@@ -17,10 +32,5 @@
     </ul>
     
 
-    <section class="pseudo">
-        <form action="" method="POST">
-            <p class="error"> Veuillez entrer un pseudo </p>
-        </form>
-    </section>
     
 </body>
