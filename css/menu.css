@@ -24,7 +24,7 @@ body{
     background-color: #fff;
     padding: 20px 10px;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
-}
+    right: 0;}
 .menu a{
     text-decoration: 0;
     text-transform: uppercase;
@@ -36,3 +36,4 @@ body{
 .menu a:hover{
     color: #8eb864;
 }
+
