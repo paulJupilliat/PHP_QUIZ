@@ -3,7 +3,7 @@
     if (isset($_POST['button'])) {
         if (isset($_POST['name']) && ($_POST['name'] != "")){
             $_SESSION['pseudo'] = $_POST['name'];
-            header("location:theme.php"); //redirection vers la page d'accueil
+            header("location:theme.php"); //redirection vers la page theme
         }
             
     
