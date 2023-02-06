@@ -1,5 +1,5 @@
 <?php
-    session_start();
+    
     if (isset($_POST['button'])) {
         if (isset($_POST['name']) && ($_POST['name'] != "")){
             $_SESSION['pseudo'] = $_POST['name'];
@@ -26,7 +26,8 @@
 <body>
 
     <?php
-        include "menu.php"
+        include "menu.php";
+        include "co.php";
     ?>
     <section class="pseudo">
     <form action="pseudo.php" method = "POST">
