@@ -1,11 +1,6 @@
-body{
-    background-color: #f4f5f3;
-    justify-content: center;
-    align-items: center;
-    letter-spacing: 0.5px;
-}
+
 .list_theme{
-    margin-top:60%;
+    margin-top:20%;
     display: flex;
     list-style-type: none;
     flex-direction: row;
