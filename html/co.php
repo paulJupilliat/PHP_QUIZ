@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -18,15 +18,6 @@ $dsn="mysql:dbname=PAULDB;host=localhost";
       printf("Échec de la connexion : %s\n", $e->getMessage());
       exit();
     }
-// Vérification préalable à l'insertion en Base
-
-// $sql="SELECT * from CARNET ";
-// $stmt=$connexion->prepare($sql);
-
-// $stmt->execute();
-
-
-// if (!$stmt) die("Pb d'accès à la table");
 
 // ?>
 </body>

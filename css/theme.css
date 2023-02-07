@@ -1,4 +1,9 @@
-
+body{
+    background-color: #f4f5f3;
+    justify-content: center;
+    align-items: center;
+    letter-spacing: 0.5px;
+}
 .list_theme{
     margin-top:60%;
     display: flex;
