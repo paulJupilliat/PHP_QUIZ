@@ -7,20 +7,17 @@ USE quizz;
 
 -- Create users
 
-CREATE USER IF NOT EXISTS 'app'@'localhost' IDENTIFIED BY 'pwdapp';
-
-GRANT SELECT, INSERT, UPDATE, DELETE ON quizz.* TO 'app'@'localhost';
-
-CREATE USER
-    IF NOT EXISTS 'appadmin' @'localhost' IDENTIFIED BY 'pwdadmin';
+CREATE USER 'app'@'%' IDENTIFIED BY 'pwdapp';
+GRANT SELECT, INSERT, UPDATE, DELETE ON quizz.* TO 'app'@'%';
 
 GRANT
 SELECT,
 INSERT,
 UPDATE,
 DELETE
-    ON quizz.* TO 'appadmin' @'localhost';
+    ON quizz.* TO 'appadmin' @'%';
 
+FLUSH PRIVILEGES;
 -- Create tables
 
 CREATE TABLE
