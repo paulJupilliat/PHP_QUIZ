@@ -5,23 +5,17 @@ This document is a guide to explain the conception of the database and how to us
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 To use the database, you need to install the following software:
-- [Mysql](https://www.mysql.com/fr/)
+- [docker](https://www.docker.com/)
+- [docker-compose](https://docs.docker.com/compose/)
 
 ### Start
 To launch the database, you need to run the following commands:
 ```bash
-mysql -u root -p
-```  
+bash startBd.sh
+```
 
-After, you need to create the database:
-```bash
-CREATE DATABASE IF NOT EXISTS `QUIZZ`;
-```  
-
-Then, you need to create the tables:
-```bash
-source sql/init.sql
-```  
+## Explication
+The database is create on docker mysql. During the creation of the container, init script is launch. This script create the database, the tables and users with there privileges. The script is in the folder `./database/init.sql`.
 
 ## MCD
 ![MCD](./mcd.png)
