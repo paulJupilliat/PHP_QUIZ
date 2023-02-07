@@ -1,17 +1,16 @@
 <?php 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 require_once 'co.php';
 require_once 'menu.php';
 require_once 'pseudo.php';
 
+
+
 session_start();
-
-
-
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,14 +21,32 @@ session_start();
 </head>
 <body>
     <section class="quiz">
-        <form action="reponse.php" methods="post">
+        <form action="reponse.php" method="post">
 
         <?php 
-            $result = $connexion->query("select PRENOM from CARNET");
-            foreach($result as $personne){
-                echo "<h3 class='question'>".$personne["PRENOM"]."</h3>";
+            $theme = "Histoire";
+            $result = $connexion->query("select * from QUESTION where theme = '$theme'");
+            foreach($result as $ques){
+                ?>
+                <h3 class="question" id=<?=$ques["id_question"] ?>  ><?=$ques["interogation"]?></h3><br><br>
+                
+                <?php
+                $idq = $ques["id_question"];
+                $id_ch = $ques["id_choix"];
+                $req_choix= "select * from REPONSE where id_choix = $id_ch";
+                $reponse_possible = explode(',', $ques["reponse"]);
+                foreach($reponse_possible as $rep){
+                ?>
+                    <div class="reponse">
+                        <input type="radio" name="reponse<?=$idq?>" value="<?=$rep?>"> <?=$rep?><br>
+                        <input type="radio" name="reponse<?=$idq?>" value="<?=$rep?>"> <?=$rep?><br>
+                        <input type="radio" name="reponse<?=$idq?>" value="<?=$rep?>"> <?=$rep?><br>
+                        <!-- a changer en fonction des choix et non des reponses -->
+                        <br>
+                    </div>
+                    <?php
+                }
             }
-        
         
         ?>
         </form>

@@ -1,9 +1,31 @@
 <?php
-    if(isset($_POST['btn_theme_1'])){
-        echo $_SESSION['pseudo'];
+    
+    if(isset($_POST['btn_theme_1'])){ // si on clique sur le bouton du theme 1
         $_SESSION['theme'] = "CINÉMA"; //on va gerer l'affichage des questions en fonction du theme
-        header("location: quiz.php");
+        header("location: quizz.php");
     }
+    if(isset($_POST['btn_theme_2'])){
+        $_SESSION['theme'] = "SPORT";
+        header("location: quizz.php");
+    }
+    if(isset($_POST['btn_theme_3'])){
+        $_SESSION['theme'] = "ART";
+        header("location: quizz.php");
+    }
+    if(isset($_POST['btn_theme_4'])){
+        $_SESSION['theme'] = "HISTOIRE";
+        header("location: quizz.php");
+    }
+    if(isset($_POST['btn_theme_5'])){
+        $_SESSION['theme'] = "PSYCHOLOGIE";
+        header("location: quizz.php");
+    }
+    if(isset($_POST['btn_theme_6'])){
+        $_SESSION['theme'] = "AUTOMOBILE";
+        header("location: quizz.php");
+    }
+    
+
 ?>
 
 <DOCTYPE html>
@@ -20,9 +42,10 @@
 <body>
 
     <?php
-        include "menu.php"
+        include "menu.php";
     ?>
-    <form action="theme.php">
+
+    <form action="quizz.php" method="POST">
         <section class="themes">
             <ul class="list_theme">
                 <li> <button name="btn_theme_1" class="style_btn"> CINÉMA</button></li>
