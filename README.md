@@ -46,13 +46,16 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
-
-```
-Give examples
-```
+To launch this project you need to install docker-compose
+```bash
+sudo apt install docker-compose
+```  
 
 ### Start
+Start by create the docker
+```bash
+docker-compose up -d
+```
 
 To launch the project, you need to run the following commands:
 

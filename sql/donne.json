@@ -1,0 +1,234 @@
+[
+  {
+    "question": "Quelle est la capitale de la France ?",
+    "reponse": "Paris",
+    "categorie": "Geographie",
+    "propositions": "Lyon, Marseille, Paris, Toulouse",
+    "type": "QCM"
+  },
+  {
+    "question": "Quelle est la plus grande planète du système solaire ?",
+    "reponse": "Jupiter",
+    "categorie": "Science",
+    "propositions": "Mercure, Venus, Terre, Mars, Jupiter, Saturne, Uranus, Neptune",
+    "type": "QCM"
+  },
+  {
+    "question": "Qui est considéré comme le père de la philosophie occidentale ?",
+    "reponse": "Socrate",
+    "categorie": "Culture",
+    "propositions": "Platon, Aristote, Socrate, Pythagore",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le sport national aux États-Unis ?",
+    "reponse": "Baseball",
+    "categorie": "Sport",
+    "propositions": "Basketball, Baseball, Football américain, Hockey sur glace",
+    "type": "QCM"
+  },
+  {
+    "question": "Qui a peint la Joconde ?",
+    "reponse": "Leonardo da Vinci",
+    "categorie": "Art",
+    "propositions": "Michel-Ange, Raphaël, Leonardo da Vinci, Caravage",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le plus grand pays du monde en termes de superficie ?",
+    "reponse": "Russie",
+    "categorie": "Geographie",
+    "propositions": "Russie, Canada, Chine, Etats-Unis",
+    "type": "QCM"
+  },
+  {
+    "question": "Qui est considéré comme le plus grand musicien de tous les temps ?",
+    "reponse": "Wolfgang Amadeus Mozart",
+    "categorie": "Musique",
+    "propositions": "Ludwig van Beethoven, Johann Sebastian Bach, Wolfgang Amadeus Mozart, Frédéric Chopin",
+    "type": "QCM"
+  },
+  {
+    "question": "Dans quel pays se trouve la statue de la liberté ?",
+    "reponse": "Etats-Unis",
+    "categorie": "Geographie",
+    "propositions": "France, Etats-Unis, Royaume-Uni, Allemagne",
+    "type": "QCM"
+  },
+  [
+  {
+    "question": "Quel est le nom du plus grand océan du monde ?",
+    "reponse": "Océan Pacifique",
+    "propositions": "Océan Atlantique, Océan Indien, Océan Arctique, Océan Pacifique",
+    "categorie": "Geographie",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le nom de la plus grande montagne du monde ?",
+    "reponse": "Mont Everest",
+    "propositions": "Mont Kilimandjaro, Mont Blanc, Mont Everest, Mont Aconcagua",
+    "categorie": "Geographie",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le nom de la plus grande compétition de football au monde ?",
+    "reponse": "Coupe du monde FIFA",
+    "propositions": "Championnats d'Europe UEFA, Championnats d'Amérique CONMEBOL, Coupe du monde FIFA, Ligue des champions UEFA",
+    "categorie": "Sport",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le nom de la plus célèbre oeuvre de Beethoven ?",
+    "reponse": "Ninth Symphony",
+    "propositions": "Moonlight Sonata, Fifth Symphony, Ninth Symphony, Fur Elise",
+    "categorie": "Musique",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le nom du plus célèbre peintre de la Renaissance ?",
+    "reponse": "Leonardo da Vinci",
+    "propositions": "Michel-Ange, Rembrandt, Leonardo da Vinci, Raphaël",
+    "categorie": "Art",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le nom du plus grand pays du monde en surface ?",
+    "reponse": "Russie",
+    "propositions": "Russie, Canada, Etats-Unis, Chine",
+    "categorie": "Geographie",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le nom de la plus grande religion du monde ?",
+    "reponse": "Christianisme",
+    "propositions": "Hindouisme, Islam, Christianisme, Bouddhisme",
+    "categorie": "Religion",
+    "type": "QCM"
+  },
+  {
+    "question": "Quel est le nom du plus grand pays d'Afrique en surface ?",
+    "reponse": "Algérie",
+    "propositions": "Nigeria, Algérie, Afrique du Sud, Egypte",
+    "categorie": "Geographie",
+    "type": "QCM"
+  },
+  {
+  "question": "Quel est le nom de la capitale de l'Espagne ?",
+  "reponse": "Madrid",
+  "categorie": "Geographie",
+  "propositions": "Lisbonne, Madrid, Barcelone, Valence",
+  "type": "QCM"
+  },
+  {
+  "question": "Lequel de ces sports est pratiqué avec un ballon rond ?",
+  "reponse": "Football",
+  "categorie": "Sport",
+  "propositions": "Basket-ball, Football, Tennis, Rugby",
+  "type": "QCM"
+  },
+  {
+  "question": "Quel est le nom de l'inventeur de la première voiture à moteur en 1886 ?",
+  "reponse": "Karl Benz",
+  "categorie": "Technologie",
+  "propositions": "Henry Ford, Karl Benz, Gottlieb Daimler, Émile Levassor",
+  "type": "QCM"
+  },
+  {
+  "question": "Quel est le nom de la plus grande île de la mer Méditerranée ?",
+  "reponse": "Sicile",
+  "categorie": "Geographie",
+  "propositions": "Corse, Sardaigne, Sicile, Ibiza",
+  "type": "QCM"
+  },
+  {
+  "question": "Quel est le nom du célèbre peintre français né en 1832 à Paris ?",
+  "reponse": "Pierre-Auguste Renoir",
+  "categorie": "Art",
+  "propositions": "Edgar Degas, Claude Monet, Pierre-Auguste Renoir, Camille Pissarro",
+  "type": "QCM"
+  },
+  {
+  "question": "Quel est le nom du premier président des Etats-Unis d'Amérique ?",
+  "reponse": "George Washington",
+  "categorie": "Histoire",
+  "propositions": "George Washington, Thomas Jefferson, Abraham Lincoln, John F. Kennedy",
+  "type": "QCM"
+  },
+  {
+  "question": "Quel est le nom de la plus haute montagne du monde ?",
+  "reponse": "Everest",
+  "categorie": "Nature",
+  "propositions": "Kilimandjaro, Aconcagua, Monte-Rosa, Everest",
+  "type": "QCM"
+  },
+  {
+  "question": "Quel est le nom du célèbre écrivain français né en 1802 à Grenoble ?",
+  "reponse": "Victor Hugo",
+  "categorie": "Littérature",
+  "propositions": "Charles Baudelaire, Gustave Flaubert, Honoré de Balzac, Victor Hugo",
+  "type": "QCM"
+  },
+  {
+      "question": "Quel est le capital de la France ?",
+      "reponse": "Paris",
+      "categorie": "Geographie",
+      "propositions": "Lyon, Marseille, Bordeaux, Paris",
+      "type": "QCU"
+    },
+    {
+      "question": "Quel est le nom de la plus haute montagne du monde ?",
+      "reponse": "Everest",
+      "categorie": "Geographie",
+      "propositions": "Kilimanjaro, Denali, Aconcagua, Everest",
+      "type": "QCU"
+    },
+    {
+      "question": "Quel est le pays qui a gagné la première coupe du monde de football ?",
+      "reponse": "Uruguay",
+      "categorie": "Sport",
+      "propositions": "Allemagne, Argentine, Brésil, Uruguay",
+      "type": "QCU"
+    },
+    {
+      "question": "Qui a écrit le livre '1984' ?",
+      "reponse": "George Orwell",
+      "categorie": "Littérature",
+      "propositions": "George Orwell, Aldous Huxley, Franz Kafka, Raymond Chandler",
+      "type": "QCU"
+    },
+    {
+      "question": "Quel est le type de la danse salsa ?",
+      "reponse": "Cubain",
+      "categorie": "Art",
+      "propositions": "Cubain, Brésilien, Argentin, Espagnol",
+      "type": "QCU"
+    },
+    {
+      "question": "Quel est le plus grand pays du monde en termes de surface ?",
+      "reponse": "Russie",
+      "categorie": "Geographie",
+      "propositions": "Russie, Canada, Chine, États-Unis",
+      "type": "QCU"
+    },
+    {
+      "question": "Qui a peint 'La Joconde' ?",
+      "reponse": "Leonardo da Vinci",
+      "categorie": "Art",
+      "propositions": "Leonardo da Vinci, Michel-Ange, Raphaël, Rembrandt",
+      "type": "QCU"
+    },
+    {
+      "question": "Quel est le nom de la devise de la France ?",
+      "reponse": "Euro",
+      "categorie": "Economie",
+      "propositions": "Dollar, Livre Sterling, Yen, Euro",
+      "type": "QCU"
+    },
+    {
+      "question": "Quel est le plus grand océan du monde ?",
+      "reponse": "Pacifique",
+      "categorie": "Geographie",
+      "propositions": "Atlantique, Indien, Pacifique, Arctique",
+      "type": "QCU"
+    }
+]

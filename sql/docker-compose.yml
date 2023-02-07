@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  db:
+    image: mysql:8
+    container_name: dbQuizz
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpwd
+      MYSQL_DATABASE: quizz
+      # faire un user
+      MYSQL_USER: appadmin
+      MYSQL_PASSWORD: pwdadmin
+    ports:
+      - "3306:3306"
+    restart: always
