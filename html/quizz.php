@@ -22,7 +22,7 @@ require_once 'pseudo.php';
 
 <body>
     <section class="quiz">
-        <form action="reponse.php" method="post">
+        <form action="resultat.php" method="post">
 
             <?php
             $theme = "Histoire";
@@ -45,11 +45,12 @@ require_once 'pseudo.php';
                         <!-- a changer en fonction des choix et non des reponses -->
                         <br>
                     </div>
+                
             <?php
                 }
             }
-
             ?>
+            <button type="submit" value="Valider"> envoyer les reponses </button>
         </form>
     </section>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
