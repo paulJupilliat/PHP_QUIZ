@@ -21,7 +21,7 @@ FLUSH PRIVILEGES;
 -- Create tables
 
 CREATE TABLE
-    ref_CATEGORIE(
+    ref_THEME(
         nom VARCHAR(42) PRIMARY KEY,
         description VARCHAR(255)
     );
@@ -34,13 +34,13 @@ CREATE TABLE
 
 CREATE TABLE
     QUESTIONS(
-        id INT PRIMARY KEY auto_increment,
-        question VARCHAR(255),
+        id_question INT PRIMARY KEY auto_increment,
+        interrogation VARCHAR(255),
         reponse VARCHAR(255),
-        categorie VARCHAR(42),
+        theme VARCHAR(42),
         propositions VARCHAR(255) NULL,
         type VARCHAR(42),
-        FOREIGN KEY (categorie) REFERENCES ref_CATEGORIE(nom),
+        FOREIGN KEY (theme) REFERENCES ref_THEME(nom),
         FOREIGN KEY (type) REFERENCES ref_TYPE(type)
     );
 
@@ -61,7 +61,7 @@ VALUES (
         'Question a choix avec un slider'
     );
 
-INSERT INTO ref_CATEGORIE
+INSERT INTO ref_THEME
 VALUES ('Histoire', 'Histoire'), ('Geographie', 'Geographie'), ('Sport', 'Sport'), ('Culture', 'Culture'), ('Science', 'Science'), (
         'Informatique',
         'Informatique'
@@ -69,9 +69,9 @@ VALUES ('Histoire', 'Histoire'), ('Geographie', 'Geographie'), ('Sport', 'Sport'
 
 INSERT INTO
     QUESTIONS (
-        question,
+        interrogation,
         reponse,
-        categorie,
+        theme,
         propositions,
         type
     )
@@ -79,13 +79,13 @@ VALUES (
         'Quelle est la capitale de la France?',
         'Paris',
         'Geographie',
-        'Lyon,Marseille,Bordeaux',
+        'Lyon|Marseille|Bordeaux',
         'QCM'
     ), (
         'Quel est le plus haut sommet de la France?',
         'Mont Blanc',
         'Geographie',
-        'Pyrenees,Alpes,Massif central',
+        'Pyrenees|Alpes|Massif central',
         'QCM'
     ), (
         'Quelle est la date de naissance de Napoléon Bonaparte?',
@@ -115,7 +115,7 @@ VALUES (
         'Quel est le plus grand pays d\'Afrique?',
         'Algérie',
         'Geographie',
-        'Nigeria,Egypte,Afrique du Sud',
+        'Nigeria|Egypte|Afrique du Sud',
         'QCM'
     ), (
         'Quel est le nom du célèbre peintre espagnol?',
@@ -127,13 +127,13 @@ VALUES (
         'Quel est le nom du plus grand océan?',
         'Océan Pacifique',
         'Geographie',
-        'Océan Atlantique,Océan Indien,Océan Arctique',
+        'Océan Atlantique|Océan Indien|Océan Arctique',
         'QCM'
     ), (
         'Quelle est la plus grande religion du monde?',
         'Islam',
         'Religion',
-        'Christianisme,Hindouisme,Bouddhisme',
+        'Christianisme|Hindouisme|Bouddhisme',
         'QCM'
     ), (
         'Sur une échelle de 1 à 10, combien de fois par semaine mangez-vous de la viande?',
