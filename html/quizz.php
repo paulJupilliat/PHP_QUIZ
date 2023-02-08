@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 require_once 'co.php';
 require_once 'menu.php';
-require_once 'pseudo.php';
+include 'pseudo.php';
 
 
 
@@ -53,7 +53,7 @@ require_once 'pseudo.php';
                 }
             }
             ?>
-            <button type="submit" value="Valider"> envoyer les reponses </button>
+            <a href="resultat.php?theme=<?=$theme?>" class="style_btn">Valider !</a>
         </form>
     </section>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
