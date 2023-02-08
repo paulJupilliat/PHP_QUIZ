@@ -6,21 +6,22 @@
   <title>
     Ajout de la personne <?php echo $_GET['nom']; ?>
   </title>
+ 
 
 <body>
   <?php
+  $ipAddress = $_SERVER['REMOTE_ADDR'];
+  $port = 3306;
+  $username = "appadmin";
+  $password = "pwdadmin";
+  $dbname = "quizz";
 
-  $addIp = $_SERVER['REMOTE_ADDR'];
-  $dsn = "mysql:dbname=quizz;host=" + ;
   try {
-    $connexion = new PDO($dsn, "paul", "paul");
-    $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+    $conn = new PDO("mysql:host=$ipAddress;port=$port;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch (PDOException $e) {
-    printf("Échec de la connexion : %s\n", $e->getMessage());
-    exit();
+    echo "Connexion échouée : " . $e->getMessage();
   }
-
-  // 
   ?>
 </body>
 

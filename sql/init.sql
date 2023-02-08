@@ -8,7 +8,7 @@ USE quizz;
 -- Create users
 
 CREATE USER 'app'@'%' IDENTIFIED BY 'pwdapp';
-GRANT SELECT, INSERT, UPDATE, DELETE ON quizz.* TO 'app'@'%';
+GRANT SELECT, INSERT, UPDATE ON quizz.* TO 'app'@'%';
 
 GRANT
 SELECT,
