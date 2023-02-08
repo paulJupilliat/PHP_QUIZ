@@ -3,32 +3,6 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-if (isset($_POST['btn_theme_1'])) { // si on clique sur le bouton du theme 1
-    $_SESSION['theme'] = "CINÉMA"; //on va gerer l'affichage des questions en fonction du theme
-    header("location: quizz.php");
-}
-if (isset($_POST['btn_theme_2'])) {
-    $_SESSION['theme'] = "SPORT";
-    header("location: quizz.php");
-}
-if (isset($_POST['btn_theme_3'])) {
-    $_SESSION['theme'] = "ART";
-    header("location: quizz.php");
-}
-if (isset($_POST['btn_theme_4'])) {
-    $_SESSION['theme'] = "HISTOIRE";
-    header("location: quizz.php");
-}
-if (isset($_POST['btn_theme_5'])) {
-    $_SESSION['theme'] = "PSYCHOLOGIE";
-    header("location: quizz.php");
-}
-if (isset($_POST['btn_theme_6'])) {
-    $_SESSION['theme'] = "AUTOMOBILE";
-    header("location: quizz.php");
-}
-$_SESSION['pseudo'] = $_POST['name'];
-
 
 ?>
 
@@ -59,12 +33,13 @@ $_SESSION['pseudo'] = $_POST['name'];
 
 
             <ul class="list_theme">
-                <li> <button name="btn_theme_1" class="style_btn"> CINÉMA</button></li>
-                <li> <button name="btn_theme_2" class="style_btn"> SPORT</button></li>
-                <li> <button name="btn_theme_3" class="style_btn"> ART</button></li>
-                <li> <button name="btn_theme_4" class="style_btn"> HISOIRE</button></li>
-                <li> <button name="btn_theme_5" class="style_btn"> PSYCHOLOGIE</button></li>
-                <li> <button name="btn_theme_6" class="style_btn"> AUTOMOBILE</button></li>
+                <li> <a name="btn_theme_1" class="style_btn" href="quizz.php?theme=Cinema">CINÉMA</a></li>
+                <li> <a name="btn_theme_2" class="style_btn" href="quizz.php?theme=Musique">MUSIQUE</a></li>
+                <li> <a name="btn_theme_3" class="style_btn" href="quizz.php?theme=Sport">SPORT</a></li>
+                <li> <a name="btn_theme_4" class="style_btn" href="quizz.php?theme=Geographie">GÉOGRAPHIE</a></li>
+                <li> <a name="btn_theme_5" class="style_btn" href="quizz.php?theme=Histoire">HISTOIRE</a></li>
+                <li> <a name="btn_theme_6" class="style_btn" href="quizz.php?theme=Science">SCIENCE</a></li>
+
             </ul>
         </section>
     </form>

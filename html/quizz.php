@@ -9,6 +9,8 @@ require_once 'menu.php';
 require_once 'pseudo.php';
 
 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,7 +27,8 @@ require_once 'pseudo.php';
         <form action="resultat.php" method="post">
 
             <?php
-            $theme = "Histoire";
+            $theme = $_GET['theme'];
+            echo $theme;
             $result = $connexion->query("select * from QUESTION where theme = '$theme'");
             foreach ($result as $ques) {
             ?>
