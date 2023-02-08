@@ -36,15 +36,18 @@ if (isset($_POST['name']) && ($_POST['name'] != "")) {
         <form action="theme.php" method="post">
             <p class="error">
                 <?php
-                if (isset($error)) {
-                    echo $error;
-                }
+                // if (isset($error)) {
+                //     echo $error; //marche pas car s'affiche tout le temps 
+                // }
                 ?>
             </p>
-            <label>Entrer votre pseudo !</label>
+            <label>Entrer ton pseudo !</label>
             <!-- si j'ai une session d'ouverte alors je garde le pseudo dans le champ sinon ma value est none-->
 
             <input type="text" name="name" value="<?php if (isset($_SESSION['pseudo'])) echo $_SESSION['pseudo'] ?>"> <!-- je n'arive pas a gérer le fait que si on ne rentre rien cela retrourne l'erreur creer. le champ de text est a priorie initialisé a 1-->
+            <br><br>
+            <label > Entre ton mdp !</label>
+            <input type="text" name="mdp" >
             <button type="submit" class="style_btn"> Enregistrer</button>
         </form>
 

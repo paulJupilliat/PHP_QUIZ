@@ -11,7 +11,7 @@ if (isset($_SESSION['pseudo'])) {
     <meta charset="utf-8">
     <title>Resultat</title>
 </head>
-
+al
 <body>
     <section class="result">
         <h3>
