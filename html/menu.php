@@ -17,7 +17,7 @@
 
         <a class="navbar_elem" href="#"> Voir les résultats</a>
         <a class="navbar_elem" href="theme.php"> Changer de thème</a>
-        <a class="navbar_elem" href="pseudo.php"> Pseudo</a>
+        <a class="navbar_elem" href="connexion.php"> Connexion</a>
     </ul>
 
 

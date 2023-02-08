@@ -6,7 +6,7 @@ error_reporting(E_ALL);
 
 require_once 'co.php';
 require_once 'menu.php';
-require_once 'pseudo.php';
+require_once 'connexion.php';
 
 
 

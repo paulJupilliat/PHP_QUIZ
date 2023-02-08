@@ -18,12 +18,12 @@ For curious:
 
 To see the ip adresse, run the following command:   
 ```bash
-ip addr | grep -oP '(?<=inet )[\d.]+'`
+ip addr | grep -oP '(?<=inet )[\d.]+'
 ```
 Take the second ip address.  
   
     
-    
+
 To access to the database, you need to run the following commands:
 ```bash
 mysql -h <ip Adresse> -P 3306 -u root -p quizz
@@ -59,6 +59,7 @@ QUESTIONS: id_question, interrogation, reponse, #theme->ref_THEME->nom, proposit
 ref_TYPE: type, description
 :
 :
+USER: pseudo, nom, prenom, mdp, age
 ```
 
 ## To do
