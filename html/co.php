@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8">
-<title>
-	Ajout de la personne <?php echo $_GET['nom']; ?>
-</title>
+  <meta charset="utf-8">
+  <title>
+    Ajout de la personne <?php echo $_GET['nom']; ?>
+  </title>
+ 
+
 <body>
-<?php
+  <?php
+  $ipAddress = $_SERVER['REMOTE_ADDR'];
+  $port = 3306;
+  $username = "appadmin";
+  $password = "pwdadmin";
+  $dbname = "quizz";
 
-
-$dsn="mysql:dbname=PAULDB;host=localhost";
-    try{
-      $connexion=new PDO($dsn,"paul","paul");
-      $connexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-    }
-    catch(PDOException $e){
-      printf("Échec de la connexion : %s\n", $e->getMessage());
-      exit();
-    }
-
-// ?>
+  try {
+    $conn = new PDO("mysql:host=$ipAddress;port=$port;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  } catch (PDOException $e) {
+    echo "Connexion échouée : " . $e->getMessage();
+  }
+  ?>
 </body>
+
 </html>
-
-
