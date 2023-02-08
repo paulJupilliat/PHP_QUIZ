@@ -1,12 +1,11 @@
 
 .list_theme{
-    margin-top:60%;
+    margin-top:20%;
     display: flex;
     list-style-type: none;
     flex-direction: row;
-  
+    margin-left: 20%;
 
-    justify-content: space-between;
 }
 
 .style_btn{
