@@ -33,7 +33,7 @@ error_reporting(E_ALL);
     include "co.php";
     ?>
     <section class="pseudo">
-        <form action="theme.php" method="post">
+        <form action="modele/check.php" method="POST">
             <!-- si erreur alors affiche cette div -->
             <?php if (isset($error)) { ?>
                 <div class="error">
@@ -44,13 +44,10 @@ error_reporting(E_ALL);
             <!-- si j'ai une session d'ouverte alors je garde le pseudo dans le champ sinon ma value est none-->
             <input type="text" name="name" value="" placeholder="pseudo">
             <label> Entre ton mdp !</label>
-            <input type="text" name="mdp" placeholder="mot de passe">
-            <button type="submit" class="style_btn"> Enregistrer</button>
+            <input type="password" name="mdp" placeholder="mot de passe">
+            <button type="submit" class="style_btn"> Connexion</button>
         </form>
 
     </section>
-
-
-
 
 </body>

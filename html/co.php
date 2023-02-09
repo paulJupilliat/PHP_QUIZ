@@ -17,8 +17,8 @@
   $dbname = "quizz";
 
   try {
-    $conn = new PDO("mysql:host=$ipAddress;port=$port;dbname=$dbname", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $CONN = new PDO("mysql:host=$ipAddress;port=$port;dbname=$dbname", $username, $password);
+    $CONN->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   } catch (PDOException $e) {
     echo "Connexion échouée : " . $e->getMessage();
   }
