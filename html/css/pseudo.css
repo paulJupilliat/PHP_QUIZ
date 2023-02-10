@@ -48,5 +48,8 @@ section{
     border-bottom: 1px solid #8eb864;
     outline: none;
     transition: 0.5s;
-    width: 450px;
+    width: 10vw;
+    margin-left: auto;
+    margin-right: auto;
 }
+

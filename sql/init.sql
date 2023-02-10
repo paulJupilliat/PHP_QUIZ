@@ -77,7 +77,7 @@ VALUES (
         "user1",
         "user1 name",
         "user1 prenom",
-        "$2y$10$w2VWHFr9wj0q139Et2yQdOgUbzDOuQ0l67XfJcTVqVLui/rFbMJ0O",
+        "$2y$10$ABaoDjNyovihIwuQieNgeuzJe1/MkTJP/oV9aKyVTfepgs1kB/X0m",
         18
     );
 INSERT INTO ref_THEMES
