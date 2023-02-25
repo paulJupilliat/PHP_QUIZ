@@ -29,7 +29,7 @@ include 'pseudo.php';
             <?php
             $theme = $_GET['theme'];
             echo $theme;
-            $result = $connexion->query("select * from QUESTION where theme = '$theme'");
+            $result = $connexion->query("SELECT * from QUESTION where theme = '$theme'");
             foreach ($result as $ques) {
             ?>
                 <h3 class="question" id=<?= $ques["id_question"] ?>><?= $ques["interogation"] ?></h3><br><br>
@@ -42,9 +42,9 @@ include 'pseudo.php';
                 foreach ($reponse_possible as $rep) {
                 ?>
                     <div class="reponse">
-                        <input type="radio" name="reponse<?= $idq ?>" value="<?= $rep ?>"> <?= $rep ?><br>
-                        <input type="radio" name="reponse<?= $idq ?>" value="<?= $rep ?>"> <?= $rep ?><br>
-                        <input type="radio" name="reponse<?= $idq ?>" value="<?= $rep ?>"> <?= $rep ?><br>
+                        <input type="radio" name="reponse<?=$idq?>" value="<?= $rep ?>"> <?= $rep ?><br>
+                        <input type="radio" name="reponse<?=$idq?>" value="<?= $rep ?>"> <?= $rep ?><br>
+                        <input type="radio" name="reponse<?=$idq?>" value="<?= $rep ?>"> <?= $rep ?><br>
                         <!-- a changer en fonction des choix et non des reponses -->
                         <br>
                     </div>
