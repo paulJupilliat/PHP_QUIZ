@@ -1,5 +1,4 @@
 <?php
-session_start();
 require('model/connect.php');
 /**
  * Connexion à la base de données
@@ -13,9 +12,19 @@ function connexion_to_bd()
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $conn;
     } catch (PDOException $e) {
+        echo SERVEUR . "|";
         echo "Erreur de connexion : " . $e->getMessage();
         return null;
     }
+}
+
+/**
+ * Vérifie si l'utilisateur est connecté
+ * @return bool true si l'utilisateur est connecté, false sinon
+ */
+function checkLoged()
+{
+    return (isset($_SESSION['pseudo']) && $_SESSION['pseudo'] !== '') ? true : false;
 }
 
 class User
@@ -51,7 +60,6 @@ class User
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($result) {
                 if (password_verify($mdp, $result['mdp'])) {
-                    $_SESSION['pseudo'] = $pseudo;
                     return 1;
                 } else {
                     return -2;
@@ -62,6 +70,9 @@ class User
         } catch (PDOException $e) {
             // return "Erreur : " . $e->getMessage(); // Pour debug
             return -1;
+        }
+        finally {
+            $conn = null;
         }
     }
 
@@ -83,6 +94,9 @@ class User
             // return "Erreur : " . $e->getMessage(); // Pour debug
             return -1;
         }
+        finally {
+            $conn = null;
+        }
     }
 
     /**
@@ -101,13 +115,16 @@ class User
             $stmt->bindParam(':pseudo', $this->pseudo);
             $stmt->bindParam(':nom', $this->nom);
             $stmt->bindParam(':prenom', $this->prenom);
-            $stmt->bindParam(':mdp', $this->mdp);
+            $stmt->bindParam(':mdp', password_hash($this->mdp, PASSWORD_DEFAULT));
             $stmt->bindParam(':age', $this->age);
             $stmt->execute();
             return 1;
         } catch (PDOException $e) {
-            // return "Erreur : " . $e->getMessage(); // Pour debug
+            echo "Erreur : " . $e->getMessage(); // Pour debug
             return -1;
+        }
+        finally {
+            $conn = null;
         }
     }
 }
