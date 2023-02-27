@@ -1,6 +1,3 @@
-<?php
-
-?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -18,7 +15,6 @@
 
     <?php
     include "menu.php";
-    include "co.php";
     ?>
     <section class="pseudo">
         <?php if (isset($err)) {

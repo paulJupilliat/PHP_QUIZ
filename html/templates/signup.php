@@ -13,7 +13,6 @@
 
     <?php
     include "menu.php";
-    include "co.php";
     ?>
     <section class="pseudo">
         <?php if (isset($err)) {
@@ -25,11 +24,11 @@
             <div>
                 <input type="hidden" name="action" value="newsignup"> <!-- Permet d'envoyer l'action -->
                 <label> Pseudo </label>
-                <input type="text" name="name" value="" placeholder="pseudo" required>
+                <input type="text" name="pseudo" value="" placeholder="pseudo" required>
                 <label> Mote de passe</label>
                 <input type="text" name="mdp" placeholder="mot de passe">
                 <label> Confirmation mot de passe</label>
-                <input type="text" name="mdp" placeholder="mot de passe">
+                <input type="text" name="mdp2" placeholder="mot de passe">
             </div>
             <div>
                 <label> Nom</label>

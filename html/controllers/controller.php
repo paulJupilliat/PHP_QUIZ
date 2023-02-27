@@ -27,6 +27,7 @@ function connexion($pseudo, $mdp)
 {
     $existe = User::checkUser($pseudo, $mdp);
     if ($existe == 1) {
+        $_SESSION['pseudo'] = $pseudo;
         header("Location: index.php");
     } elseif ($existe == 0) {
         $err = "Pseudo incorrect";
@@ -46,7 +47,9 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
     if ($mdp == $mdp2) {
         $user = new User($pseudo, $nom, $prenom, $mdp, $age);
         $res = $user->pushInBd();
+        echo $res;
         if ($res == 1) {
+            $_SESSION['pseudo'] = $pseudo;
             header("Location: index.php");
         } else {
             $err = "Erreur de connexion";

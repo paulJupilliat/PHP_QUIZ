@@ -25,6 +25,7 @@
                 <li> <a name="btn_theme_4" class="style_btn" href="quizz.php?theme=Geographie">GÉOGRAPHIE</a></li>
                 <li> <a name="btn_theme_5" class="style_btn" href="quizz.php?theme=Histoire">HISTOIRE</a></li>
                 <li> <a name="btn_theme_6" class="style_btn" href="quizz.php?theme=Science">SCIENCE</a></li>
+                <li> <a name="btn_theme_7" class="style_btn" href="quizz.php?theme=Informatique"><?php echo session_id(); ?></a></li>
 
             </ul>
         </section>

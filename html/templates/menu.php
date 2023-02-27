@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php
+require_once('controllers/controller.php');
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -15,6 +18,9 @@
 <body>
     <ul class="menu">
 
+        <a class="" href="#"> <?php
+        echo $_SESSION['pseudo'] ;
+                                ?></a>
         <a class="navbar_elem" href="#"> Voir les résultats</a>
         <a class="navbar_elem" href="#"> Changer de thème</a>
         <?php if (isset($_SESSION['pseudo'])) { ?>

@@ -2,7 +2,6 @@
 session_start();
 require_once('controllers/controller.php');
 
-
 if (isset($_GET['action']) && $_GET['action'] !== '') {
     switch($_GET['action']) {
         case 'login':
@@ -12,7 +11,7 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
             signup();
             break;
         case 'newsignup':
-            newSignup($_GET['name'], $_GET['mdp'], $_GET['mdp2'], $_GET['nom'], $_GET['prenom'], $_GET['age']);
+            newSignup($_GET['pseudo'], $_GET['mdp'], $_GET['mdp2'], $_GET['nom'], $_GET['prenom'], $_GET['age']);
             break;
         case 'connexion':
             connexion($_GET['name'], $_GET['mdp']);
@@ -27,3 +26,4 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
 } else {
     home();
 }
+?>
