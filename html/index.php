@@ -20,10 +20,15 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
             session_destroy();
             header("Location: index.php");
             break;
+        case 'quizz':
+            quizz($_GET['theme']);
+            break;
         default:
+            // echo $_GET['action']; //Debug
             echo "Erreur 404 : la page que vous recherchez n'existe pas.";
     }
 } else {
+    $_SESSION['themes'] = putTheme();
     home();
 }
 ?>

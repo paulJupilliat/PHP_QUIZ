@@ -1,5 +1,6 @@
 <?php
 require_once('model/model.php');
+require_once('model/question.php');
 function home()
 {
     require('templates/home.php');
@@ -60,4 +61,39 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
         require('templates/signup.php');
     }
 
+}
+
+/**
+ * Affiche la page de quizz
+ */
+function quizz($theme)
+{
+    if (checkLoged()) {
+        $questions = '';
+        foreach(Question::getQuestionByTheme($theme) as $question){
+            $questions .= $question->display();
+        }
+        require('templates/quizz.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+
+/**
+ * Donne tous les thèmes
+ * @return string Tableau contenant tous les thèmes
+ */
+function putTheme()
+{
+    $themes = '';
+    $themesArray = Question::getThemes();
+    if (is_array($themesArray)) {
+        foreach ($themesArray as $theme) {
+            $themes .= '<li> <a name="btn_theme_1" class="style_btn" href="index.php?action=quizz&theme=' . $theme . '">' . $theme . '</a></li>';
+        }
+        return $themes;
+    } else {
+        // handle the error
+        return 'Error: ' . $themesArray;
+    }
 }

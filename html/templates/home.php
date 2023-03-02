@@ -19,14 +19,7 @@
     <form action="quizz.php" method="POST">
         <section class="themes">
             <ul class="list_theme">
-                <li> <a name="btn_theme_1" class="style_btn" href="quizz.php?theme=Cinema">CINÉMA</a></li>
-                <li> <a name="btn_theme_2" class="style_btn" href="quizz.php?theme=Musique">MUSIQUE</a></li>
-                <li> <a name="btn_theme_3" class="style_btn" href="quizz.php?theme=Sport">SPORT</a></li>
-                <li> <a name="btn_theme_4" class="style_btn" href="quizz.php?theme=Geographie">GÉOGRAPHIE</a></li>
-                <li> <a name="btn_theme_5" class="style_btn" href="quizz.php?theme=Histoire">HISTOIRE</a></li>
-                <li> <a name="btn_theme_6" class="style_btn" href="quizz.php?theme=Science">SCIENCE</a></li>
-                <li> <a name="btn_theme_7" class="style_btn" href="quizz.php?theme=Informatique"><?php echo session_id(); ?></a></li>
-
+                <?php echo $_SESSION['themes'] ?>
             </ul>
         </section>
     </form>
