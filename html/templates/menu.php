@@ -19,13 +19,17 @@ require_once('controllers/controller.php');
     <ul class="menu">
 
         <a class="" href="#"> <?php
-        echo $_SESSION['pseudo'] ;
+                                echo $_SESSION['pseudo'];
                                 ?></a>
         <a class="navbar_elem" href="#"> Voir les résultats</a>
-        <a class="navbar_elem" href="#"> Changer de thème</a>
+        <a class="navbar_elem" href="index.php"> Changer de thème</a>
         <?php if (isset($_SESSION['pseudo'])) { ?>
             <a class="navbar_elem" href="index.php?action=logout"> Déconnexion</a>
-        <?php } else { ?>
+            <?php
+            if (USER::isAdmin($_SESSION['pseudo'])) {
+                echo '<a class="navbar_elem" href="index.php?action=admin"> Admin Console</a>';
+            }
+        } else { ?>
             <a class="navbar_elem" href="index.php?action=login"> Connexion</a>
         <?php } ?>
     </ul>

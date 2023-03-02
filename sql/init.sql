@@ -55,6 +55,21 @@ CREATE TABLE
         age INT DEFAULT 0
     );
 
+CREATE TABLE
+    REF_ROLES (
+        role_name varchar(42) PRIMARY KEY,
+        description varchar(255) NULL
+    );
+
+CREATE TABLE
+    have_role (
+        pseudo varchar(42),
+        role_name varchar(42),
+        PRIMARY KEY (pseudo, role_name),
+        FOREIGN KEY (pseudo) REFERENCES USERS(pseudo),
+        FOREIGN KEY (role_name) REFERENCES REF_ROLES(role_name)
+    );
+
 -- Insert data
 
 INSERT INTO ref_TYPES
@@ -79,7 +94,14 @@ VALUES (
         "user1 prenom",
         "$2y$10$ABaoDjNyovihIwuQieNgeuzJe1/MkTJP/oV9aKyVTfepgs1kB/X0m",
         18
+    ), (
+        "admin1",
+        "admin1 name",
+        "admin1 prenom",
+        "$2y$10$ABaoDjNyovihIwuQieNgeuzJe1/MkTJP/oV9aKyVTfepgs1kB/X0m",
+        18
     );
+
 INSERT INTO ref_THEMES
 VALUES ('Histoire', 'Histoire'), ('Geographie', 'Geographie'), ('Sport', 'Sport'), ('Culture', 'Culture'), ('Science', 'Science'), (
         'Informatique',
@@ -173,3 +195,11 @@ VALUES (
         NULL,
         'QCS'
     );
+
+INSERT INTO REF_ROLES
+VALUES ('ROLE_USER', 'Utilisateur'), (
+        'ROLE_ADMIN',
+        'Administrateur'
+    );
+
+INSERT INTO have_role VALUES ('user1', 'ROLE_USER'), ('admin1', 'ROLE_ADMIN'), ('admin1', 'ROLE_USER');

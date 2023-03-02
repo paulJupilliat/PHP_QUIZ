@@ -69,10 +69,7 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
 function quizz($theme)
 {
     if (checkLoged()) {
-        $questions = '';
-        foreach(Question::getQuestionByTheme($theme) as $question){
-            $questions .= $question->display();
-        }
+        $questions = Question::getQuestionAleatoire($theme, 2);
         require('templates/quizz.php');
     } else {
         header("Location: index.php");
@@ -95,5 +92,17 @@ function putTheme()
     } else {
         // handle the error
         return 'Error: ' . $themesArray;
+    }
+}
+
+/**
+ * Affiche la page d'administration
+ */
+function admin()
+{
+    if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        require('templates/admin.php');
+    } else {
+        header("Location: index.php");
     }
 }

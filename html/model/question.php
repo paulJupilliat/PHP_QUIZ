@@ -25,6 +25,28 @@ abstract class Question
     abstract public function display();
 
     /**
+     * Push une nouvelle question dans la base de données
+     * @param $interrogation interrogation de la question
+     * @param $reponse reponse de la question
+     * @param $theme theme de la question
+     * @param $propositions propositions de la question
+     * @param $type type de la question
+     * @return int 1 si la question a été ajoutée, 0 si elle n'a pas été ajoutée
+     */
+    public static function pushQuestion($interrogation, $reponse, $theme, $propositions, $type)
+    {
+        try {
+            $db = connexion_to_bd();
+            $query = $db->prepare("INSERT INTO QUESTIONS (interrogation, reponse, theme, propositions, type) VALUES (:interrogation, :reponse, :theme, :propositions, :type)");
+            $query->execute(['interrogation' => $interrogation, 'reponse' => $reponse, 'theme' => $theme, 'propositions' => $propositions, 'type' => $type]);
+            return 1;
+        } catch (PDOException $e) {
+            // return "Erreur : " . $e->getMessage(); // Pour debug
+            return 0;
+        }
+    }
+
+    /**
      * Donne toutes les questions d'un theme
      * @param $theme theme des questions
      * @return Question[] tableau de questions
@@ -63,6 +85,25 @@ abstract class Question
         }
     }
 
+    /*
+    * Donne un tableau de questions aléatoires
+    * @param $theme theme des questions
+    * @param $nb nombre de questions
+    * @return Question[] tableau de questions
+    */
+    public static function getQuestionAleatoire($theme, $nb)
+    {
+        $questions = Question::getQuestionByTheme($theme);
+        $tab = [];
+        for ($i = 0; $i < $nb; $i++) {
+            $rand = rand(0, count($questions) - 1);
+            array_push($tab, $questions[$rand]);
+            unset($questions[$rand]);
+            $questions = array_values($questions);
+        }
+        return $tab;
+    }
+
     /**
      * Donne tous les themes
      * @return string[] tableau de themes
@@ -85,6 +126,17 @@ abstract class Question
         }
         return $tab;
     }
+
+    /**
+     * Donne si la réponse est bonne ou non
+     * @param $reponse réponse de l'utilisateur
+     * @return bool vrai si la réponse est bonne
+     */
+    public function isTrue($reponse)
+    {
+        return $reponse == $this->reponse;
+    }
+
 }
 
 // question de type QCM

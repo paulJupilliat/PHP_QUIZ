@@ -23,6 +23,9 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
         case 'quizz':
             quizz($_GET['theme']);
             break;
+        case 'admin':
+            admin();
+            break;
         default:
             // echo $_GET['action']; //Debug
             echo "Erreur 404 : la page que vous recherchez n'existe pas.";

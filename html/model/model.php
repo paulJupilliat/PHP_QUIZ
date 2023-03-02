@@ -99,6 +99,29 @@ class User
         }
     }
 
+    public static function isAdmin($pseudo)
+    {
+        try {
+            $conn = connexion_to_bd();
+            $sql = "SELECT * FROM have_role WHERE pseudo = :pseudo AND role_name = 'ROLE_ADMIN'";
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':pseudo', $pseudo);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } catch (PDOException $e) {
+            // return "Erreur : " . $e->getMessage(); // Pour debug
+            return -1;
+        }
+        finally {
+            $conn = null;
+        }
+    }
+
     /**
      * Ajoute le user dans la base de données
      * @return int 1 si l'utilisateur a été ajouté, -1 si une erreur est survenue, -2 si l'utilisateur existe déjà
@@ -117,6 +140,11 @@ class User
             $stmt->bindParam(':prenom', $this->prenom);
             $stmt->bindParam(':mdp', password_hash($this->mdp, PASSWORD_DEFAULT));
             $stmt->bindParam(':age', $this->age);
+            $stmt->execute();
+
+            // add role user
+            $stmt = $conn->prepare("INSERT INTO `have_role` (`pseudo`, `role_name`) VALUES (:pseudo, 'ROLE_USER')");
+            $stmt->bindParam(':pseudo', $this->pseudo);
             $stmt->execute();
             return 1;
         } catch (PDOException $e) {
