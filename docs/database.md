@@ -18,12 +18,12 @@ For curious:
 
 To see the ip adresse, run the following command:   
 ```bash
-ip addr | grep -oP '(?<=inet )[\d.]+'`
+ip addr | grep -oP '(?<=inet )[\d.]+'
 ```
 Take the second ip address.  
   
     
-    
+
 To access to the database, you need to run the following commands:
 ```bash
 mysql -h <ip Adresse> -P 3306 -u root -p quizz
@@ -49,16 +49,17 @@ You can copy past this code in [mocodo](https://www.mocodo.net) to see the MCD:
 :
 :
 
-ref_THEME: nom, descritpion
-QUESTIONS: id_question, interrogation, reponse, #theme->ref_THEME->nom, propositions, #type->ref_TYPE->type
+ref_THEMES: theme_names, descritpion
+QUESTIONS: id_question, interrogation, reponse, #theme->ref_THEME->theme_name, propositions, #type->ref_TYPE->type_name
 
 :
 :
 
 :
-ref_TYPE: type, description
+ref_TYPES: type_name, description
 :
 :
+USERS: pseudo, nom, prenom, mdp, age
 ```
 
 ## To do

@@ -8,6 +8,7 @@ USE quizz;
 -- Create users
 
 CREATE USER 'app'@'%' IDENTIFIED BY 'pwdapp';
+
 GRANT SELECT, INSERT, UPDATE ON quizz.* TO 'app'@'%';
 
 GRANT
@@ -18,18 +19,19 @@ DELETE
     ON quizz.* TO 'appadmin' @'%';
 
 FLUSH PRIVILEGES;
+
 -- Create tables
 
 CREATE TABLE
-    ref_THEME(
-        nom VARCHAR(42) PRIMARY KEY,
-        description VARCHAR(255)
+    ref_THEMES(
+        theme_name VARCHAR(42) PRIMARY KEY,
+        description VARCHAR(255) NULL
     );
 
 CREATE TABLE
-    ref_TYPE(
-        type VARCHAR(42) PRIMARY KEY,
-        description VARCHAR(255)
+    ref_TYPES(
+        type_name VARCHAR(42) PRIMARY KEY,
+        description VARCHAR(255) NULL
     );
 
 CREATE TABLE
@@ -40,13 +42,22 @@ CREATE TABLE
         theme VARCHAR(42),
         propositions VARCHAR(255) NULL,
         type VARCHAR(42),
-        FOREIGN KEY (theme) REFERENCES ref_THEME(nom),
-        FOREIGN KEY (type) REFERENCES ref_TYPE(type)
+        FOREIGN KEY (theme) REFERENCES ref_THEMES(theme_name),
+        FOREIGN KEY (type) REFERENCES ref_TYPES(type_name)
+    );
+
+CREATE TABLE
+    USERS (
+        pseudo VARCHAR(42) PRIMARY KEY,
+        nom VARCHAR(42) NULL,
+        prenom VARCHAR(42) NULL,
+        mdp VARCHAR(500) NOT NULL,
+        age INT DEFAULT 0
     );
 
 -- Insert data
 
-INSERT INTO ref_TYPE
+INSERT INTO ref_TYPES
 VALUES (
         'QCM',
         'Question avec plusieurs choix possible'
@@ -61,7 +72,15 @@ VALUES (
         'Question a choix avec un slider'
     );
 
-INSERT INTO ref_THEME
+INSERT INTO USERS
+VALUES (
+        "user1",
+        "user1 name",
+        "user1 prenom",
+        "$2y$10$ABaoDjNyovihIwuQieNgeuzJe1/MkTJP/oV9aKyVTfepgs1kB/X0m",
+        18
+    );
+INSERT INTO ref_THEMES
 VALUES ('Histoire', 'Histoire'), ('Geographie', 'Geographie'), ('Sport', 'Sport'), ('Culture', 'Culture'), ('Science', 'Science'), (
         'Informatique',
         'Informatique'
