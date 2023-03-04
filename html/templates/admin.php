@@ -35,7 +35,7 @@
                 </select>
                 <!-- les réponses -->
                 <div id="reponses-prop">
-                    <input type='text' name='reponseProp' id='reponseProp' placeholder='Réponse proposée' required>
+                    <input type='text' name='reponse' id='reponse' placeholder='Réponse' required>
                 </div>
                 <!-- le thème -->
                 <div>
@@ -44,11 +44,12 @@
                         <option value="" disabled selected>Choisir un thème</option>
                         <!-- Un option par theme avec php -->
                         <?php
+                        echo $_SESSION['themes'];
                         foreach ($_SESSION['themes'] as $theme) {
                             echo "<option value='$theme'>$theme</option>";
                         }
                         ?>
-                        <option value="autre">Autre</option>
+                        <option value="other">Autre</option>
                     </select>
                     <div id="input-other-theme">
                         <input type="text" name="otherTheme" id="otherTheme" placeholder="Autre thème">

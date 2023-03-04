@@ -27,14 +27,13 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
             admin();
             break;
         case 'addQuestion':
-            addQuestion($_GET['question'], $_GET['type'], $_GET['reponseProp'], $_GET['theme']);
+            addQuestion($_GET['question'], $_GET['type'], $_GET['reponseProp'], $_GET['theme'], $_GET['otherTheme'], $_GET['reponse']);
             break;
         default:
             // echo $_GET['action']; //Debug
             echo "Erreur 404 : la page que vous recherchez n'existe pas.";
     }
 } else {
-    $_SESSION['themes'] = putTheme();
     home();
 }
 ?>

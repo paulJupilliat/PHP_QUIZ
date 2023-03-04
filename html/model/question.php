@@ -48,7 +48,7 @@ abstract class Question
     /**
      * Push dans la base de données une nouvelle question
      */
-    public function push()
+    public function pushInBd()
     {
         Question::pushQuestion($this->interrogation, $this->reponse, $this->theme, $this->propositions, $this->type);
     }

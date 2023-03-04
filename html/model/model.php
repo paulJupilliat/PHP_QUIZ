@@ -156,3 +156,19 @@ class User
         }
     }
 }
+
+/*
+* Traite le thème qui est envoyé par le formulaire
+* @param string $theme le thème à traiter
+* @param string otherTheme le thème à traiter si le thème est autre
+* @return string le thème traité
+*/
+function traitementTheme($theme, $otherTheme)
+{
+    if ($theme == "other") {
+        return $otherTheme;
+    } else {
+        // first letter in uppercase and the rest in lowercase
+        return ucfirst(strtolower($theme));
+    }
+}

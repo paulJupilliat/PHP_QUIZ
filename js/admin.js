@@ -25,17 +25,19 @@ function showReponseProp() {
 
   if (type === "Text") {
     reponseProp.innerHTML =
-      "<input type='text' name='reponseProp' id='reponseProp' placeholder='Réponse proposée' required>";
+      "<input type='text' name='reponse' id='reponse' placeholder='Réponse proposée' required>";
   } else if (type === "radio" || type === "checkbox") {
     // ajouter une zone de texte
     reponseProp.innerHTML =
-      "<input type='text' name='reponseProp' id='reponseProp' placeholder='Réponse(s) proposée(s)' required>";
+      "<input type='text' name='reponsse' id='reponse' placeholder='Réponse' required>";
     // et un bouton pour ajouter d'autre reponse
     reponseProp.innerHTML +=
       "<button type='button' id='addReponseProp' onclick='addProp()'>Ajouter une réponse</button>";
   } else if (type === "number") {
     reponseProp.innerHTML =
       "<input type='number' name='reponseProp' id='reponseProp' placeholder='Valeur max du curseur' required>";
+    reponseProp.innerHTML += 
+      "<input type=number' name='reponse' id='reponse' placeholder='reponse' required>"
   } else {
     console.log(type);
   }
@@ -58,7 +60,7 @@ function addProp() {
 function newTheme() {
   let theme = themeChoice.value;
   let inputOtherTheme = document.getElementById("otherTheme");
-  if (theme === "autre") {
+  if (theme === "other") {
     inputOtherTheme.style.display = "block";
   } else {
     inputOtherTheme.style.display = "none";

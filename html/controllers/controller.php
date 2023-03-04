@@ -3,6 +3,7 @@ require_once('model/model.php');
 require_once('model/question.php');
 function home()
 {
+    $_SESSION['themes'] = putTheme();
     require('templates/home.php');
 }
 
@@ -60,7 +61,6 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
         $err = "Les mots de passe ne correspondent pas";
         require('templates/signup.php');
     }
-
 }
 
 /**
@@ -78,20 +78,20 @@ function quizz($theme)
 
 /**
  * Donne tous les thèmes
- * @return string Tableau contenant tous les thèmes
+ * @return string[] Tableau contenant tous les thèmes
  */
 function putTheme()
 {
-    $themes = '';
+    $themes = array();
     $themesArray = Question::getThemes();
     if (is_array($themesArray)) {
         foreach ($themesArray as $theme) {
-            $themes .= '<li> <a name="btn_theme_1" class="style_btn" href="index.php?action=quizz&theme=' . $theme . '">' . $theme . '</a></li>';
+            array_push($themes, $theme);
         }
         return $themes;
     } else {
         // handle the error
-        return 'Error: ' . $themesArray;
+        return ['Error: ' . $themesArray];
     }
 }
 
@@ -110,23 +110,28 @@ function admin()
 /**
  * Ajoute une question à la base de données
  */
-function addQuestion($question, $type, $reponseProp, $theme)
+function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $reponse)
 {
-    switch ($type) {
-        case 'text':
-            $question = new QCT($question, $reponseProp, );
-            $question->pushInBd();
-            break;
-        case 'radio':
-            $question = new QCU($question, $type, $reponseProp);
-            $question->pushInBd();
-            break;
-        case 'checkbox':
-            $question = new Question($question, $type, $reponseProp);
-            $question->pushInBd();
-            break;
-        default:
-            # code...
-            break;
+    if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        $theme = traitementTheme($theme, $otherTheme);
+        switch ($type) {
+            case 'text':
+                $question = new QCT($question, $reponse, $theme, '', 'QCT');
+                $question->pushInBd();
+                break;
+            case 'radio':
+                $question = new QCU($question, $type, $reponseProp);
+                $question->pushInBd();
+                break;
+            case 'checkbox':
+                $question = new Question($question, $type, $reponseProp);
+                $question->pushInBd();
+                break;
+            default:
+                # code...
+                break;
+        }
+    } else {
+        header("Location: index.php");
     }
 }
