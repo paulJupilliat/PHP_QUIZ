@@ -86,3 +86,7 @@ main{
 .validate:hover{
     background-color: #b5d893;
 }
+
+#otherTheme{
+    display: none;
+}
