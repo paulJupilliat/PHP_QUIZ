@@ -18,16 +18,16 @@
         ?>
     </header>
     <main>
-        <!-- Bouton qui ouvre une pop up avec un formulaire pour créer une nouvelle question -->
         <button class="button-toggle-popup" onclick="togglePopup()">Ajouter une question</button>
         <div class="popup">
             <form class="popup-content" method="GET" action="index.php">
+                <input type="hidden" name="action" value="addQuestion">
                 <!-- la question -->
                 <label for="question">Question</label>
                 <input type="text" name="question" id="question" required>
                 <!-- le type -->
-                <label for="type" id="type-quest">Type</label>
-                <select name=" type" id="type" required>
+                <label for="type">Type</label>
+                <select name=" type" id="type-quest" required onchange="showReponseProp()">
                     <option value="text">Text</option>
                     <option value="number">Number</option>
                     <option value="radio">Radio</option>
@@ -35,9 +35,26 @@
                 </select>
                 <!-- les réponses -->
                 <div id="reponses-prop">
+                    <input type='text' name='reponseProp' id='reponseProp' placeholder='Réponse proposée' required>
                 </div>
-
-                <button type="submit" class="validate"> Valider </button>
+                <!-- le thème -->
+                <div>
+                    <label for="theme">Thème</label>
+                    <select name="theme" id="theme-choice" required onchange="newTheme()">
+                        <option value="" disabled selected>Choisir un thème</option>
+                        <!-- Un option par theme avec php -->
+                        <?php
+                        foreach ($_SESSION['themes'] as $theme) {
+                            echo "<option value='$theme'>$theme</option>";
+                        }
+                        ?>
+                        <option value="autre">Autre</option>
+                    </select>
+                    <div id="input-other-theme">
+                        <input type="text" name="otherTheme" id="otherTheme" placeholder="Autre thème">
+                    </div>
+                </div>
+                <button type=" submit" class="validate"> Valider </button>
                 <button type="button" class="cancel" onclick="togglePopup()"> Annuler </button>
             </form>
 

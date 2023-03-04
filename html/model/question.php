@@ -1,16 +1,15 @@
 <?php
+require_once('connect.php');
 abstract class Question
 {
-    protected int $idQuestion;
     protected string $interrogation;
     protected string $reponse;
     protected string $theme;
     protected string $propositions;
     protected string $type;
 
-    public function __construct($idQuestion, $interrogation, $reponse, $theme, $propositions, $type)
+    public function __construct($interrogation, $reponse, $theme, $propositions, $type)
     {
-        $this->idQuestion = $idQuestion;
         $this->interrogation = $interrogation;
         $this->reponse = $reponse;
         $this->theme = $theme;
@@ -47,6 +46,14 @@ abstract class Question
     }
 
     /**
+     * Push dans la base de données une nouvelle question
+     */
+    public function push()
+    {
+        Question::pushQuestion($this->interrogation, $this->reponse, $this->theme, $this->propositions, $this->type);
+    }
+
+    /**
      * Donne toutes les questions d'un theme
      * @param $theme theme des questions
      * @return Question[] tableau de questions
@@ -62,16 +69,16 @@ abstract class Question
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCM($question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCU($question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCS($question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']));
+                        array_push($tab, new QCT($question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']));
                         break;
                     default:
                         break;

@@ -106,3 +106,27 @@ function admin()
         header("Location: index.php");
     }
 }
+
+/**
+ * Ajoute une question à la base de données
+ */
+function addQuestion($question, $type, $reponseProp, $theme)
+{
+    switch ($type) {
+        case 'text':
+            $question = new QCT($question, $reponseProp, );
+            $question->pushInBd();
+            break;
+        case 'radio':
+            $question = new QCU($question, $type, $reponseProp);
+            $question->pushInBd();
+            break;
+        case 'checkbox':
+            $question = new Question($question, $type, $reponseProp);
+            $question->pushInBd();
+            break;
+        default:
+            # code...
+            break;
+    }
+}

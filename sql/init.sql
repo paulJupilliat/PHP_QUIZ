@@ -102,6 +102,30 @@ VALUES (
         18
     );
 
+INSERT INTO
+    QUESTIONS (
+        interrogation,
+        reponse,
+        theme,
+        propositions,
+        type
+    )
+SELECT
+    interrogation,
+    reponse,
+    theme,
+    propositions,
+    type
+FROM
+    OPENROWSET (BULK 'donnees.json'), SINGLE_CLOB  as json CROSS APPLY OPENJSON(json)
+WITH (
+        interrogation VARCHAR(255) '$.interrogation',
+        reponse VARCHAR(255) '$.reponse',
+        theme VARCHAR(30) '$.theme',
+        propositions VARCHAR(255) '$.propositions',
+        type VARCHAR(30) '$.type'
+    );
+
 INSERT INTO ref_THEMES
 VALUES ('Histoire', 'Histoire'), ('Geographie', 'Geographie'), ('Sport', 'Sport'), ('Culture', 'Culture'), ('Science', 'Science'), (
         'Informatique',
@@ -203,3 +227,6 @@ VALUES ('ROLE_USER', 'Utilisateur'), (
     );
 
 INSERT INTO have_role VALUES ('user1', 'ROLE_USER'), ('admin1', 'ROLE_ADMIN'), ('admin1', 'ROLE_USER');
+
+-- insérer des données dans la table USERS à partir d'un fichier JSON (user.json)
+INSERT INTO 
