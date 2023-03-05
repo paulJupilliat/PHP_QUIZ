@@ -120,17 +120,22 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
                 $question->pushInBd();
                 break;
             case 'radio':
-                $question = new QCU($question, $type, $reponseProp);
+                $question = new QCU($question, $reponse, $theme, $reponseProp, 'QCU');
                 $question->pushInBd();
                 break;
             case 'checkbox':
-                $question = new Question($question, $type, $reponseProp);
+                $question = new QCM($question, $reponse, $theme, $reponseProp, 'QCM');
+                $question->pushInBd();
+                break;
+            case 'number':
+                $question = new QCS($question, $reponse, $theme, $reponseProp, 'QCS');
                 $question->pushInBd();
                 break;
             default:
-                # code...
+                echo 'Erreur de type de question';
                 break;
         }
+        header("Location: index.php?action=admin");
     } else {
         header("Location: index.php");
     }

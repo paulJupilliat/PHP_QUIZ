@@ -27,7 +27,7 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
             admin();
             break;
         case 'addQuestion':
-            addQuestion($_GET['question'], $_GET['type'], $_GET['reponseProp'], $_GET['theme'], $_GET['otherTheme'], $_GET['reponse']);
+            addQuestion($_GET['question'], $_GET['type'], $_GET['reponsesProp'], $_GET['theme'], $_GET['otherTheme'], $_GET['reponse']);
             break;
         default:
             // echo $_GET['action']; //Debug
@@ -36,4 +36,3 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
 } else {
     home();
 }
-?>
