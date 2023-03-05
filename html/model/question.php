@@ -43,6 +43,9 @@ abstract class Question
             // return "Erreur : " . $e->getMessage(); // Pour debug
             return 0;
         }
+        finally {
+            $db = null;
+        }
     }
 
     /**
@@ -157,6 +160,7 @@ class QCM extends Question
     {
         $propositions = explode("|", $this->propositions);
         $html = "<div class='question'><p>" . $this->interrogation . "</p>";
+        shuffle($propositions);
         foreach ($propositions as $propositions) {
             $html .= "<input type='checkbox' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
         }
@@ -210,6 +214,7 @@ class QCU extends Question
     {
         $propositions = explode("|", $this->propositions);
         $html = "<div class='question'><p>" . $this->interrogation . "</p>";
+        shuffle($propositions);
         foreach ($propositions as $propositions) {
             $html .= "<input type='radio' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
         }

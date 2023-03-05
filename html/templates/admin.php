@@ -20,8 +20,8 @@
     <main>
         <button class="button-toggle-popup" onclick="togglePopup()">Ajouter une question</button>
         <div class="popup">
-            <form class="popup-content" method="GET" action="index.php">
-                <input type="hidden" name="action" value="addQuestion">
+            <form class="popup-content" id="form-new-quest">
+                <!-- <input type="hidden" name="action" value="addQuestion"> -->
                 <!-- la question -->
                 <label for="question">Question</label>
                 <input type="text" name="question" id="question" required>
@@ -44,7 +44,6 @@
                         <option value="" disabled selected>Choisir un thème</option>
                         <!-- Un option par theme avec php -->
                         <?php
-                        echo $_SESSION['themes'];
                         foreach ($_SESSION['themes'] as $theme) {
                             echo "<option value='$theme'>$theme</option>";
                         }
@@ -55,7 +54,7 @@
                         <input type="text" name="otherTheme" id="otherTheme" placeholder="Autre thème">
                     </div>
                 </div>
-                <button type=" submit" class="validate"> Valider </button>
+                <button type="button" onclick="submitNewQuest()" class="validate"> Valider </button>
                 <button type="button" class="cancel" onclick="togglePopup()"> Annuler </button>
             </form>
 
