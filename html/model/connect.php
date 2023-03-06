@@ -3,7 +3,7 @@
 
 define("BASE", "quizz");
 // define("SERVEUR", $_SERVER['REMOTE_ADDR']);
-define("SERVEUR", "172.25.160.243");
+define("SERVEUR", "172.25.160.1");
 define("USER", "appadmin");
 define("MDP", "pwdadmin");
 define("PORT", "3306");

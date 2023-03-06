@@ -1,3 +1,3 @@
 #! /bin/bash
-cd ./sql
+cd sql
 docker-compose up -d

@@ -1,7 +1,9 @@
 <?php
 require_once('model/model.php');
+require_once('model/question.php');
 function home()
 {
+    $_SESSION['themes'] = putTheme();
     require('templates/home.php');
 }
 
@@ -59,5 +61,94 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
         $err = "Les mots de passe ne correspondent pas";
         require('templates/signup.php');
     }
+}
 
+/**
+ * Affiche la page de quizz
+ */
+function quizz($theme)
+{
+    if (checkLoged()) {
+        $questions = Question::getQuestionAleatoire($theme, 2);
+        require('templates/quizz.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+
+/**
+ * Donne tous les thèmes
+ * @return string[] Tableau contenant tous les thèmes
+ */
+function putTheme()
+{
+    $themes = array();
+    $themesArray = Question::getThemes();
+    if (is_array($themesArray)) {
+        foreach ($themesArray as $theme) {
+            array_push($themes, $theme);
+        }
+        return $themes;
+    } else {
+        // handle the error
+        return ['Error: ' . $themesArray];
+    }
+}
+
+/**
+ * Affiche la page d'administration
+ */
+function admin()
+{
+    if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        require('templates/admin.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+
+/**
+ * Ajoute une question à la base de données
+ */
+function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $reponse)
+{
+    if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        $theme = traitementTheme($theme, $otherTheme);
+        switch ($type) {
+            case 'text':
+                $question = new QCT(0, $question, $reponse, $theme, '', 'QCT');
+                $question->pushInBd();
+                break;
+            case 'radio':
+                $question = new QCU(0, $question, $reponse, $theme, $reponseProp, 'QCU');
+                $question->pushInBd();
+                break;
+            case 'checkbox':
+                $question = new QCM(0, $question, $reponse, $theme, $reponseProp, 'QCM');
+                $question->pushInBd();
+                break;
+            case 'number':
+                $question = new QCS(0, $question, $reponse, $theme, $reponseProp, 'QCS');
+                $question->pushInBd();
+                break;
+            default:
+                echo 'Erreur de type de question';
+                break;
+        }
+        header("Location: index.php?action=admin");
+    } else {
+        header("Location: index.php");
+    }
+}
+
+/**
+ * Affiche la page de score d'un quizz
+ * @param string $quizz String brut du quizz avec les questions et les reponses de l'utilisateur
+ */
+function scoreQuizz($quizz){
+    if (checkLoged()) {
+       $score = traitementScoreQuizz($quizz);
+    } else {
+        header("Location: index.php");
+    }
 }

@@ -11,6 +11,10 @@ CREATE USER 'app'@'%' IDENTIFIED BY 'pwdapp';
 
 GRANT SELECT, INSERT, UPDATE ON quizz.* TO 'app'@'%';
 
+CREATE USER if NOT EXISTS 'appadmin'@'%' IDENTIFIED BY 'pwdadmin';
+
+GRANT ALL PRIVILEGES ON quizz.* TO 'appadmin'@'%';
+
 GRANT
 SELECT,
 INSERT,
@@ -55,6 +59,39 @@ CREATE TABLE
         age INT DEFAULT 0
     );
 
+CREATE TABLE
+    REF_ROLES (
+        role_name varchar(42) PRIMARY KEY,
+        description varchar(255) NULL
+    );
+
+CREATE TABLE
+    have_role (
+        pseudo varchar(42),
+        role_name varchar(42),
+        PRIMARY KEY (pseudo, role_name),
+        FOREIGN KEY (pseudo) REFERENCES USERS(pseudo),
+        FOREIGN KEY (role_name) REFERENCES REF_ROLES(role_name)
+    );
+
+CREATE TABLE
+    QUESTION_TENTATIVES (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        question_id INT,
+        proposition VARCHAR(255),
+        FOREIGN KEY (question_id) REFERENCES QUESTIONS(id_question)
+    );
+
+CREATE TABLE
+    do_tentative (
+        id_tentative INT,
+        pseudo VARCHAR(42),
+        tentative_id INT,
+        PRIMARY KEY (pseudo, tentative_id, id_tentative),
+        FOREIGN KEY (pseudo) REFERENCES USERS(pseudo),
+        FOREIGN KEY (tentative_id) REFERENCES QUESTION_TENTATIVES(id)
+    );
+
 -- Insert data
 
 INSERT INTO ref_TYPES
@@ -79,7 +116,14 @@ VALUES (
         "user1 prenom",
         "$2y$10$ABaoDjNyovihIwuQieNgeuzJe1/MkTJP/oV9aKyVTfepgs1kB/X0m",
         18
+    ), (
+        "admin1",
+        "admin1 name",
+        "admin1 prenom",
+        "$2y$10$ABaoDjNyovihIwuQieNgeuzJe1/MkTJP/oV9aKyVTfepgs1kB/X0m",
+        18
     );
+
 INSERT INTO ref_THEMES
 VALUES ('Histoire', 'Histoire'), ('Geographie', 'Geographie'), ('Sport', 'Sport'), ('Culture', 'Culture'), ('Science', 'Science'), (
         'Informatique',
@@ -172,4 +216,40 @@ VALUES (
         'Cinema',
         NULL,
         'QCS'
+    );
+
+INSERT INTO REF_ROLES
+VALUES ('ROLE_USER', 'Utilisateur'), (
+        'ROLE_ADMIN',
+        'Administrateur'
+    );
+
+INSERT INTO have_role
+VALUES ('user1', 'ROLE_USER'), ('admin1', 'ROLE_ADMIN'), ('admin1', 'ROLE_USER');
+
+-- insérer des données dans la table USERS à partir d'un fichier JSON (user.json)
+
+INSERT INTO
+    QUESTIONS (
+        interrogation,
+        reponse,
+        theme,
+        propositions,
+        type
+    )
+SELECT
+    interrogation,
+    reponse,
+    theme,
+    propositions,
+    type
+FROM
+    OPENROWSET (BULK 'donnees.json'),
+    SINGLE_CLOB as json CROSS APPLY OPENJSON(json)
+WITH (
+        interrogation VARCHAR(255) '$.interrogation',
+        reponse VARCHAR(255) '$.reponse',
+        theme VARCHAR(30) '$.theme',
+        propositions VARCHAR(255) '$.propositions',
+        type VARCHAR(30) '$.type'
     );
