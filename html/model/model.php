@@ -190,12 +190,8 @@ function traitementScoreQuizz($quizz){
         $reponse = explode(":", $reponse)[1]; // On récupère les réponses
         echo $interrogation;
         $questionBd = Question::getByInterrogation("Quel est le nom de la devise de l'Union européenne?");
-        // print questionBd dans la console
-
-        // regarde si bon ou non
-        if ($questionBd->isTrue($reponse)) {
-            $score++;
-        }
+        
+        
     }
     return $score;
 }

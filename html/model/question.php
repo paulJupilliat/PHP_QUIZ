@@ -221,7 +221,8 @@ class QCM extends Question
     public function display()
     {
         $propositions = explode("|", $this->propositions);
-        $html = "<div class='question'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $propositions = array_merge($propositions, $this->reponseToArray($this->reponse)); // On ajoute les réponses dans les propositions
+        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         shuffle($propositions);
         foreach ($propositions as $propositions) {
             $html .= "<input type='checkbox' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
@@ -230,6 +231,15 @@ class QCM extends Question
         return $html;
     }
     
+    public function reponseToArray($reponse)
+    {
+        if (strpos($reponse, '|') !== false) {
+            return explode('|', $reponse);
+        } else {
+            return [$reponse];
+        }
+    }
+
     public function isTrue($tentative)
     {
         if (strpos($this->reponse, '|') !== false) {
@@ -265,7 +275,7 @@ class QCS extends Question
      */
     public function display()
     {
-        $html = "<div class='question'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         $html .= "<input type='range' class='reponse' name='reponse' min='0' max='" . $this->propositions . "' value='0' class='slider' id='myRange'>";
         $html .= "<p>Value: <span id='value'></span></p>";
         $html .= "<script>
@@ -293,7 +303,8 @@ class QCU extends Question
     public function display()
     {
         $propositions = explode("|", $this->propositions);
-        $html = "<div class='question'><p class='interrogation'>" . $this->interrogation . "</p>";
+        array_push($propositions, $this->reponse); // On ajoute la réponse à la proposition
+        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         shuffle($propositions);
         foreach ($propositions as $propositions) {
             $html .= "<input type='radio' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
@@ -315,7 +326,7 @@ class QCT extends Question
      */
     public function display()
     {
-        $html = "<div class='question'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         $html .= "<input type='text' class='reponse' name='reponse' placeholder='Votre réponse'>";
         $html .= "</div>";
         return $html;

@@ -148,7 +148,6 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
 function scoreQuizz($quizz){
     if (checkLoged()) {
        $score = traitementScoreQuizz($quizz);
-        require('templates/score.php');
     } else {
         header("Location: index.php");
     }
