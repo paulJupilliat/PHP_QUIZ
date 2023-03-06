@@ -1,3 +1,4 @@
+-- Active: 1678109077661@@127.0.0.1@3306@quizz
 -- Create data base
 
 CREATE DATABASE
