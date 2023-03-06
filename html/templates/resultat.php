@@ -1,5 +1,4 @@
 <?php
-session_start();
 if (isset($_SESSION['pseudo'])) {
     echo 'Bonjour ' . $_SESSION['pseudo'] . ' voici vos resultat du quiz !';
 }
