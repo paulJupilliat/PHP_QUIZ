@@ -2,19 +2,83 @@
 require_once('connect.php');
 abstract class Question
 {
+    protected int $id;
     protected string $interrogation;
     protected string $reponse;
     protected string $theme;
     protected string $propositions;
     protected string $type;
 
-    public function __construct($interrogation, $reponse, $theme, $propositions, $type)
+    public function __construct($id, $interrogation, $reponse, $theme, $propositions, $type)
     {
         $this->interrogation = $interrogation;
         $this->reponse = $reponse;
         $this->theme = $theme;
         $this->propositions = $propositions;
         $this->type = $type;
+    }
+
+    public static function getByInterrogation($proposition){
+        try {
+            $db = connexion_to_bd();
+            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE interrogation = :interrogation");
+            $query->execute(['interrogation' => $proposition]);
+            $question = $query->fetch();
+            switch ($question['type']) {
+                case 'QCM':
+                    $res = new QCM($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    break;
+                case 'QCU':
+                    $res = new QCU($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    break;
+                case 'QCT':
+                    $res = new QCT($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']);
+                    break;
+                case 'QCS':
+                    $res = new QCS($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    break;
+                default:
+                    $res = null;
+                    break;
+            }
+            return $res;
+        } catch (PDOException $e) {
+            return "Erreur : " . $e->getMessage();
+        } finally {
+            $db = null;
+        }
+    }
+
+    public static function getById($id)
+    {
+        try {
+            $db = connexion_to_bd();
+            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE id = :id");
+            $query->execute(['id' => $id]);
+            $question = $query->fetch();
+            switch ($question['type']) {
+                case 'QCM':
+                    $res = new QCM($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    break;
+                case 'QCU':
+                    $res = new QCU($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    break;
+                case 'QCT':
+                    $res = new QCT($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    break;
+                case 'QCS':
+                    $res = new QCS($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    break;
+                default:
+                    $res = null;
+                    break;
+            }
+            return $res;
+        } catch (PDOException $e) {
+            return "Erreur : " . $e->getMessage();
+        } finally {
+            $db = null;
+        }
     }
 
     /*
@@ -42,8 +106,7 @@ abstract class Question
         } catch (PDOException $e) {
             // return "Erreur : " . $e->getMessage(); // Pour debug
             return 0;
-        }
-        finally {
+        } finally {
             $db = null;
         }
     }
@@ -72,16 +135,16 @@ abstract class Question
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCM($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCU($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCS($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']));
+                        array_push($tab, new QCT($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']));
                         break;
                     default:
                         break;
@@ -139,14 +202,13 @@ abstract class Question
 
     /**
      * Donne si la réponse est bonne ou non
-     * @param $reponse réponse de l'utilisateur
+     * @param $tentative réponse de l'utilisateur
      * @return bool vrai si la réponse est bonne
      */
-    public function isTrue($reponse)
+    public function isTrue($tentative)
     {
-        return $reponse == $this->reponse;
+        return $tentative == $this->reponse;
     }
-
 }
 
 // question de type QCM
@@ -159,14 +221,32 @@ class QCM extends Question
     public function display()
     {
         $propositions = explode("|", $this->propositions);
-        $html = "<div class='question'><p>" . $this->interrogation . "</p>";
+        $html = "<div class='question'><p class='interrogation'>" . $this->interrogation . "</p>";
         shuffle($propositions);
         foreach ($propositions as $propositions) {
-            $html .= "<input type='checkbox' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
+            $html .= "<input type='checkbox' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
         }
         $html .= "</div>";
         return $html;
     }
+    
+    public function isTrue($tentative)
+    {
+        if (strpos($this->reponse, '|') !== false) {
+            $arrayReponses = explode('|', $this->reponse);
+            foreach (explode('|', $tentative) as $reponse) {
+                if (!in_array($reponse, $arrayReponses)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return $tentative == $this->reponse;
+        }
+
+        
+    }
+
 }
 
 /*
@@ -185,8 +265,8 @@ class QCS extends Question
      */
     public function display()
     {
-        $html = "<div class='question'><p>" . $this->interrogation . "</p>";
-        $html .= "<input type='range' name='reponse' min='0' max='" . $this->propositions . "' value='0' class='slider' id='myRange'>";
+        $html = "<div class='question'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html .= "<input type='range' class='reponse' name='reponse' min='0' max='" . $this->propositions . "' value='0' class='slider' id='myRange'>";
         $html .= "<p>Value: <span id='value'></span></p>";
         $html .= "<script>
         var slider = document.getElementById('myRange');
@@ -213,10 +293,10 @@ class QCU extends Question
     public function display()
     {
         $propositions = explode("|", $this->propositions);
-        $html = "<div class='question'><p>" . $this->interrogation . "</p>";
+        $html = "<div class='question'><p class='interrogation'>" . $this->interrogation . "</p>";
         shuffle($propositions);
         foreach ($propositions as $propositions) {
-            $html .= "<input type='radio' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
+            $html .= "<input type='radio' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
         }
         $html .= "</div>";
         return $html;
@@ -235,8 +315,8 @@ class QCT extends Question
      */
     public function display()
     {
-        $html = "<div class='question'><p>" . $this->interrogation . "</p>";
-        $html .= "<input type='text' name='reponse' placeholder='Votre réponse'>";
+        $html = "<div class='question'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html .= "<input type='text' class='reponse' name='reponse' placeholder='Votre réponse'>";
         $html .= "</div>";
         return $html;
     }

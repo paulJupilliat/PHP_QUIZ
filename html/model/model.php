@@ -172,3 +172,30 @@ function traitementTheme($theme, $otherTheme)
         return ucfirst(strtolower($theme));
     }
 }
+
+/*
+* Traite le score du quizz
+* @param string $quizz le quizz à traiter
+* @return int le score du quizz
+*/
+function traitementScoreQuizz($quizz){
+    $score = 0;
+    $parQuestion = explode("*", $quizz);
+    // On regarde par question
+    foreach ($parQuestion as $question) {
+        $interrogation = explode("!", $question)[0]; // On récupère la partie interrogation
+        $interrogation = explode(":", $interrogation)[1]; // On récupère la partie l'interrogation
+        $interrogation = str_replace("%20", " ", $interrogation);// remplace tous les %20 de l'interrogation par des espaces
+        $reponse = explode("!", $question)[1]; // On récupère la partie réponse
+        $reponse = explode(":", $reponse)[1]; // On récupère les réponses
+        echo $interrogation;
+        $questionBd = Question::getByInterrogation("Quel est le nom de la devise de l'Union européenne?");
+        // print questionBd dans la console
+
+        // regarde si bon ou non
+        if ($questionBd->isTrue($reponse)) {
+            $score++;
+        }
+    }
+    return $score;
+}

@@ -29,6 +29,9 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
         case 'addQuestion':
             addQuestion($_GET['question'], $_GET['type'], $_GET['reponsesProp'], $_GET['theme'], $_GET['otherTheme'], $_GET['reponse']);
             break;
+        case 'scoreQuizz':
+            scoreQuizz($_GET['quizz']);
+            break;
         default:
             // echo $_GET['action']; //Debug
             echo "Erreur 404 : la page que vous recherchez n'existe pas.";
