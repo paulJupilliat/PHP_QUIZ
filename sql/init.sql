@@ -86,10 +86,10 @@ CREATE TABLE
     do_tentative (
         id_tentative INT,
         pseudo VARCHAR(42),
-        tentative_id INT,
-        PRIMARY KEY (pseudo, tentative_id, id_tentative),
+        quest_tentative_id INT,
+        PRIMARY KEY (pseudo, quest_tentative_id , id_tentative),
         FOREIGN KEY (pseudo) REFERENCES USERS(pseudo),
-        FOREIGN KEY (tentative_id) REFERENCES QUESTION_TENTATIVES(id)
+        FOREIGN KEY (quest_tentative_id ) REFERENCES QUESTION_TENTATIVES(id)
     );
 
 -- Insert data

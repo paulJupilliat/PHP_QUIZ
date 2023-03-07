@@ -11,6 +11,7 @@ abstract class Question
 
     public function __construct($id, $interrogation, $reponse, $theme, $propositions, $type)
     {
+        $this->id = $id;
         $this->interrogation = $interrogation;
         $this->reponse = $reponse;
         $this->theme = $theme;
@@ -18,7 +19,8 @@ abstract class Question
         $this->type = $type;
     }
 
-    public static function getByInterrogation($proposition){
+    public static function getByInterrogation($proposition)
+    {
         try {
             $db = connexion_to_bd();
             $query = $db->prepare("SELECT * FROM QUESTIONS WHERE interrogation = :interrogation");
@@ -26,16 +28,16 @@ abstract class Question
             $question = $query->fetch();
             switch ($question['type']) {
                 case 'QCM':
-                    $res = new QCM($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    $res = new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
                     break;
                 case 'QCU':
-                    $res = new QCU($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    $res = new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
                     break;
                 case 'QCT':
-                    $res = new QCT($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']);
+                    $res = new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']);
                     break;
                 case 'QCS':
-                    $res = new QCS($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
+                    $res = new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']);
                     break;
                 default:
                     $res = null;
@@ -49,11 +51,20 @@ abstract class Question
         }
     }
 
+    public function getId()
+    {
+        if (isset($this->id) && $this->id != 0 ) {
+            return $this->id;
+        } else {
+            return Question::getByInterrogation($this->interrogation)->getId();
+        }
+    }
+
     public static function getById($id)
     {
         try {
             $db = connexion_to_bd();
-            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE id = :id");
+            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE id_question = :id");
             $query->execute(['id' => $id]);
             $question = $query->fetch();
             switch ($question['type']) {
@@ -135,16 +146,16 @@ abstract class Question
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']));
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']));
                         break;
                     default:
                         break;
@@ -230,7 +241,7 @@ class QCM extends Question
         $html .= "</div>";
         return $html;
     }
-    
+
     public function reponseToArray($reponse)
     {
         if (strpos($reponse, '|') !== false) {
@@ -253,10 +264,7 @@ class QCM extends Question
         } else {
             return $tentative == $this->reponse;
         }
-
-        
     }
-
 }
 
 /*
@@ -276,7 +284,7 @@ class QCS extends Question
     public function display()
     {
         $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
-        $html .= "<input type='range' class='reponse' name='reponse' min='0' max='" . $this->propositions . "' value='0' class='slider' id='myRange'>";
+        $html .= "<input type='range' class='reponse' name='reponse' step=1 min='0' max='" . $this->propositions . "' value='0' id='myRange'>";
         $html .= "<p>Value: <span id='value'></span></p>";
         $html .= "<script>
         var slider = document.getElementById('myRange');

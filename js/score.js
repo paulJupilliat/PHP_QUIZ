@@ -18,6 +18,8 @@ function getScore() {
           propositions += reponses[j].value + "|";
         }
       }
+      // Enlever le dernier caractère
+      propositions = propositions.substring(0, propositions.length - 1);
     } else if (classes.contains("QCU")) {
       for (let j = 0; j < reponses.length; j++) {
         if (reponses[j].checked) {
@@ -26,16 +28,13 @@ function getScore() {
       }
     } else if (classes.contains("QCS")) {
       // on récupère la valeur du slider
-      let slider = question.getElementsByClassName("slider")[0];
-      let value = slider.value;
+      let value = document.getElementById("myRange").value;
+      console.log(value);
       propositions += value;
-    }
-    else if (classes.contains("QCT")) {
+    } else if (classes.contains("QCT")) {
       // on récupère la valeur du champ texte
       propositions += reponses[0].value;
     }
-      // Enlever le dernier caractère
-    propositions = propositions.substring(0, propositions.length - 1);
     quizz.push(
       "question" +
         i +
@@ -46,5 +45,8 @@ function getScore() {
         "*"
     );
   }
+  // On enlève le dernier * du tableau
+  quizz = quizz.join("");
+  quizz = quizz.substring(0, quizz.length - 1);
   window.location.href = "index.php?action=scoreQuizz&quizz=" + quizz;
 }

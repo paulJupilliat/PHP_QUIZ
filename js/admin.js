@@ -88,7 +88,6 @@ function submitNewQuest() {
     for (let i = 0; i < reponsesProp.length; i++) {
       reponsesPropToSend += reponsesProp[i].value + "|";
     }
-    reponsesPropToSend += reponse;
   }
   // envoyer les donnéer par l'url
   window.location.href =

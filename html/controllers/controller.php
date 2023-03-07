@@ -69,7 +69,7 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
 function quizz($theme)
 {
     if (checkLoged()) {
-        $questions = Question::getQuestionAleatoire($theme, 2);
+        $questions = Question::getQuestionAleatoire($theme, 2); // Int value to change number of questions
         require('templates/quizz.php');
     } else {
         header("Location: index.php");
@@ -145,9 +145,12 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
  * Affiche la page de score d'un quizz
  * @param string $quizz String brut du quizz avec les questions et les reponses de l'utilisateur
  */
-function scoreQuizz($quizz){
+function scoreQuizz($quizz)
+{
     if (checkLoged()) {
-       $score = traitementScoreQuizz($quizz);
+        $quizz_tentative = Score::traitementQuizz($quizz);
+        $score = Score::getScore($quizz_tentative);
+        require('templates/score.php');
     } else {
         header("Location: index.php");
     }
