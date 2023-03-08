@@ -158,6 +158,40 @@ abstract class Question
         }
     }
 
+
+    public static function getQuestionByThemePrenium($theme)
+    {
+        try {
+            $db = connexion_to_bd();
+            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE theme = :theme and prenium = TRUE");
+            $query->execute(['theme' => $theme]);
+            $questions = $query->fetchAll(PDO::FETCH_ASSOC);
+            $tab = [];
+            foreach ($questions as $question) {
+                switch ($question['type']) {
+                    case 'QCM':
+                        array_push($tab, new QCM($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        break;
+                    case 'QCU':
+                        array_push($tab, new QCU($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        break;
+                    case 'QCS':
+                        array_push($tab, new QCS($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        break;
+                    case 'QCT':
+                        array_push($tab, new QCT($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type']));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return $tab;
+        } catch (PDOException $e) {
+            return "Erreur : " . $e->getMessage();
+        } finally {
+            $db = null;
+        }
+    }
     /*
     * Donne un tableau de questions aléatoires
     * @param $theme theme des questions
@@ -165,6 +199,21 @@ abstract class Question
     * @return Question[] tableau de questions
     */
     public static function getQuestionAleatoire($theme, $nb)
+    {
+        $questions = Question::getQuestionByThemePrenium($theme);
+        $tab = [];
+        for ($i = 0; $i < $nb; $i++) {
+            $rand = rand(0, count($questions) - 1);
+            array_push($tab, $questions[$rand]);
+            unset($questions[$rand]);
+            $questions = array_values($questions);
+        }
+        return $tab;
+    }
+
+    
+
+    public static function getQuestionAleatoireLambda($theme, $nb)
     {
         $questions = Question::getQuestionByTheme($theme);
         $tab = [];
@@ -176,6 +225,7 @@ abstract class Question
         }
         return $tab;
     }
+
 
     /**
      * Donne tous les themes

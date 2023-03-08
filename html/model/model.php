@@ -17,6 +17,20 @@ function connexion_to_bd()
         return null;
     }
 }
+function isPremium($id)
+    {
+        try {
+            $db = connexion_to_bd();
+            $query = $db->prepare("SELECT prenium FROM USER WHERE pseudo = :id");
+            $query->execute(['id' => $id]);
+            $prenium = $query->fetch();
+            return $prenium['prenium'];
+        } catch (PDOException $e) {
+            return "Erreur : " . $e->getMessage();
+        } finally {
+            $db = null;
+        }
+    }
 
 /**
  * Vérifie si l'utilisateur est connecté

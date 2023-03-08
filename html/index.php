@@ -32,6 +32,12 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
         case 'scoreQuizz':
             scoreQuizz($_GET['quizz']);
             break;
+        case 'paypal':
+            paypal();
+            break;
+        case 'success':
+            success();
+            break;
         default:
             // echo $_GET['action']; //Debug
             echo "Erreur 404 : la page que vous recherchez n'existe pas.";
