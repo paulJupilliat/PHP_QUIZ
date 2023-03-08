@@ -42,6 +42,7 @@ CREATE TABLE
 CREATE TABLE
     QUESTIONS(
         id_question INT PRIMARY KEY auto_increment,
+        prenium BOOLEAN DEFAULT FALSE,
         interrogation VARCHAR(255),
         reponse VARCHAR(255),
         theme VARCHAR(42),
@@ -55,6 +56,7 @@ CREATE TABLE
     USERS (
         pseudo VARCHAR(42) PRIMARY KEY,
         nom VARCHAR(42) NULL,
+        prenium BOOLEAN DEFAULT FALSE,
         prenom VARCHAR(42) NULL,
         mdp VARCHAR(500) NOT NULL,
         age INT DEFAULT 0
@@ -114,6 +116,7 @@ INSERT INTO USERS
 VALUES (
         "user1",
         "user1 name",
+        True,
         "user1 prenom",
         "$2y$10$ABaoDjNyovihIwuQieNgeuzJe1/MkTJP/oV9aKyVTfepgs1kB/X0m",
         18
@@ -134,6 +137,7 @@ VALUES ('Histoire', 'Histoire'), ('Geographie', 'Geographie'), ('Sport', 'Sport'
 INSERT INTO
     QUESTIONS (
         interrogation,
+        prenium,
         reponse,
         theme,
         propositions,
@@ -141,12 +145,14 @@ INSERT INTO
     )
 VALUES (
         'Quelle est la capitale de la France?',
+        True,
         'Paris',
         'Geographie',
         'Lyon|Marseille|Bordeaux',
         'QCM'
     ), (
         'Quel est le plus haut sommet de la France?',
+        True,
         'Mont Blanc',
         'Geographie',
         'Pyrenees|Alpes|Massif central',

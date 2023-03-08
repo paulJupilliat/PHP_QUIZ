@@ -106,6 +106,23 @@ function admin()
         header("Location: index.php");
     }
 }
+function paypal()
+{
+    if (checkLoged()) {
+        require('templates/paypal.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+
+function success()
+{
+    if (checkLoged()) {
+        require('templates/success.php');
+    } else {
+        header("Location: index.php");
+    }
+}
 
 /**
  * Ajoute une question à la base de données
