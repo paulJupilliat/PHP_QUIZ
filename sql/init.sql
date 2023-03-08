@@ -112,7 +112,7 @@ VALUES (
         'Question a choix avec un slider'
     );
 
-INSERT INTO USERS
+INSERT INTO USERS (pseudo,nom,prenium,prenom,mdp,age)
 VALUES (
         "user1",
         "user1 name",
@@ -123,6 +123,7 @@ VALUES (
     ), (
         "admin1",
         "admin1 name",
+        False,
         "admin1 prenom",
         "$2y$10$ABaoDjNyovihIwuQieNgeuzJe1/MkTJP/oV9aKyVTfepgs1kB/X0m",
         18
@@ -145,80 +146,91 @@ INSERT INTO
     )
 VALUES (
         'Quelle est la capitale de la France?',
-        True,
+        TRUE,
         'Paris',
         'Geographie',
         'Lyon|Marseille|Bordeaux',
         'QCM'
     ), (
         'Quel est le plus haut sommet de la France?',
-        True,
+        TRUE,
         'Mont Blanc',
         'Geographie',
         'Pyrenees|Alpes|Massif central',
         'QCM'
     ), (
         'Quelle est la date de naissance de Napoléon Bonaparte?',
+        FALSE,
         '15 août 1769',
         'Histoire',
         NULL,
         'QCT'
     ), (
         'Quel est le nom de la devise de l\'Union européenne?',
+        FALSE,
         'L\'euro',
         'Economie',
         NULL,
         'QCT'
     ), (
         'Quelle est la capitale du Burkina Faso?',
+        FALSE,
         'Ouagadougou',
         'Geographie',
         NULL,
         'QCT'
     ), (
         'Quel est le nom du premier président de la Côte d\'Ivoire?',
+        FALSE,
         'Félix Houphouët-Boigny',
         'Histoire',
         NULL,
         'QCT'
     ), (
         'Quel est le plus grand pays d\'Afrique?',
+        TRUE,
         'Algérie',
         'Geographie',
         'Nigeria|Egypte|Afrique du Sud',
         'QCM'
     ), (
         'Quel est le nom du célèbre peintre espagnol?',
+        FALSE,
         'Pablo Picasso',
         'Art',
         NULL,
         'QCT'
     ), (
         'Quel est le nom du plus grand océan?',
+        FALSE,
         'Océan Pacifique',
         'Geographie',
         'Océan Atlantique|Océan Indien|Océan Arctique',
         'QCM'
     ), (
         'Quelle est la plus grande religion du monde?',
+        FALSE,
         'Islam',
         'Religion',
         'Christianisme|Hindouisme|Bouddhisme',
         'QCM'
     ), (
         'Sur une échelle de 1 à 10, combien de fois par semaine mangez-vous de la viande?',
+        FALSE,
         '5',
         'Sante',
         NULL,
         'QCS'
     ), (
         'Sur une échelle de 1 à 10, quelle est votre satisfaction avec votre vie actuelle?',
+        FALSE,
         '7',
         'Societe',
         NULL,
         'QCS'
     ), (
         'Sur une échelle de 1 à 10, combien aimez-vous les films d\'horreur?',
+        FALSE,
         '3',
         'Cinema',
         NULL,
@@ -235,28 +247,3 @@ INSERT INTO have_role
 VALUES ('user1', 'ROLE_USER'), ('admin1', 'ROLE_ADMIN'), ('admin1', 'ROLE_USER');
 
 -- insérer des données dans la table USERS à partir d'un fichier JSON (user.json)
-
-INSERT INTO
-    QUESTIONS (
-        interrogation,
-        reponse,
-        theme,
-        propositions,
-        type
-    )
-SELECT
-    interrogation,
-    reponse,
-    theme,
-    propositions,
-    type
-FROM
-    OPENROWSET (BULK 'donnees.json'),
-    SINGLE_CLOB as json CROSS APPLY OPENJSON(json)
-WITH (
-        interrogation VARCHAR(255) '$.interrogation',
-        reponse VARCHAR(255) '$.reponse',
-        theme VARCHAR(30) '$.theme',
-        propositions VARCHAR(255) '$.propositions',
-        type VARCHAR(30) '$.type'
-    );

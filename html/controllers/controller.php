@@ -69,6 +69,12 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
 function quizz($theme)
 {
     if (checkLoged()) {
+        //si je suis prenium
+        if (isPremium($_SESSION['pseudo'])) {
+            $questions = Question::getQuestionAleatoire($theme, 10);
+        } else {
+            $questions = Question::getQuestionAleatoireLambda($theme, 2);
+        }
         $questions = Question::getQuestionAleatoire($theme, 2);
         require('templates/quizz.php');
     } else {

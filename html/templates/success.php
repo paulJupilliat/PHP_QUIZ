@@ -1,4 +1,7 @@
 <?php
+session_start();
+// je modifie mon utilisateur dans la base de données pour le faire passer prenium
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
