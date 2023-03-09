@@ -18,47 +18,24 @@
         ?>
     </header>
     <main>
-        <button class="button-toggle-popup" onclick="togglePopup()">Ajouter une question</button>
-        <div class="popup">
-            <form class="popup-content" id="form-new-quest">
-                <!-- <input type="hidden" name="action" value="addQuestion"> -->
-                <!-- la question -->
-                <label for="question">Question</label>
-                <input type="text" name="question" id="question" required>
-                <!-- le type -->
-                <label for="type">Type</label>
-                <select name=" type" id="type-quest" required onchange="showReponseProp()">
-                    <option value="text">Text</option>
-                    <option value="number">Number</option>
-                    <option value="radio">Radio</option>
-                    <option value="checkbox">Checkbox</option>
-                </select>
-                <!-- les réponses -->
-                <div id="reponses-prop">
-                    <input type='text' name='reponse' id='reponse' placeholder='Réponse' required>
-                </div>
-                <!-- le thème -->
-                <div>
-                    <label for="theme">Thème</label>
-                    <select name="theme" id="theme-choice" required onchange="newTheme()">
-                        <option value="" disabled selected>Choisir un thème</option>
-                        <!-- Un option par theme avec php -->
-                        <?php
-                        foreach ($_SESSION['themes'] as $theme) {
-                            echo "<option value='$theme'>$theme</option>";
-                        }
-                        ?>
-                        <option value="other">Autre</option>
-                    </select>
-                    <div id="input-other-theme">
-                        <input type="text" name="otherTheme" id="otherTheme" placeholder="Autre thème">
-                    </div>
-                </div>
-                <button type="button" onclick="submitNewQuest()" class="validate"> Valider </button>
-                <button type="button" class="cancel" onclick="togglePopup()"> Annuler </button>
+        <div id="adminQuestion">
+            <button class="button-toggle-popup" onclick="togglePopupAddQuest()">Ajouter une question</button>
+            <form method="get" action="index.php?action=admin">
+                <input type="hidden" name="action" value="admin" />
+                <input type="text" name="recherche" placeholder="Recherche...">
+                <button type="submit">Rechercher</button>
             </form>
 
-        </div>
+            <div class="popUp" id="popupAddQuest">
+                <?php echo $popUpAddQuest; ?>
+            </div>
+            <div class="allQuestions">
+                <?php
+                foreach ($allQuestion as $question) {
+                    echo $question->displayPreview();
+                } ?>
+
+            </div>
 
     </main>
     <svg xmlns=" http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

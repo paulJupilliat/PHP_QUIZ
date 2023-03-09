@@ -1,15 +1,15 @@
 let validate = document.getElementsByClassName("validate");
 let close = document.getElementsByClassName("close");
-let popup = document.getElementsByClassName("popup");
+let popupAddQuest = document.getElementById("popupAddQuest");
 let buttonTogglePopup = document.getElementsByClassName("button-toggle-popup");
 let typeQuest = document.getElementById("type-quest");
 let themeChoice = document.getElementById("theme-choice");
 let formNewQuest = document.getElementById("form-new-quest");
 
-function togglePopup() {
-  popup[0].style.display === "block"
-    ? (popup[0].style.display = "none")
-    : (popup[0].style.display = "block");
+function togglePopupAddQuest() {
+  popupAddQuest.style.display === "block"
+    ? (popupAddQuest.style.display = "none")
+    : (popupAddQuest.style.display = "block");
 }
 
 /**
@@ -88,7 +88,6 @@ function submitNewQuest() {
     for (let i = 0; i < reponsesProp.length; i++) {
       reponsesPropToSend += reponsesProp[i].value + "|";
     }
-    reponsesPropToSend += reponse;
   }
   // envoyer les donnéer par l'url
   window.location.href =
@@ -104,4 +103,22 @@ function submitNewQuest() {
     reponse +
     "&reponsesProp=" +
     reponsesPropToSend;
+  }
+
+function deleteQuest(id) {
+  // window.location.href = "index.php?action=deleteQuestion&id=" + id; avec la méthode POST
+    let formDeleteQuest = document.createElement("form"); // Crée un élément de formulaire
+    formDeleteQuest.method = "POST"; // Spécifie la méthode POST
+    formDeleteQuest.action = "index.php?action=deleteQuestion&id=" + id; // Spécifie l'URL à laquelle envoyer la requête et l'identifiant de la question à supprimer
+
+    // Ajoute un champ caché pour l'identifiant de la question
+    let inputId = document.createElement("input");
+    inputId.setAttribute("type", "hidden");
+    inputId.setAttribute("name", "id");
+    inputId.setAttribute("value", id);
+    formDeleteQuest.appendChild(inputId);
+
+    // Ajoute le formulaire à la page et soumet la requête
+    document.body.appendChild(formDeleteQuest);
+    formDeleteQuest.submit();
   }

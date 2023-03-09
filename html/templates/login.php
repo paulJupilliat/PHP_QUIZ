@@ -31,7 +31,7 @@
             </div>';
             }
         } ?>
-        <form method="get" action="index.php">
+        <form method="post" action="index.php">
             <input type="hidden" name="action" value="connexion"> <!-- Permet d'envoyer l'action -->
             <label>Entrer ton pseudo !</label>
             <input type="text" name="name" value="" placeholder="pseudo" required>

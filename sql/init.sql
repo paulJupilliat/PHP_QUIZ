@@ -46,8 +46,9 @@ CREATE TABLE
         interrogation VARCHAR(255),
         reponse VARCHAR(255),
         theme VARCHAR(42),
-        propositions VARCHAR(255) NULL,
+        propositions VARCHAR(255) DEFAULT " ",
         type VARCHAR(42),
+        is_shown BOOLEAN DEFAULT true,
         FOREIGN KEY (theme) REFERENCES ref_THEMES(theme_name),
         FOREIGN KEY (type) REFERENCES ref_TYPES(type_name)
     );
@@ -89,10 +90,10 @@ CREATE TABLE
     do_tentative (
         id_tentative INT,
         pseudo VARCHAR(42),
-        tentative_id INT,
-        PRIMARY KEY (pseudo, tentative_id, id_tentative),
+        quest_tentative_id INT,
+        PRIMARY KEY (pseudo, quest_tentative_id , id_tentative),
         FOREIGN KEY (pseudo) REFERENCES USERS(pseudo),
-        FOREIGN KEY (tentative_id) REFERENCES QUESTION_TENTATIVES(id)
+        FOREIGN KEY (quest_tentative_id ) REFERENCES QUESTION_TENTATIVES(id)
     );
 
 -- Insert data

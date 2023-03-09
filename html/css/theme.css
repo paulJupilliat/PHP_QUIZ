@@ -31,10 +31,17 @@
 }
 
 main{
-    margin-top: 5%;
+    margin-top: 8%;
 }
 
-.popup{
+.allQuestions{
+    margin-top: 5%;
+    margin-left: 20%;
+    margin-right: 20%;
+    overflow: scroll;
+}
+
+.popUp{
     display: none;
     position: fixed;
     z-index: 1;
@@ -89,4 +96,12 @@ main{
 
 #otherTheme{
     display: none;
+}
+
+.false{
+    color: red;
+}
+
+.true{
+    color: green;
 }
