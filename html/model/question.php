@@ -53,7 +53,7 @@ abstract class Question
 
     public function getId()
     {
-        if (isset($this->id) && $this->id != 0 ) {
+        if (isset($this->id) && $this->id != 0) {
             return $this->id;
         } else {
             return Question::getByInterrogation($this->interrogation)->getId();
@@ -97,6 +97,13 @@ abstract class Question
     *@return ce que l'on veut afficher
     */
     abstract public function display();
+
+    /**
+     * Affiche la question et ces propositions pour la relecture
+     * @param array $proposition  proposition de l'utilisateur pour la question
+     * @return void ce que l'on veut afficher
+     */
+    abstract public function displayRelecture($proposition);
 
     /**
      * Push une nouvelle question dans la base de données
@@ -199,7 +206,7 @@ abstract class Question
             $query = $db->prepare('SELECT DISTINCT theme FROM QUESTIONS');
             $query->execute();
             $themes = $query->fetchAll();
-            $tab = array();
+            $tab = [];
             foreach ($themes as $theme) {
                 array_push($tab, $theme['theme']);
             }
@@ -209,6 +216,21 @@ abstract class Question
             $db = null;
         }
         return $tab;
+    }
+
+    public function getReponse()
+    {
+        return $this->reponse;
+    }
+
+    public function getInterrogation()
+    {
+        return $this->interrogation;
+    }
+
+    public function getPropositions()
+    {
+        return $this->propositions;
     }
 
     /**
@@ -222,48 +244,44 @@ abstract class Question
     }
 }
 
-// question de type QCM
-class QCM extends Question
+/*
+* question de type QCU (question à choix unique)
+*/
+class QCU extends Question
 {
     /**
-     * Affiche la question et ces propositions
+     * Affiche la question et ses propositions
      * @return mixed ce que l'on veut afficher
      */
     public function display()
     {
         $propositions = explode("|", $this->propositions);
-        $propositions = array_merge($propositions, $this->reponseToArray($this->reponse)); // On ajoute les réponses dans les propositions
+        array_push($propositions, $this->reponse); // On ajoute la réponse à la proposition
         $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         shuffle($propositions);
         foreach ($propositions as $propositions) {
-            $html .= "<input type='checkbox' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
+            $html .= "<input type='radio' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
         }
         $html .= "</div>";
         return $html;
     }
 
-    public function reponseToArray($reponse)
+    /**
+     * Affichage pour la relecture après la partie
+     * @param array $proposition_user proposition de l'utilisateur
+     * @return string html
+     */
+    public function displayRelecture($proposition_user)
     {
-        if (strpos($reponse, '|') !== false) {
-            return explode('|', $reponse);
-        } else {
-            return [$reponse];
+        $propositions = explode("|", $this->propositions);
+        array_push($propositions, $this->reponse); // On ajoute la réponse à la proposition
+        $html = "<div class='question " . $this->type . " " . strval($this->isTrue($proposition_user) ? 'false' : 'true') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        foreach ($propositions as $proposition) {
+            $html .= "<input type='radio' class='reponse' name='reponse' value='" . $proposition . "' " . strval(in_array($proposition, $proposition_user) ? '' : 'checked') . " disabled>" . $proposition . "<br>";
         }
-    }
-
-    public function isTrue($tentative)
-    {
-        if (strpos($this->reponse, '|') !== false) {
-            $arrayReponses = explode('|', $this->reponse);
-            foreach (explode('|', $tentative) as $reponse) {
-                if (!in_array($reponse, $arrayReponses)) {
-                    return false;
-                }
-            }
-            return true;
-        } else {
-            return $tentative == $this->reponse;
-        }
+        $html .= "<p> La réponse était : " . $this->reponse . "</p>";
+        $html .= "</div>";
+        return $html;
     }
 }
 
@@ -297,26 +315,19 @@ class QCS extends Question
         $html .= "</div>";
         return $html;
     }
-}
 
-/*
-* question de type QCU (question à choix unique)
-*/
-class QCU extends Question
-{
     /**
-     * Affiche la question et ses propositions
-     * @return mixed ce que l'on veut afficher
+     * Affichage pour la relecture après la partie
+     * @param array $proposition_user proposition de l'utilisateur
+     * @return string html
      */
-    public function display()
+    public function displayRelecture($propositionUser)
     {
-        $propositions = explode("|", $this->propositions);
-        array_push($propositions, $this->reponse); // On ajoute la réponse à la proposition
-        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
-        shuffle($propositions);
-        foreach ($propositions as $propositions) {
-            $html .= "<input type='radio' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
-        }
+        $html = "<div class='question " . $this->type . " " . strval($this->isTrue($propositionUser[0]) ? 'true' : 'false') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html .= '<p>La réponse était : ' . $this->isTrue($propositionUser). '</p>';
+        $html .= "<input type='range' class='reponse' name='reponse' step=1 min='0' max='" . $this->propositions . "' value='" . $propositionUser[0] . "' id='myRange' disabled>";
+        $html .= "<p>Value: <span id='value'>" . $propositionUser[0] . "</span></p>";
+        $html .= "<p> La réponse était : " . $this->reponse . "</p>";
         $html .= "</div>";
         return $html;
     }
@@ -338,5 +349,88 @@ class QCT extends Question
         $html .= "<input type='text' class='reponse' name='reponse' placeholder='Votre réponse'>";
         $html .= "</div>";
         return $html;
+    }
+
+    /**
+     * Affichage pour la relecture après la partie
+     * @param array $proposition_user proposition de l'utilisateur
+     * @return string html
+     */
+    public function displayRelecture($propositionUser)
+    {
+        $html = "<div class='question " . $this->type . " " . strval($this->isTrue($propositionUser[0]) ? 'true' : 'false') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html .= "<input type='text' class='reponse' name='reponse' placeholder='Votre réponse' value='" . $propositionUser[0] . "' disabled>";
+        $html .= "<p> La réponse était : " . $this->reponse . "</p>";
+        $html .= "</div>";
+        return $html;
+    }
+}
+
+// question de type QCM
+class QCM extends Question
+{
+    /**
+     * Affiche la question et ces propositions
+     * @return mixed ce que l'on veut afficher
+     */
+    public function display()
+    {
+        $propositions = explode("|", $this->propositions);
+        $propositions = array_merge($propositions, $this->reponseToArray($this->reponse)); // On ajoute les réponses dans les propositions
+        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        shuffle($propositions);
+        foreach ($propositions as $propositions) {
+            $html .= "<input type='checkbox' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
+        }
+        $html .= "</div>";
+        return $html;
+    }
+
+    /**
+     * Affichage pour la relecture après la partie
+     * @param array $proposition_user proposition de l'utilisateur
+     * @return string html
+     */
+    public function displayRelecture($propositionUser)
+    {
+        $reponse = $this->reponseToArray($this->reponse);
+        $propositions = explode("|", $this->propositions);
+        $propositions = array_merge($propositions, $reponse); // On ajoute les réponses dans les propositions
+        $html = "";
+        $nbReponse = 0; // compteur de bonne réponse donnée par l'utilisateur
+        foreach ($propositions as $proposition) {
+            $html .= "<input type='checkbox' class='reponse" . "' name='reponse' value='" . $proposition . "' " . strval(in_array($proposition, $propositionUser) ? 'checked' : '') . " disabled>" . $proposition . "<br>";
+            if (in_array($proposition, $reponse) && in_array($proposition, $propositionUser)) {
+                $nbReponse++;
+            }
+        }
+        $html .= "<p> La réponse était : " . $this->reponse . "</p>";
+        $html .= "</div>";
+        $html = "<div class='question " . $this->type . " " . strval($nbReponse == count($reponse) ? 'true' : 'false') . "'><p class='interrogation'>" . $this->interrogation . "</p>" . $html;
+        return $html;
+    }
+
+    public function reponseToArray($reponse)
+    {
+        if (strpos($reponse, '|') !== false) {
+            return explode('|', $reponse);
+        } else {
+            return [$reponse];
+        }
+    }
+
+    public function isTrue($tentative)
+    {
+        if (strpos($this->reponse, '|') !== false) {
+            $arrayReponses = explode('|', $this->reponse);
+            foreach (explode('|', $tentative) as $reponse) {
+                if (!in_array($reponse, $arrayReponses)) {
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return $tentative == $this->reponse;
+        }
     }
 }

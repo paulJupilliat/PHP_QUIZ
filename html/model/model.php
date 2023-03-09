@@ -1,6 +1,6 @@
 <?php
 require('model/connect.php');
-require('model/scoreModel.php');
+require('model/tentative.php');
 /**
  * Connexion à la base de données
  * @return PDO $conn connexion à la base de données

@@ -44,7 +44,7 @@ CREATE TABLE
         interrogation VARCHAR(255),
         reponse VARCHAR(255),
         theme VARCHAR(42),
-        propositions VARCHAR(255) NULL,
+        propositions VARCHAR(255) DEFAULT " ",
         type VARCHAR(42),
         FOREIGN KEY (theme) REFERENCES ref_THEMES(theme_name),
         FOREIGN KEY (type) REFERENCES ref_TYPES(type_name)

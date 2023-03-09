@@ -145,11 +145,11 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
  * Affiche la page de score d'un quizz
  * @param string $quizz String brut du quizz avec les questions et les reponses de l'utilisateur
  */
-function scoreQuizz($quizz)
+function scoreQuizz(string $quizz)
 {
     if (checkLoged()) {
-        $quizz_tentative = Score::traitementQuizz($quizz);
-        $score = Score::getScore($quizz_tentative);
+        $tentative = new Tentative($quizz);
+        $affichage = $tentative->display();
         require('templates/score.php');
     } else {
         header("Location: index.php");

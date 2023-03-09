@@ -90,3 +90,11 @@ main{
 #otherTheme{
     display: none;
 }
+
+.false{
+    color: red;
+}
+
+.true{
+    color: green;
+}
