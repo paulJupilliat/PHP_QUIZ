@@ -34,7 +34,7 @@ main{
     margin-top: 5%;
 }
 
-.popup{
+.popUp{
     display: none;
     position: fixed;
     z-index: 1;

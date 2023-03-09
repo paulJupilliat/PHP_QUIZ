@@ -38,7 +38,7 @@ class PopUp
                     </div>
                 </div>
                 <button type="button" onclick="submitNewQuest()" class="validate"> Valider </button>
-                <button type="button" class="cancel" onclick="togglePopup()"> Annuler </button>
+                <button type="button" class="cancel" onclick="togglePopupAddQuest()"> Annuler </button>
             </form>';
     }
 }

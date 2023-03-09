@@ -49,4 +49,6 @@ function getScore() {
   quizz = quizz.join("");
   quizz = quizz.substring(0, quizz.length - 1);
   window.location.href = "index.php?action=scoreQuizz&quizz=" + quizz;
+  
+  
 }

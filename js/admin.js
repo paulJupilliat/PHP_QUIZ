@@ -1,15 +1,15 @@
 let validate = document.getElementsByClassName("validate");
 let close = document.getElementsByClassName("close");
-let popup = document.getElementsByClassName("popup");
+let popupAddQuest = document.getElementById("popupAddQuest");
 let buttonTogglePopup = document.getElementsByClassName("button-toggle-popup");
 let typeQuest = document.getElementById("type-quest");
 let themeChoice = document.getElementById("theme-choice");
 let formNewQuest = document.getElementById("form-new-quest");
 
-function togglePopup() {
-  popup[0].style.display === "block"
-    ? (popup[0].style.display = "none")
-    : (popup[0].style.display = "block");
+function togglePopupAddQuest() {
+  popupAddQuest.style.display === "block"
+    ? (popupAddQuest.style.display = "none")
+    : (popupAddQuest.style.display = "block");
 }
 
 /**

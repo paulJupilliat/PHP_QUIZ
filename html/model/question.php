@@ -106,6 +106,11 @@ abstract class Question
     abstract public function displayRelecture($proposition);
 
     /**
+     * Affichage d'une prévisualisation de la question
+     * @return void ce que l'on veut afficher
+     */
+
+    /**
      * Push une nouvelle question dans la base de données
      * @param $interrogation interrogation de la question
      * @param $reponse reponse de la question
@@ -124,6 +129,44 @@ abstract class Question
         } catch (PDOException $e) {
             // return "Erreur : " . $e->getMessage(); // Pour debug
             return 0;
+        } finally {
+            $db = null;
+        }
+    }
+
+    /**
+     * Récupère toutes les questions de la base de données
+     * @return array|string tableau de questions ou message d'erreur
+     */
+    public static function getAllQuestion()
+    {
+        try {
+            $db = connexion_to_bd();
+            $query = $db->prepare("SELECT * FROM QUESTIONS");
+            $query->execute();
+            $questions = $query->fetchAll(PDO::FETCH_ASSOC);
+            $tab = [];
+            foreach ($questions as $question) {
+                switch ($question['type']) {
+                    case 'QCM':
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        break;
+                    case 'QCU':
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        break;
+                    case 'QCT':
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        break;
+                    case 'QCS':
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type']));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return $tab;
+        } catch (PDOException $e) {
+            return "Erreur : " . $e->getMessage();
         } finally {
             $db = null;
         }
@@ -271,13 +314,13 @@ class QCU extends Question
      * @param array $proposition_user proposition de l'utilisateur
      * @return string html
      */
-    public function displayRelecture($proposition_user)
+    public function displayRelecture($propositionUser)
     {
         $propositions = explode("|", $this->propositions);
         array_push($propositions, $this->reponse); // On ajoute la réponse à la proposition
-        $html = "<div class='question " . $this->type . " " . strval($this->isTrue($proposition_user) ? 'false' : 'true') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html = "<div class='question " . $this->type . " " . strval($this->isTrue($propositionUser[0]) ? 'true' : 'false') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         foreach ($propositions as $proposition) {
-            $html .= "<input type='radio' class='reponse' name='reponse' value='" . $proposition . "' " . strval(in_array($proposition, $proposition_user) ? '' : 'checked') . " disabled>" . $proposition . "<br>";
+            $html .= "<input type='radio' class='reponse' name='reponse' value='" . $proposition . "' " . strval(in_array($proposition, $propositionUser) ? 'checked' : '') . " disabled>" . $proposition . "<br>";
         }
         $html .= "<p> La réponse était : " . $this->reponse . "</p>";
         $html .= "</div>";
@@ -324,12 +367,19 @@ class QCS extends Question
     public function displayRelecture($propositionUser)
     {
         $html = "<div class='question " . $this->type . " " . strval($this->isTrue($propositionUser[0]) ? 'true' : 'false') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
-        $html .= '<p>La réponse était : ' . $this->isTrue($propositionUser). '</p>';
+        $html .= '<p>La réponse était : ' . $this->isTrue($propositionUser) . '</p>';
         $html .= "<input type='range' class='reponse' name='reponse' step=1 min='0' max='" . $this->propositions . "' value='" . $propositionUser[0] . "' id='myRange' disabled>";
         $html .= "<p>Value: <span id='value'>" . $propositionUser[0] . "</span></p>";
         $html .= "<p> La réponse était : " . $this->reponse . "</p>";
         $html .= "</div>";
         return $html;
+    }
+
+    public function displayPreview()
+    {
+        $html = "<div class=questionPreview onclick=''><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html .= "<button class='deleteQuestion' type='button' name='button'>Supprimer</button>";
+        
     }
 }
 
@@ -363,6 +413,11 @@ class QCT extends Question
         $html .= "<p> La réponse était : " . $this->reponse . "</p>";
         $html .= "</div>";
         return $html;
+    }
+
+    public function isTrue($tentative)
+    {
+        return strtoupper($tentative) == strtoupper($this->reponse);
     }
 }
 

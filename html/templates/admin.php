@@ -18,8 +18,12 @@
         ?>
     </header>
     <main>
-        <button class="button-toggle-popup" onclick="togglePopup()">Ajouter une question</button>
-        <div class="popup">
+        <div id="adminQuestion">
+            <button class="button-toggle-popup" onclick="togglePopupAddQuest()">Ajouter une question</button>
+            <div class="popUp" id="popupAddQuest">
+                <?php echo $popUpAddQuest; ?>
+            </div>
+            
         </div>
 
     </main>

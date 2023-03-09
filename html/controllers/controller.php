@@ -1,6 +1,7 @@
 <?php
 require_once('model/model.php');
 require_once('model/question.php');
+require_once('model/popUp.php');
 function home()
 {
     $_SESSION['themes'] = putTheme();
@@ -101,6 +102,8 @@ function putTheme()
 function admin()
 {
     if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        $popUpAddQuest = PopUp::getPopUpAddQuest();
+        $allQuestion = Question::getAllQuestion();
         require('templates/admin.php');
     } else {
         header("Location: index.php");
