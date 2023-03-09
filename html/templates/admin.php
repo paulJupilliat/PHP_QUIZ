@@ -23,8 +23,13 @@
             <div class="popUp" id="popupAddQuest">
                 <?php echo $popUpAddQuest; ?>
             </div>
-            
-        </div>
+            <div class="allQuestions">
+                <?php
+                foreach ($allQuestion as $question) {
+                    echo $question->displayPreview();
+                } ?>
+
+            </div>
 
     </main>
     <svg xmlns=" http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

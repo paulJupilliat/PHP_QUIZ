@@ -26,6 +26,9 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
         case 'scoreQuizz':
             scoreQuizz($_GET['quizz']);
             break;
+        case 'deleteQuestion':
+            deleteQuest($_GET['id']);
+            break;
         default:
             // echo $_GET['action']; //Debug
             echo "Erreur 404 : la page que vous recherchez n'existe pas.";
@@ -40,6 +43,9 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
             break;
         case 'scoreQuizz':
             scoreQuizz($_POST['quizz']);
+            break;
+        case 'deleteQuestion':
+            deleteQuest($_POST['id']);
             break;
         default:
             // echo $_POST['action']; //Debug

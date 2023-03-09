@@ -103,7 +103,7 @@ function admin()
 {
     if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
         $popUpAddQuest = PopUp::getPopUpAddQuest();
-        $allQuestion = Question::getAllQuestion();
+        $allQuestion = Question::getAllQuestionShawn();
         require('templates/admin.php');
     } else {
         header("Location: index.php");
@@ -154,6 +154,16 @@ function scoreQuizz(string $quizz)
         $tentative = new Tentative($quizz);
         $affichage = $tentative->display();
         require('templates/score.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+
+function deleteQuest($id)
+{
+    if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        Question::deleteQuestion($id);
+        header("Location: index.php?action=admin");
     } else {
         header("Location: index.php");
     }

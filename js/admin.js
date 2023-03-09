@@ -104,3 +104,21 @@ function submitNewQuest() {
     "&reponsesProp=" +
     reponsesPropToSend;
   }
+
+function deleteQuest(id) {
+  // window.location.href = "index.php?action=deleteQuestion&id=" + id; avec la méthode POST
+    let formDeleteQuest = document.createElement("form"); // Crée un élément de formulaire
+    formDeleteQuest.method = "POST"; // Spécifie la méthode POST
+    formDeleteQuest.action = "index.php?action=deleteQuestion&id=" + id; // Spécifie l'URL à laquelle envoyer la requête et l'identifiant de la question à supprimer
+
+    // Ajoute un champ caché pour l'identifiant de la question
+    let inputId = document.createElement("input");
+    inputId.setAttribute("type", "hidden");
+    inputId.setAttribute("name", "id");
+    inputId.setAttribute("value", id);
+    formDeleteQuest.appendChild(inputId);
+
+    // Ajoute le formulaire à la page et soumet la requête
+    document.body.appendChild(formDeleteQuest);
+    formDeleteQuest.submit();
+  }
