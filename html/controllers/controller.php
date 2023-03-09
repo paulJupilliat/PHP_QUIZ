@@ -102,8 +102,13 @@ function putTheme()
 function admin()
 {
     if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        $recherche = $_GET['recherche'];
         $popUpAddQuest = PopUp::getPopUpAddQuest();
-        $allQuestion = Question::getAllQuestionShawn();
+        if (isset($recherche)) {
+            $allQuestion = Question::getQuestionSearch($recherche);
+        } else {
+            $allQuestion = Question::getAllQuestionShawn();
+        }
         require('templates/admin.php');
     } else {
         header("Location: index.php");
@@ -119,19 +124,19 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
         $theme = traitementTheme($theme, $otherTheme);
         switch ($type) {
             case 'text':
-                $question = new QCT(0, $question, $reponse, $theme, '', 'QCT');
+                $question = new QCT(0, $question, $reponse, $theme, '', 'QCT', 1);
                 $question->pushInBd();
                 break;
             case 'radio':
-                $question = new QCU(0, $question, $reponse, $theme, $reponseProp, 'QCU');
+                $question = new QCU(0, $question, $reponse, $theme, $reponseProp, 'QCU', 1);
                 $question->pushInBd();
                 break;
             case 'checkbox':
-                $question = new QCM(0, $question, $reponse, $theme, $reponseProp, 'QCM');
+                $question = new QCM(0, $question, $reponse, $theme, $reponseProp, 'QCM', 1);
                 $question->pushInBd();
                 break;
             case 'number':
-                $question = new QCS(0, $question, $reponse, $theme, $reponseProp, 'QCS');
+                $question = new QCS(0, $question, $reponse, $theme, $reponseProp, 'QCS', 1);
                 $question->pushInBd();
                 break;
             default:

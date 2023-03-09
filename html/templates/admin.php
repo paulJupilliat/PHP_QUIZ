@@ -20,6 +20,12 @@
     <main>
         <div id="adminQuestion">
             <button class="button-toggle-popup" onclick="togglePopupAddQuest()">Ajouter une question</button>
+            <form method="get" action="index.php?action=admin">
+                <input type="hidden" name="action" value="admin" />
+                <input type="text" name="recherche" placeholder="Recherche...">
+                <button type="submit">Rechercher</button>
+            </form>
+
             <div class="popUp" id="popupAddQuest">
                 <?php echo $popUpAddQuest; ?>
             </div>

@@ -153,7 +153,7 @@ abstract class Question
     {
         try {
             $db = connexion_to_bd();
-            $query = $db->prepare("UPDATE QUESTIONS set is_shown = 0 WHERE id_question = :id" );
+            $query = $db->prepare("UPDATE QUESTIONS set is_shown = 0 WHERE id_question = :id");
             $query->execute(['id' => $id]);
             return 1;
         } catch (PDOException $e) {
@@ -206,7 +206,8 @@ abstract class Question
      * Récupère toutes les questions de la base de données qui peuvent être affichées dans un quizz
      * @return array|string tableau de questions ou message d'erreur
      */
-    public static function getAllQuestionShawn(){
+    public static function getAllQuestionShawn()
+    {
         try {
             $db = connexion_to_bd();
             $query = $db->prepare("SELECT * FROM QUESTIONS where is_shown = 1");
@@ -286,6 +287,48 @@ abstract class Question
         }
     }
 
+    /**
+     * Recherche dans la bd une correspondance
+     * @param mixed $recherche la recherche de l'utilisateur
+     * @return array ce qui correspond
+     */
+    public static function getQuestionSearch($recherche)
+    {
+        try {
+            $db = connexion_to_bd();
+            $query = $db->prepare(
+                "SELECT * FROM QUESTIONS WHERE interrogation LIKE :recherche"
+            );
+            $query->execute(['recherche' => "%$recherche%"]);
+            $questions = $query->fetchAll(PDO::FETCH_ASSOC);
+            $tab = [];
+            foreach ($questions as $question) {
+                switch ($question['type']) {
+                    case 'QCM':
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        break;
+                    case 'QCU':
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        break;
+                    case 'QCS':
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        break;
+                    case 'QCT':
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown']));
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return $tab;
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+            return [];
+        } finally {
+            $db = null;
+        }
+    }
+
     /*
     * Donne un tableau de questions aléatoires
     * @param $theme theme des questions
@@ -333,7 +376,8 @@ abstract class Question
         return $tab;
     }
 
-    public function getShown(){
+    public function getShown()
+    {
         return $this->is_shown;
     }
 
