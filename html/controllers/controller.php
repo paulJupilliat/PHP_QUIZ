@@ -70,7 +70,13 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
 function quizz($theme)
 {
     if (checkLoged()) {
-        $questions = Question::getQuestionAleatoire($theme, 2); // Int value to change number of questions
+        //si je suis prenium
+        if (isPremium($_SESSION['pseudo'])) {
+            $questions = Question::getQuestionAleatoire($theme, 10);
+        } else {
+            $questions = Question::getQuestionAleatoireLambda($theme, 2);
+        }
+        $questions = Question::getQuestionAleatoire($theme, 2);
         require('templates/quizz.php');
     } else {
         header("Location: index.php");
@@ -110,6 +116,23 @@ function admin()
             $allQuestion = Question::getAllQuestionShawn();
         }
         require('templates/admin.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+function paypal()
+{
+    if (checkLoged()) {
+        require('templates/paypal.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+
+function success()
+{
+    if (checkLoged()) {
+        require('templates/success.php');
     } else {
         header("Location: index.php");
     }
