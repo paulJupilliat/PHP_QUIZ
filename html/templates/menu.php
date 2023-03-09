@@ -33,6 +33,13 @@ require_once('controllers/controller.php');
             <a class="navbar_elem" href="index.php?action=login"> Connexion</a>
         <?php } ?>
         <a href="index.php?action=paypal">Prenium</a>
+        <?php 
+        // si personne n'est connecté
+        if (!isset($_SESSION['pseudo'])) {
+            echo '<a class="navbar_elem" href="index.php?action=signup"> Inscription</a>';
+        }
+        
+        ?>
     </ul>
 
 
