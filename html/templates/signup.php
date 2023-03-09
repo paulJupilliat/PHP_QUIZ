@@ -20,15 +20,15 @@
                 <p><?php echo $err; ?></p>
             </div>';
         } ?>
-        <form method="get" action="index.php">
+        <form method="post" action="index.php">
             <div>
                 <input type="hidden" name="action" value="newsignup"> <!-- Permet d'envoyer l'action -->
                 <label> Pseudo </label>
                 <input type="text" name="pseudo" value="" placeholder="pseudo" required>
                 <label> Mote de passe</label>
-                <input type="text" name="mdp" placeholder="mot de passe">
+                <input type="password" name="mdp" placeholder="mot de passe">
                 <label> Confirmation mot de passe</label>
-                <input type="text" name="mdp2" placeholder="mot de passe">
+                <input type="password" name="mdp2" placeholder="confirmer mot de passe">
             </div>
             <div>
                 <label> Nom</label>

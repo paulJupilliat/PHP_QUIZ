@@ -11,10 +11,10 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
             signup();
             break;
         case 'newsignup':
-            newSignup($_GET['pseudo'], $_GET['mdp'], $_GET['mdp2'], $_GET['nom'], $_GET['prenom'], $_GET['age']);
+            newSignup($_POST['pseudo'], $_POST['mdp'], $_POST['mdp2'], $_POST['nom'], $_POST['prenom'], $_POST['age']);
             break;
         case 'connexion':
-            connexion($_GET['name'], $_GET['mdp']);
+            connexion($_POST['name'], $_POST['mdp']);
             break;
         case 'logout':
             session_destroy();
