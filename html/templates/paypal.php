@@ -3,6 +3,7 @@ session_start();
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+include('menu.php');
 
 ?>
 
@@ -20,7 +21,7 @@ error_reporting(E_ALL);
 
 <body>
 
-  <div class="container">
+  <div class="container" style="margin-top: 20vw;">
 
     <div class="left">
       <div class="product-pic">
