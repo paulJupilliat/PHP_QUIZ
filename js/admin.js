@@ -16,6 +16,7 @@ function togglePopupAddQuest() {
  * According to the type of question, show the right input
  */
 function showReponseProp() {
+  console.log("showReponseProp");
   // récupérer la valeur du menu déroulant
   let type = typeQuest.value;
   let reponseProp = document.getElementById("reponses-prop");
@@ -24,7 +25,7 @@ function showReponseProp() {
   reponseProp.innerHTML = "";
   console.log(type);
 
-  if (type === "Text") {
+  if (type === "text") {
     reponseProp.innerHTML =
       "<input type='text' name='reponse' id='reponse' placeholder='Réponse proposée' required>";
   } else if (type === "radio" || type === "checkbox") {
@@ -62,7 +63,7 @@ function addProp() {
  */
 function newTheme() {
   let theme = themeChoice.value;
-  let inputOtherTheme = document.getElementById("otherTheme");
+  let inputOtherTheme = document.getElementById("input-other-theme");
   if (theme === "other") {
     inputOtherTheme.style.display = "block";
   } else {
@@ -88,6 +89,13 @@ function submitNewQuest() {
     for (let i = 0; i < reponsesProp.length; i++) {
       reponsesPropToSend += reponsesProp[i].value + "|";
     }
+    // enlève le dernier|
+    reponsesPropToSend = reponsesPropToSend.slice(0, -1);
+  }
+  else if (type === "number") {
+    let reponsesProp = document.getElementsByClassName("reponseProp");
+    reponsesPropToSend = reponsesProp[0].value;
+    console.log(reponsesPropToSend);
   }
   // envoyer les donnéer par l'url
   window.location.href =
@@ -103,22 +111,22 @@ function submitNewQuest() {
     reponse +
     "&reponsesProp=" +
     reponsesPropToSend;
-  }
+}
 
 function deleteQuest(id) {
   // window.location.href = "index.php?action=deleteQuestion&id=" + id; avec la méthode POST
-    let formDeleteQuest = document.createElement("form"); // Crée un élément de formulaire
-    formDeleteQuest.method = "POST"; // Spécifie la méthode POST
-    formDeleteQuest.action = "index.php?action=deleteQuestion&id=" + id; // Spécifie l'URL à laquelle envoyer la requête et l'identifiant de la question à supprimer
+  let formDeleteQuest = document.createElement("form"); // Crée un élément de formulaire
+  formDeleteQuest.method = "POST"; // Spécifie la méthode POST
+  formDeleteQuest.action = "index.php?action=deleteQuestion&id=" + id; // Spécifie l'URL à laquelle envoyer la requête et l'identifiant de la question à supprimer
 
-    // Ajoute un champ caché pour l'identifiant de la question
-    let inputId = document.createElement("input");
-    inputId.setAttribute("type", "hidden");
-    inputId.setAttribute("name", "id");
-    inputId.setAttribute("value", id);
-    formDeleteQuest.appendChild(inputId);
+  // Ajoute un champ caché pour l'identifiant de la question
+  let inputId = document.createElement("input");
+  inputId.setAttribute("type", "hidden");
+  inputId.setAttribute("name", "id");
+  inputId.setAttribute("value", id);
+  formDeleteQuest.appendChild(inputId);
 
-    // Ajoute le formulaire à la page et soumet la requête
-    document.body.appendChild(formDeleteQuest);
-    formDeleteQuest.submit();
-  }
+  // Ajoute le formulaire à la page et soumet la requête
+  document.body.appendChild(formDeleteQuest);
+  formDeleteQuest.submit();
+}

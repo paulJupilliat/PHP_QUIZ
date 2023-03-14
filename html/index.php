@@ -53,6 +53,9 @@ if (isset($_GET['action']) && $_GET['action'] !== '') {
         case 'deleteQuestion':
             deleteQuest($_POST['id']);
             break;
+        case 'admin':
+            admin();
+            break;
         default:
             // echo $_POST['action']; //Debug
             echo "Erreur 404 : la page que vous recherchez n'existe pas.";

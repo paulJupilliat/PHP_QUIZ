@@ -9,8 +9,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpwd
       MYSQL_DATABASE: quizz
-      MYSQL_USER: appadmin
-      MYSQL_PASSWORD: pwdadmin
+      # MYSQL_USER: root
+      # MYSQL_PASSWORD: rootpwd
     ports:
       - "3306:3306"
     restart: always
