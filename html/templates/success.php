@@ -19,7 +19,7 @@ session_start();
         <img src="assets/img/checked.png">
     </div>
     <h1 class="font-title">Merci pour votre confiance !</h1>
-    <p>Veuillez joindre vos fichiers au format .zip</p>
+    <p>Votre paiement a bien été effectué. Vous pouvez maintenant profiter de toutes les fonctionnalités de notre site.</p>
     <div class="center">
         <a class="return" href="index.php?accueil">Retour à l'accueil</a>
     </div>
