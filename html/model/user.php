@@ -11,7 +11,7 @@ class User
 
     private string $prenom;
 
-    private int $prenium;
+    private int $premium;
 
     private int $age;
 
@@ -26,7 +26,7 @@ class User
             $this->pseudo = $pseudo;
             $this->nom = $nom;
             $this->prenom = $prenom;
-            $this->prenium = false;
+            $this->premium = false;
             $this->age = $age;
             $this->mdp = $mdp;
         }
@@ -43,7 +43,7 @@ class User
                 $user = $query->fetch();
                 $this->nom = $user['nom'];
                 $this->prenom = $user['prenom'];
-                $this->prenium = $user['prenium'] == 1;
+                $this->premium = $user['premium'] == 1;
                 $this->age = $user['age'];
                 $this->mdp = $user['mdp'];
             }
@@ -220,14 +220,15 @@ class User
         echo "<p> Prenom: " . $this->prenom . "</p>";
         echo "<p> Age: " . $this->age . "</p>";
         if (isPremium($this->pseudo)) {
-            echo "<p> Prenium </p>";
+            echo "<p> premium </p>";
         }
         // checkbox coché si admin et si on clicke dessus peut changer de role
         echo "<input type='checkbox' name='admin' value='admin'" . strval(($this->getAdmin() == 1) ? 'checked' : '') . " disabled> Admin";
         echo "</div>";
     }
 
-    public static function exportToJson(){
+    public static function exportToJson()
+    {
         try {
             $db = connexion_to_bd();
             $query = $db->query("SELECT * FROM USERS");
@@ -244,7 +245,7 @@ class User
                 array_push($roles, $role);
             }
             $data .= json_encode($roles, JSON_UNESCAPED_UNICODE);
-            
+
             // Écrit le contenu dans un fichier
             file_put_contents('users.json', $data);
 
@@ -260,8 +261,9 @@ class User
         }
     }
 
-    public static function importFromJson($fic){
-        try{
+    public static function importFromJson($fic)
+    {
+        try {
             $db = connexion_to_bd();
             $data = file_get_contents($fic);
             $users = json_decode($data, true);
@@ -290,19 +292,16 @@ class User
         }
     }
 
-    public function setPrenium()
+    public function setpremium()
     {
         try {
             $connexion = connexion_to_bd();
-            $query = $connexion->prepare("UPDATE USERS SET prenium = 1 WHERE pseudo = :pseudo");
+            $query = $connexion->prepare("UPDATE USERS SET premium = 1 WHERE pseudo = :pseudo");
             $res = $query->execute(['pseudo' => $this->pseudo]);
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
         } finally {
             $connexion = null;
         }
-
-
     }
-
 }

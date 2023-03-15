@@ -72,7 +72,7 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
 function quizz($theme)
 {
     if (checkLoged()) {
-        //si je suis prenium
+        //si je suis premium
         if (isPremium($_SESSION['pseudo'])) {
             $questions = Question::getQuestionAleatoire($theme, $_SESSION['nbQuestQuest']);
         } else {
@@ -165,7 +165,7 @@ function success()
 {
     if (checkLoged()) {
         $user = new User($_SESSION['pseudo']);
-        $user->setPrenium();
+        $user->setpremium();
         require('templates/success.php');
     } else {
         header("Location: index.php");

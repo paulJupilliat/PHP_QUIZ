@@ -19,20 +19,19 @@ function connexion_to_bd()
     }
 }
 function isPremium($id)
-    {
-        try {
-            $db = connexion_to_bd();
-            $query = $db->prepare("SELECT prenium FROM USERS WHERE pseudo = :pseudo");
-            $query->execute(['pseudo' => $id]);
-            $result = $query->fetch();
-            return $result['prenium'];
-
-        } catch (PDOException $e) {
-            return "Erreur : " . $e->getMessage();
-        } finally {
-            $db = null;
-        }
+{
+    try {
+        $db = connexion_to_bd();
+        $query = $db->prepare("SELECT premium FROM USERS WHERE pseudo = :pseudo");
+        $query->execute(['pseudo' => $id]);
+        $result = $query->fetch();
+        return $result['premium'];
+    } catch (PDOException $e) {
+        return "Erreur : " . $e->getMessage();
+    } finally {
+        $db = null;
     }
+}
 
 /**
  * Vérifie si l'utilisateur est connecté

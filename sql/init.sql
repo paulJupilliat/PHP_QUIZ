@@ -27,8 +27,8 @@ DELETE
 FLUSH PRIVILEGES;
 
 -- Met en place l'utf8
-ALTER DATABASE
-    quizz CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+ALTER DATABASE quizz CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 -- Create tables
 
@@ -47,7 +47,7 @@ CREATE TABLE
 CREATE TABLE
     QUESTIONS(
         id_question INT PRIMARY KEY auto_increment,
-        prenium BOOLEAN DEFAULT FALSE,
+        premium BOOLEAN DEFAULT FALSE,
         interrogation VARCHAR(255),
         reponse VARCHAR(255),
         theme VARCHAR(42),
@@ -62,7 +62,7 @@ CREATE TABLE
     USERS (
         pseudo VARCHAR(42) PRIMARY KEY,
         nom VARCHAR(42) NULL,
-        prenium BOOLEAN DEFAULT FALSE,
+        premium BOOLEAN DEFAULT FALSE,
         prenom VARCHAR(42) NULL,
         mdp VARCHAR(500) NOT NULL,
         age INT DEFAULT 0
@@ -126,7 +126,7 @@ INSERT INTO
     USERS (
         pseudo,
         nom,
-        prenium,
+        premium,
         prenom,
         mdp,
         age
@@ -156,7 +156,7 @@ VALUES ('Histoire', 'Histoire'), ('Geographie', 'Geographie'), ('Sport', 'Sport'
 INSERT INTO
     QUESTIONS (
         interrogation,
-        prenium,
+        premium,
         reponse,
         theme,
         propositions,
@@ -265,6 +265,7 @@ INSERT INTO have_role
 VALUES ('user1', 'ROLE_USER'), ('admin1', 'ROLE_ADMIN'), ('admin1', 'ROLE_USER');
 
 INSERT INTO QUESTION_TENTATIVE (1, 1, 'init');
+
 INSERT INTO do_tentative (1, 'admin', 1);
 
 -- trigger si la question
@@ -280,8 +281,7 @@ ON QUESTIONS FOR EACH ROW BEGIN
 	-- Compter le nombre de propositions
 	SET
 	    prop_count = LENGTH(NEW.propositions) - LENGTH(
-	        REPLACE
-	(NEW.propositions, '|', '')
+	        REPLACE (NEW.propositions, '|', '')
 	    ) + 1;
 	-- Vérifier si une question similaire existe déjà
 	WHILE i <= prop_count
@@ -307,8 +307,7 @@ ON QUESTIONS FOR EACH ROW BEGIN
 	    WHERE
 	        id_question = existing_question_id
 	) THEN
-	SET
-	    NEW.is_shown = true;
+	SET NEW.is_shown = true;
 	ELSE SIGNAL SQLSTATE '45000'
 	SET
 	    MESSAGE_TEXT = 'Impossible d\'insérer. Une question similaire existe déjà.';
