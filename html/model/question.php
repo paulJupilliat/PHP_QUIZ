@@ -449,6 +449,9 @@ abstract class Question
         $questions = Question::getQuestionByThemepremium($theme);
         $tab = [];
         for ($i = 0; $i < $nb; $i++) {
+            if (count($questions) == 0) {
+                return $tab;
+            }
             $rand = rand(0, count($questions) - 1);
             array_push($tab, $questions[$rand]);
             unset($questions[$rand]);
@@ -469,6 +472,9 @@ abstract class Question
         $questions = Question::getQuestionByTheme($theme);
         $tab = [];
         for ($i = 0; $i < $nb; $i++) {
+            if (count($questions) == 0) {
+                return $tab;
+            }
             $rand = rand(0, count($questions) - 1);
 
             array_push($tab, $questions[$rand]);

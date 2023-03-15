@@ -178,3 +178,6 @@ p {
 path {
     fill: #8eb864;
 }
+svg{
+    max-height: 65vh;
+}

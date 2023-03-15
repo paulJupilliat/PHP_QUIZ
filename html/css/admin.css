@@ -46,16 +46,9 @@ main {
     text-decoration: underline;
     cursor: pointer;
 }
-
-/* Le SVG est positionné dans le coin inférieur droit de la page */
-#svg-logo {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
+svg {
+    max-height: 65vh;
 }
-
 /* Réinitialisation des styles */
 * {
     margin: 0;
@@ -63,13 +56,6 @@ main {
     box-sizing: border-box;
 }
 
-/* Styles pour le SVG */
-#svg-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
 
 /* Styles pour la div adminQuestion */
 #adminQuestion {

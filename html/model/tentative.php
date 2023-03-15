@@ -33,11 +33,12 @@ class Tentative
         $this->idTentative = $idTenatative;
         $this->questionTentative = [];
         $result = Tentative::getAllContentTentative($idTenatative);
-        $this->pseudo = $result[0]['pseudo'];
-        foreach ($result as $row) {
-            $question = Question::getById($row['question_id']);
-            array_push($this->questionTentative, $question);
+        foreach ($result as $question) {
+            $questionBd = Tentative::getidQuestAndProposition($question['quest_tentative_id']);
+            $questionInstance = Question::getById($questionBd['question_id']);
+            array_push($this->questionTentative, $questionInstance);
         }
+        $this->pseudo = $_SESSION['pseudo'];
         $this->score = $this->getScore();
     }
 
@@ -138,7 +139,10 @@ class Tentative
         // Pour toutes les questions de la tentative
         foreach ($doTentative as $quest_tentative) {
             $result2 = Tentative::getidQuestAndProposition($quest_tentative['quest_tentative_id']);
-            if (Question::getById($result2['question_id'])->isTrue($result2['proposition'])) {
+            $question = Question::getById($result2['question_id']);
+            $proposition = $result2['proposition'];
+            $reponse = $question->getReponse();
+            if ($proposition == $reponse) {
                 $score++;
             }
         }
@@ -160,9 +164,9 @@ class Tentative
     {
         try {
             $connexion = connexion_to_bd();
-            $sql = "SELECT * FROM QUESTION_TENTATIVES WHERE id = :question_id";
+            $sql = "SELECT * FROM QUESTION_TENTATIVES WHERE id = :id_tentative";
             $stmt = $connexion->prepare($sql);
-            $stmt->bindParam(':question_id', $questTentative);
+            $stmt->bindParam(':id_tentative', $questTentative);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -193,6 +197,11 @@ class Tentative
         } finally {
             $connexion = null;
         }
+    }
+
+    public function getID()
+    {
+        return $this->idTentative;
     }
 
     /**
@@ -242,5 +251,56 @@ class Tentative
             }
         }
         return [];
+    }
+
+    /**
+     * Get all the tentative of the user
+     * @param mixed $pseudo pseudo of the user
+     * @return array array of all the tentative of the user
+     */
+    public static function getAllTentative($pseudo)
+    {
+        try {
+            $connexion = connexion_to_bd();
+            $sql = "SELECT * FROM do_tentative WHERE pseudo = :pseudo order by id_tentative ";
+            $stmt = $connexion->prepare($sql);
+            $stmt->bindParam(':pseudo', $pseudo);
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $tentatives = [];
+            foreach ($result as $tentative) {
+                array_push($tentatives, new Tentative($tentative['id_tentative']));
+            }
+            return $tentatives;
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage(); // Pour debug
+            return [];
+        } finally {
+            $connexion = null;
+        }
+    }
+
+    /**
+     * Affiche un récapitulatif de toutes les tentatives de l'utilisateur
+     * @param mixed $pseudo pseudo de l'utilisateur
+     * @return string html code of the recap of all tentative
+     */
+    public static function displayAllTentative($pseudo)
+    {
+        $lastTentativeCheck = -1;
+        $html = "<div class='tentative'>";
+        $html .= "<h2>Tentatives</h2>";
+        $html .= "<div class='tentative'>";
+        $tentatives = Tentative::getAllTentative($pseudo);
+        foreach ($tentatives as $tentative) {
+            if ($lastTentativeCheck != $tentative->getID()) {
+                $html .= "<h3>Tentative n°" . $tentative->getId() . "</h3>";
+                $lastTentativeCheck = $tentative->getId();
+                $html .= $tentative->display();
+                $html .= "</div>";
+            }
+        }
+        $html .= "</div>";
+        return $html;
     }
 }

@@ -35,3 +35,6 @@
 main {
     margin-top: 8%;
 }
+svg{
+    max-height: 65vh;
+}

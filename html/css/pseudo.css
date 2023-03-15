@@ -52,4 +52,7 @@ section{
     margin-left: auto;
     margin-right: auto;
 }
+svg{
+    max-height: 65vh;
+}
 
