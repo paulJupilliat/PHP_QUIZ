@@ -2,6 +2,7 @@
 require_once('model/model.php');
 require_once('model/question.php');
 require_once('model/popUp.php');
+require_once('model/user.php');
 function home()
 {
     $_SESSION['themes'] = putTheme();
@@ -108,13 +109,43 @@ function putTheme()
 function admin()
 {
     if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
-        $recherche = $_GET['recherche'];
+        // gestion des questions
         $popUpAddQuest = PopUp::getPopUpAddQuest();
-        if (isset($recherche)) {
-            $allQuestion = Question::getQuestionSearch($recherche);
+        if (isset($_GET['recherche'])) {
+            $allQuestion = Question::getQuestionSearch($_GET['recherche']);
         } else {
-            $allQuestion = Question::getAllQuestionShawn();
+            $allQuestion = Question::getAllQuestionsShawn();
         }
+
+        // Exportation et importation
+        if (isset($_GET['export'])) {
+            Question::exportToJSON();
+        }
+        if (isset($_FILES['fileToUpload'])) {
+            try {
+                Question::importFromJSON($_FILES['fileToUpload']);
+                unset($_FILES['fileToUpload']);
+            } catch (Exception $e) {
+                echo '<script>alert("Le fichier selectionné n\'est pas un .json")</script>';
+            }
+        }
+
+        // Import export user
+        if (isset($_GET['exportUser'])) {
+            User::exportToJSON();
+        }
+        if (isset($_FILES['fileToUploadUser'])) {
+            try {
+                User::importFromJSON($_FILES['fileToUploadUser']);
+                unset($_FILES['fileToUploadUser']);
+            } catch (Exception $e) {
+                echo '<script>alert("Le fichier selectionné n\'est pas un .json")</script>';
+            }
+        }
+
+        // gestion des utilisateurs
+        $allUsers = User::getAllUsers();
+
         require('templates/admin.php');
     } else {
         header("Location: index.php");
@@ -145,6 +176,7 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
 {
     if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
         $theme = traitementTheme($theme, $otherTheme);
+        $theme = ucfirst(strtolower($theme));
         switch ($type) {
             case 'text':
                 $question = new QCT(0, $question, $reponse, $theme, '', 'QCT', 1);

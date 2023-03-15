@@ -105,3 +105,72 @@ main{
 .true{
     color: green;
 }
+
+h1 {
+    margin-top: 0;
+}
+
+.score {
+    background-color: #8eb864;
+    color: #fff;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+}
+
+.questions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.question {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.reponse:checked+label{
+    background-color: #8eb864;
+    color: #fff;
+}
+
+.reponse {
+    margin-right: 0.5rem;
+}
+
+.reponse:disabled {
+    opacity: 0.5;
+}
+
+.reponse+label {
+    margin-right: 1rem;
+    cursor: pointer;
+}
+
+.reponse:focus+label {
+    outline: 1px solid #8eb864;
+}
+
+.reponse:valid {
+    border-color: #8eb864;
+}
+
+.interrogation {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+path {
+    fill: #8eb864;
+}

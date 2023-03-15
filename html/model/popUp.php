@@ -1,8 +1,14 @@
 <?php
+require_once('model/model.php');
 class PopUp
 {
     static function getPopUpAddQuest()
     {
+        $themes = '';
+        foreach (putTheme() as $theme) {
+            $themes .= '"<option value="' . $theme . '">' . $theme . '</option>"';
+        }
+
         return '<form class="popup-content" id="form-new-quest">
                 <!-- <input type="hidden" name="action" value="addQuestion"> -->
                 <!-- la question -->
@@ -10,7 +16,7 @@ class PopUp
                 <input type="text" name="question" id="question" required>
                 <!-- le type -->
                 <label for="type">Type</label>
-                <select name=" type" id="type-quest" required onchange="showReponseProp()">
+                <select name=" type" id="type-quest" required onclick="showReponseProp()">
                     <option value="text">Text</option>
                     <option value="number">Number</option>
                     <option value="radio">Radio</option>
@@ -23,15 +29,10 @@ class PopUp
                 <!-- le thème -->
                 <div>
                     <label for="theme">Thème</label>
-                    <select name="theme" id="theme-choice" required onchange="newTheme()">
-                        <option value="" disabled selected>Choisir un thème</option>
-                        <!-- Un option par theme avec php -->
-                        <?php
-                        foreach ($_SESSION["themes"] as $theme) {
-                            echo "<option value="$theme">$theme</option>";
-                        }
-                        ?>
-                        <option value="other">Autre</option>
+                    <select name="theme" id="theme-choice" required onChange="newTheme()">
+                        <option value="" disabled selected>Choisir un thème</option>'
+            . $themes .
+            '<option value="other">Autre</option>
                     </select>
                     <div id="input-other-theme">
                         <input type="text" name="otherTheme" id="otherTheme" placeholder="Autre thème">

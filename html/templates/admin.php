@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/admin.css">
 
 
 </head>
@@ -20,7 +20,18 @@
     <main>
         <div id="adminQuestion">
             <button class="button-toggle-popup" onclick="togglePopupAddQuest()">Ajouter une question</button>
-            <form method="get" action="index.php?action=admin">
+            <form id="importFic" action="index.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="admin" />
+                <label for="fileToUpload">Sélectionnez un fichier :</label>
+                <input type="file" id="fileToUpload" name="fileToUpload">
+                <input type="submit" value="Importer depuis .json" name="submit">
+            </form>
+            <form id="ExportFic" method="get" action="index.php">
+                <input type="hidden" name="action" value="admin" />
+                <input type="hidden" name="export" value="true" />
+                <button type="submit">Exporter</button>
+            </form>
+            <form id="findQuest" method="get" action="index.php?action=admin">
                 <input type="hidden" name="action" value="admin" />
                 <input type="text" name="recherche" placeholder="Recherche...">
                 <button type="submit">Rechercher</button>
@@ -36,6 +47,25 @@
                 } ?>
 
             </div>
+
+        </div>
+        <div id="adminUser">
+            <?php foreach ($allUsers as $user) {
+                echo $user->displayPreview();
+            } ?>
+            <!-- <form id="importFic" action="index.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="admin" />
+                <label for="fileToUploadUser">Sélectionnez un fichier :</label>
+                <input type="file" id="fileToUploadUser" name="fileToUploadUser">
+                <input type="submit" value="Importer depuis .json" name="submit">
+            </form> -->
+            <form id="ExportFic" method="get" action="index.php">
+                <input type="hidden" name="action" value="admin" />
+                <input type="hidden" name="exportUser" value="true" />
+                <button type="submit">Exporter</button>
+            </form>
+
+        </div>
 
     </main>
     <svg xmlns=" http://www.w3.org/2000/svg" viewBox="0 0 1440 320">

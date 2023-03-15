@@ -120,6 +120,62 @@ abstract class Question
         return $html;
     }
 
+    public static function exportToJSON()
+    {
+        try {
+            $db = connexion_to_bd();
+            $query = $db->query("SELECT interrogation, reponse, theme, propositions, type, prenium, is_shown FROM QUESTIONS");
+            $questions = array();
+            while ($quest = $query->fetch(PDO::FETCH_ASSOC)) {
+                $questions[] = $quest;
+            }
+            $data = json_encode($questions, JSON_UNESCAPED_UNICODE);
+
+            // Écrit le contenu dans un fichier
+            file_put_contents('questions.json', $data);
+
+            // Envoie le fichier en tant que réponse HTTP
+            header('Content-Type: application/json; charset=utf-8');
+            header('Content-Disposition: attachment; filename="questions.json"');
+            readfile('questions.json');
+            exit;
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        } finally {
+            $db = null;
+        }
+    }
+
+    /**
+     * Importe les questions depuis un fichier JSON
+     * @param mixed $fic fichier JSON
+     */
+    public static function importFromJSON($fic)
+    {
+        try {
+            $db = connexion_to_bd();
+            $data = file_get_contents($fic['tmp_name']);
+            $questions = json_decode($data, true);
+            foreach ($questions as $question) {
+                try {
+                    $query = $db->prepare("INSERT INTO QUESTIONS (interrogation, reponse, theme, propositions, type, prenium, is_shown) VALUES (:interrogation, :reponse, :theme, :propositions, :type, :prenium, :is_shown)");
+                    $query->execute(['interrogation' => $question['interrogation'], 'reponse' => $question['reponse'], 'theme' => $question['theme'], 'propositions' => $question['propositions'], 'type' => $question['type'], 'prenium' => $question['prenium'], 'is_shown' => $question['is_shown']]);
+                } catch (PDOException $e) {
+                    if (!$e->getMessage() == "SQLSTATE[45000]: <>: 1644 Impossible d'insérer. Une question similaire existe déjà.") {
+                        echo "Erreur : " . $e->getMessage();
+                    }
+                }
+            }
+            echo "<script>alert('Les questions ont bien été importées')</script>";
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        } catch (ValueError $e) {
+            echo "<script>alert('Le fichier selectionné n'est pas un .json')</script>";
+        } finally {
+            $db = null;
+        }
+    }
+
     /**
      * Push une nouvelle question dans la base de données
      * @param $interrogation interrogation de la question
@@ -133,6 +189,17 @@ abstract class Question
     {
         try {
             $db = connexion_to_bd();
+            // on regarde si le thème existe déjà
+            $theme = ucfirst(strtolower($theme));
+            $query = $db->prepare("SELECT * FROM ref_THEMES WHERE theme_name = :theme");
+            $query->execute(['theme' => $theme]);
+            $theme_exists = $query->fetch(PDO::FETCH_ASSOC);
+            if ($theme_exists == null) {
+                $query = $db->prepare("INSERT INTO ref_THEMES (theme_name) VALUES (:theme)");
+                $query->execute(['theme' => $theme]);
+            }
+
+            // on insère la question
             $query = $db->prepare("INSERT INTO QUESTIONS (interrogation, reponse, theme, propositions, type) VALUES (:interrogation, :reponse, :theme, :propositions, :type)");
             $query->execute(['interrogation' => $interrogation, 'reponse' => $reponse, 'theme' => $theme, 'propositions' => $propositions, 'type' => $type]);
             return 1;
@@ -168,7 +235,7 @@ abstract class Question
      * Récupère toutes les questions de la base de données
      * @return array|string tableau de questions ou message d'erreur
      */
-    public static function getAllQuestion()
+    public static function getAllQuestions()
     {
         try {
             $db = connexion_to_bd();
@@ -206,7 +273,7 @@ abstract class Question
      * Récupère toutes les questions de la base de données qui peuvent être affichées dans un quizz
      * @return array|string tableau de questions ou message d'erreur
      */
-    public static function getAllQuestionShawn()
+    public static function getAllQuestionsShawn()
     {
         try {
             $db = connexion_to_bd();
@@ -257,7 +324,7 @@ abstract class Question
     {
         try {
             $db = connexion_to_bd();
-            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE theme = :theme");
+            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE theme = :theme and is_shown = 1 and prenium = 0");
             $query->execute(['theme' => $theme]);
             $questions = $query->fetchAll(PDO::FETCH_ASSOC);
             $tab = [];
@@ -297,7 +364,7 @@ abstract class Question
         try {
             $db = connexion_to_bd();
             $query = $db->prepare(
-                "SELECT * FROM QUESTIONS WHERE interrogation LIKE :recherche"
+                "SELECT * FROM QUESTIONS WHERE interrogation LIKE :recherche AND is_shown = 1"
             );
             $query->execute(['recherche' => "%$recherche%"]);
             $questions = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -334,23 +401,23 @@ abstract class Question
     {
         try {
             $db = connexion_to_bd();
-            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE theme = :theme and prenium = TRUE");
+            $query = $db->prepare("SELECT * FROM QUESTIONS WHERE theme = :theme and is_shown = 1");
             $query->execute(['theme' => $theme]);
             $questions = $query->fetchAll(PDO::FETCH_ASSOC);
             $tab = [];
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['id'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown']));
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown']));
                         break;
                     default:
                         break;
@@ -382,7 +449,7 @@ abstract class Question
         return $tab;
     }
 
-    
+
 
     public static function getQuestionAleatoireLambda($theme, $nb)
     {
