@@ -1,0 +1,380 @@
+[
+  {
+    "interrogation": "Quelle est la capitale de la France?",
+    "reponse": "Paris",
+    "theme": "Geographie",
+    "propositions": "Lyon|Marseille|Bordeaux",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le plus haut sommet de la France?",
+    "reponse": "Mont Blanc",
+    "theme": "Geographie",
+    "propositions": "Pyrenees|Alpes|Massif central",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quelle est la date de naissance de Napoléon Bonaparte?",
+    "reponse": "15 août 1769",
+    "theme": "Histoire",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom de la devise de l'Union européenne?",
+    "reponse": "L'euro",
+    "theme": "Economie",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quelle est la capitale du Burkina Faso?",
+    "reponse": "Ouagadougou",
+    "theme": "Geographie",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom du premier président de la Côte d'Ivoire?",
+    "reponse": "Félix Houphouët-Boigny",
+    "theme": "Histoire",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le plus grand pays d'Afrique?",
+    "reponse": "Algérie",
+    "theme": "Geographie",
+    "propositions": "Nigeria|Egypte|Afrique du Sud",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom du célèbre peintre espagnol?",
+    "reponse": "Pablo Picasso",
+    "theme": "Art",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom du plus grand océan?",
+    "reponse": "Océan Pacifique",
+    "theme": "Geographie",
+    "propositions": "Océan Atlantique|Océan Indien|Océan Arctique",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quelle est la plus grande religion du monde?",
+    "reponse": "Islam",
+    "theme": "Religion",
+    "propositions": "Christianisme|Hindouisme|Bouddhisme",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Sur une échelle de 1 à 10, combien de fois par semaine mangez-vous de la viande?",
+    "reponse": "5",
+    "theme": "Sante",
+    "propositions": "",
+    "type": "QCS",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Sur une échelle de 1 à 10, quelle est votre satisfaction avec votre vie actuelle?",
+    "reponse": "7",
+    "theme": "Societe",
+    "propositions": "",
+    "type": "QCS",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Sur une échelle de 1 à 10, combien aimez-vous les films d'horreur?",
+    "reponse": "3",
+    "theme": "Cinema",
+    "propositions": "",
+    "type": "QCS",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le plus grand désert du monde?",
+    "reponse": "Le Sahara",
+    "theme": "Geographie",
+    "propositions": "Le Kalahari|Le Gobi|Le désert d'Atacama",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Qui a écrit le roman 'Le rouge et le noir'?",
+    "reponse": "Stendhal",
+    "theme": "Littérature",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom de la première femme à avoir reçu un prix Nobel?",
+    "reponse": "Marie Curie",
+    "theme": "Histoire",
+    "propositions": "Dorothy Hodgkin|Irene Joliot-Curie|Gerty Cori",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le plus grand animal terrestre?",
+    "reponse": "L'éléphant d'Afrique",
+    "theme": "Animaux",
+    "propositions": "Le lion|Le rhinocéros|L'hippopotame",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quel pays se trouve la tour de Pise?",
+    "reponse": "Italie",
+    "theme": "Geographie",
+    "propositions": "France|Espagne|Portugal",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom du personnage principal dans 'Le petit prince'?",
+    "reponse": "Le petit prince",
+    "theme": "Littérature",
+    "propositions": "Antoine de Saint-Exupéry|Le renard|La rose",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le plus grand lac du monde?",
+    "reponse": "La mer Caspienne",
+    "theme": "Geographie",
+    "propositions": "Le lac Supérieur|Le lac Victoria|Le lac Baïkal",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quel pays se trouve le Machu Picchu?",
+    "reponse": "Pérou",
+    "theme": "Geographie",
+    "propositions": "Mexique|Colombie|Chili",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quelle est la plus grande ville des États-Unis?",
+    "reponse": "New York",
+    "theme": "Géographie",
+    "propositions": "Los Angeles|Chicago|Houston",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom du plus grand désert du monde?",
+    "reponse": "Le Sahara",
+    "theme": "Géographie",
+    "propositions": "Le Gobi|Le Kalahari|L'Atacama",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quelle ville se trouve la Tour Eiffel?",
+    "reponse": "Paris",
+    "theme": "Géographie",
+    "propositions": "Londres|Berlin|Amsterdam",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Qui a écrit le livre 'Les Misérables'?",
+    "reponse": "Victor Hugo",
+    "theme": "Littérature",
+    "propositions": "Charles Dickens|Gustave Flaubert|Honoré de Balzac",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quelle ville se trouve la Basilique Saint-Pierre?",
+    "reponse": "Rome",
+    "theme": "Religion",
+    "propositions": "Barcelone|Athènes|Lisbonne",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom du plus grand fleuve d'Europe?",
+    "reponse": "La Volga",
+    "theme": "Géographie",
+    "propositions": "Le Danube|Le Rhin|Le Pô",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quelle ville se trouve le siège de l'Organisation des Nations Unies (ONU)?",
+    "reponse": "New York",
+    "theme": "Politique",
+    "propositions": "Genève|Bruxelles|Vienne",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Qui a écrit le roman 'Les Misérables' ?",
+    "reponse": "Victor Hugo",
+    "theme": "Littérature",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quelle ville se trouve la tour Eiffel ?",
+    "reponse": "Paris",
+    "theme": "Géographie",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quel pays se trouve la ville de Cuzco, ancienne capitale de l'empire Inca ?",
+    "reponse": "Pérou",
+    "theme": "Géographie",
+    "propositions": "Mexique|Argentine|Colombie",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom de la plus grande île du monde ?",
+    "reponse": "Groenland",
+    "theme": "Géographie",
+    "propositions": "Australie|Sumatra|Bornéo",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quelle ville italienne se trouve la tour penchée ?",
+    "reponse": "Pise",
+    "theme": "Géographie",
+    "propositions": "Rome|Milan|Florence",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Qui a réalisé le film 'Les Dents de la Mer' ?",
+    "reponse": "Steven Spielberg",
+    "theme": "Cinéma",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le plus grand fleuve du monde?",
+    "reponse": "Le Nil",
+    "theme": "Géographie",
+    "propositions": "L'Amazone|Le Yangzi|Le Mississippi",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom de l'héroïne de 'Gone with the Wind'?",
+    "reponse": "Scarlett O'Hara",
+    "theme": "Littérature",
+    "propositions": "",
+    "type": "QCT",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le plus grand mammifère terrestre?",
+    "reponse": "L'éléphant d'Afrique",
+    "theme": "Animaux",
+    "propositions": "Le bison d'Amérique|Le rhinocéros blanc|Le lion",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom du phénomène naturel qui se produit lorsqu'une éclipse solaire est visible autour du disque lunaire?",
+    "reponse": "L'anneau de feu",
+    "theme": "Astronomie",
+    "propositions": "L'éclipse totale|L'éclipse partielle|Le transit de Mercure",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quel pays se trouve la ville de Marrakech?",
+    "reponse": "Maroc",
+    "theme": "Géographie",
+    "propositions": "Algérie|Tunisie|Libye",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom de la première personne à avoir marché sur la Lune?",
+    "reponse": "Neil Armstrong",
+    "theme": "Astronomie",
+    "propositions": "Buzz Aldrin|Yuri Gagarin|Alan Shepard",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Quel est le nom de la première femme à avoir remporté le prix Nobel de physique?",
+    "reponse": "Marie Curie",
+    "theme": "Science",
+    "propositions": "Rosalind Franklin|Chien-Shiung Wu|Jocelyn Bell Burnell",
+    "type": "QCM",
+    "premium": 1,
+    "is_shown": 1
+  },
+  {
+    "interrogation": "Dans quel film Leonardo DiCaprio joue-t-il le personnage principal?",
+    "reponse": "Titanic",
+    "theme": "Cinéma",
+    "propositions": "Inception|Le loup de Wall Street|Le revenant",
+    "type": "QCM",
+    "premium": 0,
+    "is_shown": 1
+  }
+]

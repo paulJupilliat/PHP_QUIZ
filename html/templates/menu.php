@@ -32,7 +32,9 @@ require_once('controllers/controller.php');
         } else { ?>
             <a class="navbar_elem" href="index.php?action=login"> Connexion</a>
         <?php } ?>
-        <a href="index.php?action=paypal">premium</a>
+        <?php if (!isPremium($_SESSION['pseudo'])) { ?>
+            <a class="navbar_elem" href="index.php?action=paypal"> Premium</a>
+        <?php } ?>
         <?php
         // si personne n'est connecté
         if (!isset($_SESSION['pseudo'])) {
