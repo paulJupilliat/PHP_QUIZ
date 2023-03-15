@@ -1,0 +1,37 @@
+.list_theme {
+    margin-top: 20%;
+    margin-right: 20%;
+    display: flex;
+    list-style-type: none;
+    flex-direction: row;
+    margin-left: 20%;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.style_btn {
+    border: none;
+    padding: 10px 20px;
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    background-color: #8eb864;
+    border-radius: 5px;
+    text-transform: uppercase;
+    flex-wrap: wrap;
+    margin-right: 3px;
+}
+
+.style_btn:hover {
+    background-color: #b5d893;
+}
+
+main {
+    margin-top: 8%;
+}

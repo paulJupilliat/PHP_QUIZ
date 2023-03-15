@@ -1,4 +1,5 @@
--- Active: 1678109077661@@127.0.0.1@3306@quizz
+-- Active: 1675864418959@@localhost@3306
+
 -- Create data base
 
 CREATE DATABASE
@@ -25,6 +26,10 @@ DELETE
 
 FLUSH PRIVILEGES;
 
+-- Met en place l'utf8
+ALTER DATABASE
+    quizz CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 -- Create tables
 
 CREATE TABLE
@@ -46,8 +51,9 @@ CREATE TABLE
         interrogation VARCHAR(255),
         reponse VARCHAR(255),
         theme VARCHAR(42),
-        propositions VARCHAR(255) NULL,
+        propositions VARCHAR(255) DEFAULT " ",
         type VARCHAR(42),
+        is_shown BOOLEAN DEFAULT true,
         FOREIGN KEY (theme) REFERENCES ref_THEMES(theme_name),
         FOREIGN KEY (type) REFERENCES ref_TYPES(type_name)
     );
@@ -89,10 +95,14 @@ CREATE TABLE
     do_tentative (
         id_tentative INT,
         pseudo VARCHAR(42),
-        tentative_id INT,
-        PRIMARY KEY (pseudo, tentative_id, id_tentative),
+        quest_tentative_id INT,
+        PRIMARY KEY (
+            pseudo,
+            quest_tentative_id,
+            id_tentative
+        ),
         FOREIGN KEY (pseudo) REFERENCES USERS(pseudo),
-        FOREIGN KEY (tentative_id) REFERENCES QUESTION_TENTATIVES(id)
+        FOREIGN KEY (quest_tentative_id) REFERENCES QUESTION_TENTATIVES(id)
     );
 
 -- Insert data
@@ -112,7 +122,15 @@ VALUES (
         'Question a choix avec un slider'
     );
 
-INSERT INTO USERS (pseudo,nom,prenium,prenom,mdp,age)
+INSERT INTO
+    USERS (
+        pseudo,
+        nom,
+        prenium,
+        prenom,
+        mdp,
+        age
+    )
 VALUES (
         "user1",
         "user1 name",
@@ -163,28 +181,28 @@ VALUES (
         FALSE,
         '15 août 1769',
         'Histoire',
-        NULL,
+        '',
         'QCT'
     ), (
         'Quel est le nom de la devise de l\'Union européenne?',
         FALSE,
         'L\'euro',
         'Economie',
-        NULL,
+        '',
         'QCT'
     ), (
         'Quelle est la capitale du Burkina Faso?',
         FALSE,
         'Ouagadougou',
         'Geographie',
-        NULL,
+        '',
         'QCT'
     ), (
         'Quel est le nom du premier président de la Côte d\'Ivoire?',
         FALSE,
         'Félix Houphouët-Boigny',
         'Histoire',
-        NULL,
+        '',
         'QCT'
     ), (
         'Quel est le plus grand pays d\'Afrique?',
@@ -198,7 +216,7 @@ VALUES (
         FALSE,
         'Pablo Picasso',
         'Art',
-        NULL,
+        '',
         'QCT'
     ), (
         'Quel est le nom du plus grand océan?',
@@ -219,21 +237,21 @@ VALUES (
         FALSE,
         '5',
         'Sante',
-        NULL,
+        '',
         'QCS'
     ), (
         'Sur une échelle de 1 à 10, quelle est votre satisfaction avec votre vie actuelle?',
         FALSE,
         '7',
         'Societe',
-        NULL,
+        '',
         'QCS'
     ), (
         'Sur une échelle de 1 à 10, combien aimez-vous les films d\'horreur?',
         FALSE,
         '3',
         'Cinema',
-        NULL,
+        '',
         'QCS'
     );
 
@@ -246,4 +264,56 @@ VALUES ('ROLE_USER', 'Utilisateur'), (
 INSERT INTO have_role
 VALUES ('user1', 'ROLE_USER'), ('admin1', 'ROLE_ADMIN'), ('admin1', 'ROLE_USER');
 
--- insérer des données dans la table USERS à partir d'un fichier JSON (user.json)
+-- trigger si la question
+
+DELIMITER //
+
+CREATE TRIGGER CHECK_DUPLICATE_QUESTION BEFORE INSERT 
+ON QUESTIONS FOR EACH ROW BEGIN 
+	DECLARE prop_count INT;
+	DECLARE i INT DEFAULT 1;
+	DECLARE prop_value VARCHAR(255);
+	DECLARE existing_question_id INT;
+	-- Compter le nombre de propositions
+	SET
+	    prop_count = LENGTH(NEW.propositions) - LENGTH(
+	        REPLACE
+	(NEW.propositions, '|', '')
+	    ) + 1;
+	-- Vérifier si une question similaire existe déjà
+	WHILE i <= prop_count
+	DO
+	    -- Extraire la valeur de la proposition
+	SET
+	    prop_value = SUBSTRING_INDEX(
+	        SUBSTRING_INDEX(NEW.propositions, '|', i),
+	        '|',
+	        -1
+	    );
+	-- Vérifier si une question similaire existe déjà
+	SELECT
+	    id_question INTO existing_question_id
+	FROM QUESTIONS
+	WHERE
+	    interrogation = NEW.interrogation
+	    AND propositions LIKE CONCAT('%', prop_value, '%');
+	IF existing_question_id IS NOT NULL THEN -- Si une question similaire existe et is_shown est false, mettre à true
+	IF NOT (
+	    SELECT is_shown
+	    FROM QUESTIONS
+	    WHERE
+	        id_question = existing_question_id
+	) THEN
+	SET
+	    NEW.is_shown = true;
+	ELSE SIGNAL SQLSTATE '45000'
+	SET
+	    MESSAGE_TEXT = 'Impossible d\'insérer. Une question similaire existe déjà.';
+	END IF;
+	END IF;
+	SET i = i + 1;
+	END WHILE;
+	END// 
+
+
+DELIMITER ;
