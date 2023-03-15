@@ -11,7 +11,9 @@ abstract class Question
 
     protected bool $is_shown;
 
-    public function __construct($id, $interrogation, $reponse, $theme, $propositions, $type, $shown)
+    protected bool $isPrenium;
+
+    public function __construct($id, $interrogation, $reponse, $theme, $propositions, $type, $shown, $isPrenium)
     {
         $this->id = $id;
         $this->interrogation = $interrogation;
@@ -20,6 +22,7 @@ abstract class Question
         $this->propositions = $propositions;
         $this->type = $type;
         $this->is_shown = $shown;
+        $this->isPrenium = $isPrenium;
     }
 
     public static function getByInterrogation($proposition)
@@ -31,16 +34,16 @@ abstract class Question
             $question = $query->fetch();
             switch ($question['type']) {
                 case 'QCM':
-                    $res = new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']);
+                    $res = new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium']));
                     break;
                 case 'QCU':
-                    $res = new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']);
+                    $res = new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium']));
                     break;
                 case 'QCT':
-                    $res = new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown']);
+                    $res = new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown'], boolval($question['prenium']));
                     break;
                 case 'QCS':
-                    $res = new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']);
+                    $res = new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium']));
                     break;
                 default:
                     $res = null;
@@ -63,6 +66,11 @@ abstract class Question
         }
     }
 
+    public function isPremium()
+    {
+        return $this->isPrenium;
+    }
+
     public static function getById($id)
     {
         try {
@@ -72,16 +80,16 @@ abstract class Question
             $question = $query->fetch();
             switch ($question['type']) {
                 case 'QCM':
-                    $res = new QCM($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']);
+                    $res = new QCM($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium']));
                     break;
                 case 'QCU':
-                    $res = new QCU($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']);
+                    $res = new QCU($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium']));
                     break;
                 case 'QCT':
-                    $res = new QCT($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']);
+                    $res = new QCT($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium']));
                     break;
                 case 'QCS':
-                    $res = new QCS($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']);
+                    $res = new QCS($id, $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium']));
                     break;
                 default:
                     $res = null;
@@ -159,7 +167,7 @@ abstract class Question
             foreach ($questions as $question) {
                 try {
                     $query = $db->prepare("INSERT INTO QUESTIONS (interrogation, reponse, theme, propositions, type, prenium, is_shown) VALUES (:interrogation, :reponse, :theme, :propositions, :type, :prenium, :is_shown)");
-                    $query->execute(['interrogation' => $question['interrogation'], 'reponse' => $question['reponse'], 'theme' => $question['theme'], 'propositions' => $question['propositions'], 'type' => $question['type'], 'prenium' => $question['prenium'], 'is_shown' => $question['is_shown']]);
+                    $query->execute(['interrogation' => $question['interrogation'], 'reponse' => $question['reponse'], 'theme' => $question['theme'], 'propositions' => $question['propositions'], 'type' => $question['type'], 'prenium' => strval($question['prenium'] ? "1" : "0"), 'is_shown' => $question['is_shown']]);
                 } catch (PDOException $e) {
                     if (!$e->getMessage() == "SQLSTATE[45000]: <>: 1644 Impossible d'insérer. Une question similaire existe déjà.") {
                         echo "Erreur : " . $e->getMessage();
@@ -246,16 +254,16 @@ abstract class Question
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     default:
                         break;
@@ -284,16 +292,16 @@ abstract class Question
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     default:
                         break;
@@ -331,16 +339,16 @@ abstract class Question
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown']));
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     default:
                         break;
@@ -372,16 +380,16 @@ abstract class Question
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown']));
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     default:
                         break;
@@ -408,16 +416,16 @@ abstract class Question
             foreach ($questions as $question) {
                 switch ($question['type']) {
                     case 'QCM':
-                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCM($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCU':
-                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCU($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCS':
-                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown']));
+                        array_push($tab, new QCS($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], $question['propositions'], $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     case 'QCT':
-                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown']));
+                        array_push($tab, new QCT($question['id_question'], $question['interrogation'], $question['reponse'], $question['theme'], '', $question['type'], $question['is_shown'], boolval($question['prenium'])));
                         break;
                     default:
                         break;
@@ -537,7 +545,7 @@ class QCU extends Question
     {
         $propositions = explode("|", $this->propositions);
         array_push($propositions, $this->reponse); // On ajoute la réponse à la proposition
-        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html = "<div class='question " . strval($this->isPremium() ? 'prenium' : '') . " ". $this->type .  "'><p class='interrogation'>" . $this->interrogation ."</p>";
         shuffle($propositions);
         foreach ($propositions as $propositions) {
             $html .= "<input type='radio' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";
@@ -581,7 +589,7 @@ class QCS extends Question
      */
     public function display()
     {
-        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html = "<div class='question " . $this->type . " " . strval($this->isPremium() ? 'prenium' : '') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         $html .= "<input type='range' class='reponse' name='reponse' step=1 min='0' max='" . $this->propositions . "' value='0' id='myRange'>";
         $html .= "<p>Value: <span id='value'></span></p>";
         $html .= "<script>
@@ -625,7 +633,7 @@ class QCT extends Question
      */
     public function display()
     {
-        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html = "<div class='question " . $this->type .  " " . strval($this->isPremium() ? 'prenium' : '') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         $html .= "<input type='text' class='reponse' name='reponse' placeholder='Votre réponse'>";
         $html .= "</div>";
         return $html;
@@ -662,7 +670,7 @@ class QCM extends Question
     {
         $propositions = explode("|", $this->propositions);
         $propositions = array_merge($propositions, $this->reponseToArray($this->reponse)); // On ajoute les réponses dans les propositions
-        $html = "<div class='question " . $this->type . "'><p class='interrogation'>" . $this->interrogation . "</p>";
+        $html = "<div class='question " . $this->type .  " " . strval($this->isPremium() ? 'prenium' : '') . "'><p class='interrogation'>" . $this->interrogation . "</p>";
         shuffle($propositions);
         foreach ($propositions as $propositions) {
             $html .= "<input type='checkbox' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";

@@ -179,19 +179,19 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
         $theme = ucfirst(strtolower($theme));
         switch ($type) {
             case 'text':
-                $question = new QCT(0, $question, $reponse, $theme, '', 'QCT', 1);
+                $question = new QCT(0, $question, $reponse, $theme, '', 'QCT', 1, 0);
                 $question->pushInBd();
                 break;
             case 'radio':
-                $question = new QCU(0, $question, $reponse, $theme, $reponseProp, 'QCU', 1);
+                $question = new QCU(0, $question, $reponse, $theme, $reponseProp, 'QCU', 1, 0);
                 $question->pushInBd();
                 break;
             case 'checkbox':
-                $question = new QCM(0, $question, $reponse, $theme, $reponseProp, 'QCM', 1);
+                $question = new QCM(0, $question, $reponse, $theme, $reponseProp, 'QCM', 1, 0);
                 $question->pushInBd();
                 break;
             case 'number':
-                $question = new QCS(0, $question, $reponse, $theme, $reponseProp, 'QCS', 1);
+                $question = new QCS(0, $question, $reponse, $theme, $reponseProp, 'QCS', 1, 0);
                 $question->pushInBd();
                 break;
             default:
