@@ -1,6 +1,9 @@
 <?php
 require_once('model/model.php');
 require_once('model/question.php');
+require_once('model/popUp.php');
+require_once('model/user.php');
+$_SESSION['nbQuestQuest'] = 3;
 function home()
 {
     $_SESSION['themes'] = putTheme();
@@ -69,6 +72,12 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
 function quizz($theme)
 {
     if (checkLoged()) {
+        //si je suis premium
+        if (isPremium($_SESSION['pseudo'])) {
+            $questions = Question::getQuestionAleatoire($theme, $_SESSION['nbQuestQuest']);
+        } else {
+            $questions = Question::getQuestionAleatoireLambda($theme, $_SESSION['nbQuestQuest']);
+        }
         $questions = Question::getQuestionAleatoire($theme, 2);
         require('templates/quizz.php');
     } else {
@@ -101,7 +110,63 @@ function putTheme()
 function admin()
 {
     if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        // gestion des questions
+        $popUpAddQuest = PopUp::getPopUpAddQuest();
+        if (isset($_GET['recherche'])) {
+            $allQuestion = Question::getQuestionSearch($_GET['recherche']);
+        } else {
+            $allQuestion = Question::getAllQuestionsShawn();
+        }
+
+        // Exportation et importation
+        if (isset($_GET['export'])) {
+            Question::exportToJSON();
+        }
+        if (isset($_FILES['fileToUpload'])) {
+            try {
+                Question::importFromJSON($_FILES['fileToUpload']);
+                unset($_FILES['fileToUpload']);
+            } catch (Exception $e) {
+                echo '<script>alert("Le fichier selectionné n\'est pas un .json")</script>';
+            }
+        }
+
+        // Import export user
+        if (isset($_GET['exportUser'])) {
+            User::exportToJSON();
+        }
+        if (isset($_FILES['fileToUploadUser'])) {
+            try {
+                User::importFromJSON($_FILES['fileToUploadUser']);
+                unset($_FILES['fileToUploadUser']);
+            } catch (Exception $e) {
+                echo '<script>alert("Le fichier selectionné n\'est pas un .json")</script>';
+            }
+        }
+
+        // gestion des utilisateurs
+        $allUsers = User::getAllUsers();
+
         require('templates/admin.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+function paypal()
+{
+    if (checkLoged()) {
+        require('templates/paypal.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+
+function success()
+{
+    if (checkLoged()) {
+        $user = new User($_SESSION['pseudo']);
+        $user->setpremium();
+        require('templates/success.php');
     } else {
         header("Location: index.php");
     }
@@ -114,21 +179,22 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
 {
     if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
         $theme = traitementTheme($theme, $otherTheme);
+        $theme = ucfirst(strtolower($theme));
         switch ($type) {
             case 'text':
-                $question = new QCT(0, $question, $reponse, $theme, '', 'QCT');
+                $question = new QCT(0, $question, $reponse, $theme, '', 'QCT', 1, 0);
                 $question->pushInBd();
                 break;
             case 'radio':
-                $question = new QCU(0, $question, $reponse, $theme, $reponseProp, 'QCU');
+                $question = new QCU(0, $question, $reponse, $theme, $reponseProp, 'QCU', 1, 0);
                 $question->pushInBd();
                 break;
             case 'checkbox':
-                $question = new QCM(0, $question, $reponse, $theme, $reponseProp, 'QCM');
+                $question = new QCM(0, $question, $reponse, $theme, $reponseProp, 'QCM', 1, 0);
                 $question->pushInBd();
                 break;
             case 'number':
-                $question = new QCS(0, $question, $reponse, $theme, $reponseProp, 'QCS');
+                $question = new QCS(0, $question, $reponse, $theme, $reponseProp, 'QCS', 1, 0);
                 $question->pushInBd();
                 break;
             default:
@@ -145,9 +211,22 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
  * Affiche la page de score d'un quizz
  * @param string $quizz String brut du quizz avec les questions et les reponses de l'utilisateur
  */
-function scoreQuizz($quizz){
+function scoreQuizz(string $quizz)
+{
     if (checkLoged()) {
-       $score = traitementScoreQuizz($quizz);
+        $tentative = new Tentative($quizz);
+        $affichage = $tentative->display();
+        require('templates/score.php');
+    } else {
+        header("Location: index.php");
+    }
+}
+
+function deleteQuest($id)
+{
+    if (checkLoged() && User::isAdmin($_SESSION['pseudo'])) {
+        Question::deleteQuestion($id);
+        header("Location: index.php?action=admin");
     } else {
         header("Location: index.php");
     }

@@ -31,12 +31,12 @@
             </div>';
             }
         } ?>
-        <form method="get" action="index.php">
+        <form method="post" action="index.php">
             <input type="hidden" name="action" value="connexion"> <!-- Permet d'envoyer l'action -->
             <label>Entrer ton pseudo !</label>
             <input type="text" name="name" value="" placeholder="pseudo" required>
             <label> Entre ton mdp !</label>
-            <input type="text" name="mdp" placeholder="mot de passe" required>
+            <input type="password" name="mdp" placeholder="mot de passe" required>
             <button type="submit" class="style_btn"> Enregistrer</button>
         </form>
     </section>

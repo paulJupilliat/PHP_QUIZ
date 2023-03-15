@@ -27,22 +27,15 @@
 - [🏁 Getting Started ](#-getting-started-)
   - [Prerequisites](#prerequisites)
   - [Start](#start)
-- [🔧 Running the tests ](#-running-the-tests-)
-  - [Break down into end to end tests](#break-down-into-end-to-end-tests)
-  - [And coding style tests](#and-coding-style-tests)
 - [🎈 Usage ](#-usage-)
-- [🚀 Deployment ](#-deployment-)
 - [⛏️ Built Using ](#️-built-using-)
 - [✍️ Authors ](#️-authors-)
-- [🎉 Acknowledgements ](#-acknowledgements-)
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+This project is a website of questions. We create this during us studies in the BUT Informatique.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
-
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
@@ -52,64 +45,38 @@ sudo apt install docker-compose
 ```  
 
 ### Start
+Go on sql folder
+```bash
+cd sql
+```
+  
+<br>
 Start by create the docker
 ```bash
 docker-compose up -d
 ```
 
-To launch the project, you need to run the following commands:
-
+To launch the project, you need to run the following commands, on the PHP_QUIZZ folder:
 ```bash
 php -S localhost:8000
 ```
-After go on your browser and type localhost:8000
-
-
-
-## 🔧 Running the tests <a name = "tests"></a>
-
-Explain how to run the automated tests for this system.
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
+After go on http://localhost:8000/html/index.php
 
 ## 🎈 Usage <a name="usage"></a>
 
-Add notes about how to use the system.
+With this website, you can create and connect with user account. An user can be a simple user or a admin. If is a admin, he can manage questions, users and themes, on admin console. If is a simple user, he can play to the quiz, and see his score.
 
-## 🚀 Deployment <a name = "deployment"></a>
-
-Add additional notes about how to deploy this on a live system.
+We integrate a prenium system. If you pay 3€ you can acces to prenium questions.
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [Mysql](https://) - Database
   About the database[./docs/database.md]
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [PHP](https://expressjs.com/) - Web Framework
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+You can see the source code on [github](https://github.com/paulJupilliat/PHP_QUIZ)
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+- GUERRE Benjamin - [BenGuerre](https://github.com/BenGuerre)
+- JUPILLAT Paul - [paulJupilliat](https://github.com/paulJupilliat)

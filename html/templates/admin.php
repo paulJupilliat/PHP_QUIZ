@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
 
-    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/admin.css">
 
 
 </head>
@@ -18,44 +18,51 @@
         ?>
     </header>
     <main>
-        <button class="button-toggle-popup" onclick="togglePopup()">Ajouter une question</button>
-        <div class="popup">
-            <form class="popup-content" id="form-new-quest">
-                <!-- <input type="hidden" name="action" value="addQuestion"> -->
-                <!-- la question -->
-                <label for="question">Question</label>
-                <input type="text" name="question" id="question" required>
-                <!-- le type -->
-                <label for="type">Type</label>
-                <select name=" type" id="type-quest" required onchange="showReponseProp()">
-                    <option value="text">Text</option>
-                    <option value="number">Number</option>
-                    <option value="radio">Radio</option>
-                    <option value="checkbox">Checkbox</option>
-                </select>
-                <!-- les réponses -->
-                <div id="reponses-prop">
-                    <input type='text' name='reponse' id='reponse' placeholder='Réponse' required>
-                </div>
-                <!-- le thème -->
-                <div>
-                    <label for="theme">Thème</label>
-                    <select name="theme" id="theme-choice" required onchange="newTheme()">
-                        <option value="" disabled selected>Choisir un thème</option>
-                        <!-- Un option par theme avec php -->
-                        <?php
-                        foreach ($_SESSION['themes'] as $theme) {
-                            echo "<option value='$theme'>$theme</option>";
-                        }
-                        ?>
-                        <option value="other">Autre</option>
-                    </select>
-                    <div id="input-other-theme">
-                        <input type="text" name="otherTheme" id="otherTheme" placeholder="Autre thème">
-                    </div>
-                </div>
-                <button type="button" onclick="submitNewQuest()" class="validate"> Valider </button>
-                <button type="button" class="cancel" onclick="togglePopup()"> Annuler </button>
+        <div id="adminQuestion">
+            <button class="button-toggle-popup" onclick="togglePopupAddQuest()">Ajouter une question</button>
+            <form id="importFic" action="index.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="admin" />
+                <label for="fileToUpload">Sélectionnez un fichier :</label>
+                <input type="file" id="fileToUpload" name="fileToUpload">
+                <input type="submit" value="Importer depuis .json" name="submit">
+            </form>
+            <form id="ExportFic" method="get" action="index.php">
+                <input type="hidden" name="action" value="admin" />
+                <input type="hidden" name="export" value="true" />
+                <button type="submit">Exporter</button>
+            </form>
+            <form id="findQuest" method="get" action="index.php?action=admin">
+                <input type="hidden" name="action" value="admin" />
+                <input type="text" name="recherche" placeholder="Recherche...">
+                <button type="submit">Rechercher</button>
+            </form>
+
+            <div class="popUp" id="popupAddQuest">
+                <?php echo $popUpAddQuest; ?>
+            </div>
+            <div class="allQuestions">
+                <?php
+                foreach ($allQuestion as $question) {
+                    echo $question->displayPreview();
+                } ?>
+
+            </div>
+
+        </div>
+        <div id="adminUser">
+            <?php foreach ($allUsers as $user) {
+                echo $user->displayPreview();
+            } ?>
+            <!-- <form id="importFic" action="index.php" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="admin" />
+                <label for="fileToUploadUser">Sélectionnez un fichier :</label>
+                <input type="file" id="fileToUploadUser" name="fileToUploadUser">
+                <input type="submit" value="Importer depuis .json" name="submit">
+            </form> -->
+            <form id="ExportFic" method="get" action="index.php">
+                <input type="hidden" name="action" value="admin" />
+                <input type="hidden" name="exportUser" value="true" />
+                <button type="submit">Exporter</button>
             </form>
 
         </div>
