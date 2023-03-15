@@ -59,10 +59,12 @@ function newSignUp($pseudo, $mdp, $mdp2, $nom, $prenom, $age)
             header("Location: index.php");
         } else {
             $err = "Erreur de connexion";
+            echo "<script>alert('Erreur de connexion')</script>";
             require('templates/signup.php');
         }
     } else {
         $err = "Les mots de passe ne correspondent pas";
+        echo "<script>alert('Les mots de passe ne correspondent pas')</script>";
         require('templates/signup.php');
     }
 }
@@ -81,6 +83,7 @@ function quizz($theme)
         }
         require('templates/quizz.php');
     } else {
+        echo "<script>alert('Veillez vous login')</script>";
         header("Location: index.php");
     }
 }
@@ -149,6 +152,7 @@ function admin()
 
         require('templates/admin.php');
     } else {
+        echo "<script>alert('Veillez vous login')</script>";
         header("Location: index.php");
     }
 }
@@ -157,6 +161,7 @@ function paypal()
     if (checkLoged()) {
         require('templates/paypal.php');
     } else {
+        echo "<script>alert('Veillez vous login')</script>";
         header("Location: index.php");
     }
 }
@@ -168,6 +173,7 @@ function success()
         $user->setpremium();
         require('templates/success.php');
     } else {
+        echo "<script>alert('Veillez vous login')</script>";
         header("Location: index.php");
     }
 }
@@ -203,6 +209,7 @@ function addQuestion($question, $type, $reponseProp, $theme, $otherTheme, $repon
         }
         header("Location: index.php?action=admin");
     } else {
+        echo "<script>alert('Veillez vous login')</script>";
         header("Location: index.php");
     }
 }
@@ -218,6 +225,7 @@ function scoreQuizz(string $quizz)
         $affichage = $tentative->display();
         require('templates/score.php');
     } else {
+        echo "<script>alert('Veillez vous login')</script>";
         header("Location: index.php");
     }
 }
@@ -228,6 +236,18 @@ function deleteQuest($id)
         Question::deleteQuestion($id);
         header("Location: index.php?action=admin");
     } else {
+        echo "<script>alert('Veillez vous login')</script>";
+        header("Location: index.php");
+    }
+}
+
+function historique()
+{
+    if (checkLoged()) {
+        $tentatives = Tentative::displayAllTentative($_SESSION['pseudo']);
+        require('templates/historique.php');
+    } else {
+        echo "<script>alert('Veillez vous login')</script>";
         header("Location: index.php");
     }
 }

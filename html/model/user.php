@@ -304,4 +304,27 @@ class User
             $connexion = null;
         }
     }
+
+    /**
+     * Permet d'obtenir toutes les tentatives d'un user
+     * @return array liste des tentatives
+     */
+    public function getTentatives(){
+        try{
+            $conn = connexion_to_bd();
+            $query = $conn->prepare("SELECT * FROM do_tentative WHERE pseudo = :pseudo");
+            $query->execute(['pseudo' => $this->pseudo]);
+            $res = $query->fetchAll();
+            $arrayTentatives = array();
+            foreach ($res as $tentative) {
+                array_push($arrayTentatives, new Tentative($tentative['id_tentative']));
+            }
+            return $arrayTentatives;
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        } finally {
+            $conn = null;
+        }
+
+    }
 }

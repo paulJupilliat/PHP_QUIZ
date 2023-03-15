@@ -36,6 +36,9 @@ body{
 .menu a:hover{
     color: #8eb864;
 }
+svg{
+    max-height: 65vh;
+}
 
 
 

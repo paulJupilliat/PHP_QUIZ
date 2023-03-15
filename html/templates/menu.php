@@ -21,7 +21,7 @@ require_once('controllers/controller.php');
         <a class="" href="#"> <?php
                                 echo $_SESSION['pseudo'];
                                 ?></a>
-        <a class="navbar_elem" href="#"> Voir les résultats</a>
+        <a class="navbar_elem" href="index.php?action=historique"> Voir les résultats</a>
         <a class="navbar_elem" href="index.php"> Changer de thème</a>
         <?php if (isset($_SESSION['pseudo'])) { ?>
             <a class="navbar_elem" href="index.php?action=logout"> Déconnexion</a>
