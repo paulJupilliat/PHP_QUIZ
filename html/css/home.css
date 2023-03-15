@@ -26,6 +26,7 @@
     text-transform: uppercase;
     flex-wrap: wrap;
     margin-right: 3px;
+    margin: 1vw;
 }
 
 .style_btn:hover {
