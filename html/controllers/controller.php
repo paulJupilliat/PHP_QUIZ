@@ -3,6 +3,7 @@ require_once('model/model.php');
 require_once('model/question.php');
 require_once('model/popUp.php');
 require_once('model/user.php');
+$_SESSION['nbQuestQuest'] = 3;
 function home()
 {
     $_SESSION['themes'] = putTheme();
@@ -73,9 +74,9 @@ function quizz($theme)
     if (checkLoged()) {
         //si je suis prenium
         if (isPremium($_SESSION['pseudo'])) {
-            $questions = Question::getQuestionAleatoire($theme, 10);
+            $questions = Question::getQuestionAleatoire($theme, $_SESSION['nbQuestQuest']);
         } else {
-            $questions = Question::getQuestionAleatoireLambda($theme, 2);
+            $questions = Question::getQuestionAleatoireLambda($theme, $_SESSION['nbQuestQuest']);
         }
         $questions = Question::getQuestionAleatoire($theme, 2);
         require('templates/quizz.php');
@@ -163,6 +164,8 @@ function paypal()
 function success()
 {
     if (checkLoged()) {
+        $user = new User($_SESSION['pseudo']);
+        $user->setPrenium();
         require('templates/success.php');
     } else {
         header("Location: index.php");

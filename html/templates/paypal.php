@@ -4,6 +4,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include('menu.php');
+require_once('model/model.php');
 
 ?>
 
@@ -34,19 +35,19 @@ include('menu.php');
 
     <div class="right">
       <div class="bloc">
-        
 
-        
+
+
 
         <div class="price-infos">
           <div class="price">
-            
+
           </div>
-          
+
         </div>
 
         <div class="description">
-          
+
         </div>
 
         <div id="paypal-payment-button"></div>
@@ -58,27 +59,27 @@ include('menu.php');
   <script src="https://www.paypal.com/sdk/js?client-id=ARMF8oM_mbhLxNLp66VvkwgecwMY113CHwa_axGivZ_1Xly-h_8r9Zb0_reTTkd31v-M0LOCn6k7JPX2&currency=EUR"></script>
   <script>
     paypal.Buttons({
-    style : {
+      style: {
         color: 'blue'
-    },
-    createOrder: function(data, actions) {
+      },
+      createOrder: function(data, actions) {
         return actions.order.create({
-            purchase_units:[{
-              amount: {
-                  value: 3.0
-              }
-            }]
+          purchase_units: [{
+            amount: {
+              value: 3.0
+            }
+          }]
         })
-    },
-    onApprove: function(data, actions) {
+      },
+      onApprove: function(data, actions) {
         // This function captures the funds from the transaction.
         return actions.order.capture().then(function(details) {
-            console.log(details)
-            window.location.replace("index.php?action=success")
+          console.log(details)
+          window.location.replace("index.php?action=success")
         })
-    }
-}).render('#paypal-payment-button');
-</script>
+      }
+    }).render('#paypal-payment-button');
+  </script>
 </body>
 
 </html>

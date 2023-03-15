@@ -22,10 +22,11 @@ function isPremium($id)
     {
         try {
             $db = connexion_to_bd();
-            $query = $db->prepare("SELECT prenium FROM USER WHERE pseudo = :id");
-            $query->execute(['id' => $id]);
-            $prenium = $query->fetch();
-            return $prenium['prenium'] == 1;
+            $query = $db->prepare("SELECT prenium FROM USERS WHERE pseudo = :pseudo");
+            $query->execute(['pseudo' => $id]);
+            $result = $query->fetch();
+            return $result['prenium'];
+
         } catch (PDOException $e) {
             return "Erreur : " . $e->getMessage();
         } finally {

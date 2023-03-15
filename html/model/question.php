@@ -465,14 +465,10 @@ abstract class Question
         $tab = [];
         for ($i = 0; $i < $nb; $i++) {
             $rand = rand(0, count($questions) - 1);
-            if ($questions[$rand]->getShown() == 0) {
-                $i--;
-                continue;
-            } else {
-                array_push($tab, $questions[$rand]);
-                unset($questions[$rand]);
-                $questions = array_values($questions);
-            }
+
+            array_push($tab, $questions[$rand]);
+            unset($questions[$rand]);
+            $questions = array_values($questions);
         }
         return $tab;
     }
@@ -545,7 +541,7 @@ class QCU extends Question
     {
         $propositions = explode("|", $this->propositions);
         array_push($propositions, $this->reponse); // On ajoute la réponse à la proposition
-        $html = "<div class='question " . strval($this->isPremium() ? 'prenium' : '') . " ". $this->type .  "'><p class='interrogation'>" . $this->interrogation ."</p>";
+        $html = "<div class='question " . strval($this->isPremium() ? 'prenium' : '') . " " . $this->type .  "'><p class='interrogation'>" . $this->interrogation . "</p>";
         shuffle($propositions);
         foreach ($propositions as $propositions) {
             $html .= "<input type='radio' class='reponse' name='reponse' value='" . $propositions . "'>" . $propositions . "<br>";

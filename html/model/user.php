@@ -290,4 +290,19 @@ class User
         }
     }
 
+    public function setPrenium()
+    {
+        try {
+            $connexion = connexion_to_bd();
+            $query = $connexion->prepare("UPDATE USERS SET prenium = 1 WHERE pseudo = :pseudo");
+            $res = $query->execute(['pseudo' => $this->pseudo]);
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        } finally {
+            $connexion = null;
+        }
+
+
+    }
+
 }

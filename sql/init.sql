@@ -264,6 +264,9 @@ VALUES ('ROLE_USER', 'Utilisateur'), (
 INSERT INTO have_role
 VALUES ('user1', 'ROLE_USER'), ('admin1', 'ROLE_ADMIN'), ('admin1', 'ROLE_USER');
 
+INSERT INTO QUESTION_TENTATIVE (1, 1, 'init');
+INSERT INTO do_tentative (1, 'admin', 1);
+
 -- trigger si la question
 
 DELIMITER //
