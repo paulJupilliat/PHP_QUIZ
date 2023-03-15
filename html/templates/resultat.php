@@ -10,6 +10,39 @@ if (isset($_SESSION['pseudo'])) {
     <meta charset="utf-8">
     <title>Resultat</title>
 </head>
+<style>
+  .tentative {
+    border: 1px solid black;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .tentative h2 {
+    margin-top: 0;
+  }
+  .score {
+    text-align: right;
+    margin-bottom: 10px;
+  }
+  .score h2 {
+    margin-top: 0;
+    color: #4CAF50;
+  }
+  .question {
+    margin-bottom: 10px;
+  }
+  .interrogation {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .reponse {
+    margin-right: 5px;
+  }
+  .true {
+    color: #4CAF50;
+  }
+  .false {
+    color: #F44336;
+  }
 al
 <body>
     <section class="result">
